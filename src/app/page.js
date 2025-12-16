@@ -5,7 +5,13 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main>
-      
+      <header>
+        <p className="p-10 text-[#9f9f9f] font-bold">
+          What To Watch
+        </p>
+        
+      </header>
+
 
     </main>
   );

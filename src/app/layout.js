@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   icons: {
-    icon: '/regular.ico',
+    icon: './regular.ico',
   },
   title: "WhatToWatch",
   description: "A theatre of experience for an audience of movie lovers",

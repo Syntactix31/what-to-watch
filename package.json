@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "encoding": "^0.1.13",
     "firebase": "^12.6.0",
     "firestore": "^1.1.6",
     "next": "16.0.10",

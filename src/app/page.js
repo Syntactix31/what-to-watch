@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main>
       <header>
-        <p className="p-10 text-[#9f9f9f] font-bold">
+        <p className="p-10 text-[#FFD700] font-bold">
           What To Watch
         </p>
         

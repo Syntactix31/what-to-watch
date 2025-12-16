@@ -5,30 +5,30 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main>
-      <header>
-            <div className="hover-container">
-                <h1 className="explosive-text">What To Watch?</h1>
-            </div>
-            <div className="shadow-dance-container">
-                <h1 className="shadow-dance-text">What To Watch?</h1>
-            </div>
-            <div className="container">
+      <nav className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 px-6 py-4 flex items-center justify-between">
+        <div className="hover-container">
+            <h1 className="explosive-text">What To Watch?</h1>
+        </div>
+        <Link 
+          href="/login" 
+          className=" hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors"
+        >
+          Log In
+        </Link>
+      </nav>
+
+      <header className="mt-40">
+            <div className="container-text">
               <h1>What to</h1>
               <h1>Watch?</h1>
             </div>
       </header>  
 
       <div>
-        <Image src="./assets/img/movietheatre1.jpg" alt="Movie Theatre Bb" width={100} height={100} className="h-screen w-screen"/>
+        <Image src="/movietheatre2.jpg" alt="Movie Theatre Bb" fill className="object-cover -z-10"/>
       </div>
 
       <div>
-        {/* {trending.results.map(movie => (
-          <div key={movie.id}>
-            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
-            <h3>{movie.title}</h3>
-          </div>
-        ))} */}
       </div>
     </main>
   );

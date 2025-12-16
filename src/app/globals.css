@@ -25,18 +25,19 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Work Sans", Arial, Helvetica, sans-serif;
 }
 
 
-body {
+/* Explosive Text */
+/* body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
     background: #000000;
-}
+} */
 
 .hover-container {
     display: inline-block;
@@ -45,6 +46,7 @@ body {
 
 .explosive-text {
     font-size: 3rem;
+    font-family: "Work Sans", sans-serif;
     font-weight: bold;
     color: #fff;
     display: inline-block;
@@ -95,6 +97,86 @@ body {
 
 
 
+
+
+
+
+/* Typing Text */
+.container-text{
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  /* background-color: transparent; */
+}
+
+.container-text h1:nth-child(1) {
+  font-family: "Work Sans", sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  margin: 0 0 0 35%;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 170px;
+  animation: type 2s steps(12,end) forwards;
+}
+
+.container-text h1:nth-child(2) {
+  opacity: 0;
+  font-family: "Work Sans", sans-serif;
+  margin: 0 auto auto auto;
+  background: linear-gradient(to right, #f8b195, #f67280, #c06c84);
+  font-weight: 800;
+  font-size: 100px;  
+  width: 430px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  overflow: hidden;
+  animation: shring-animation 2s steps(12,end) 2s forwards, blink .5s step-end infinite alternate;
+}
+
+@keyframes shring-animation {
+  0% {
+    background-position: 0 0;
+    opacity: 0;
+    width: 0;
+  }
+  1% {
+    background-position: 0 0;
+    opacity: 1;
+    border-right: 1px solid orange;
+  }
+  50% {
+    background-position: 150px 0;
+    opacity: 1;
+    border-right: 1px solid orange;
+  }
+  100% {
+    background-position: 400px 0;
+    opacity: 1;
+    border-right: 1px solid orange;
+  }
+}
+
+@keyframes type {
+  0% {
+    width: 0;
+  }
+  1%, 99%{
+    border-right: 1px solid orange;
+  }
+  100%{
+    width: 170px;
+    border-right: none;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
 
 
 

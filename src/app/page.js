@@ -25,7 +25,7 @@ export default function Home() {
       </header>  
 
       <div>
-        <Image src="/movietheatre2.jpg" alt="Movie Theatre Bb" fill className="object-cover -z-10"/>
+        <Image src="/movietheatre1.jpg" alt="Movie Theatre Bb" fill className="object-cover -z-10"/>
       </div>
 
       <div>

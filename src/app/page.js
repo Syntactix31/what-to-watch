@@ -6,10 +6,21 @@ export default function Home() {
   return (
     <main>
       <header>
-        <p className="p-10 text-[#FFD700] font-bold">
-          What To Watch
-        </p>
+            <div className="hover-container">
+                <h1 className="explosive-text">What To Watch?</h1>
+            </div>
+            <div className="shadow-dance-container">
+                <h1 className="shadow-dance-text">What To Watch?</h1>
+            </div>
+            <div className="container">
+              <h1>What to</h1>
+              <h1>Watch?</h1>
+            </div>
       </header>  
+
+      <div>
+        <Image src="./assets/img/movietheatre1.jpg" alt="Movie Theatre Bb" width={100} height={100} className="h-screen w-screen"/>
+      </div>
 
       <div>
         {/* {trending.results.map(movie => (

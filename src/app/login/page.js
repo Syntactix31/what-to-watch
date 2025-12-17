@@ -57,7 +57,7 @@ export default function Page() {
           {/* Left text block */}
           <div className="text-center lg:text-left">
             <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-red-500 drop-shadow">
-              What To Watch
+              WhatToWatch
             </h1>
             <p className="mt-4 text-zinc-200">
               Sign in to save watchlists, rate movies, and get recommendations.
@@ -70,7 +70,7 @@ export default function Page() {
               <h2 className="text-2xl font-bold">Welcome back</h2>
               <p className="mt-1 text-sm text-zinc-400">
                 Log in to continue to{" "}
-                <span className="text-red-400">What To Watch</span>.
+                <span className="text-red-400">WhatToWatch</span>.
               </p>
 
               {error && (

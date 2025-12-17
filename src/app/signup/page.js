@@ -39,7 +39,7 @@ export default function Page() {
     <main className="min-h-screen bg-zinc-950 text-zinc-100 grid place-items-center px-6">
       <div className="w-full max-w-md rounded-3xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-xl p-6 md:p-8">
         <h1 className="text-2xl font-extrabold">
-          Join <span className="text-red-500">What To Watch</span>
+          Join <span className="text-red-500">WhatToWatch</span>
         </h1>
         <p className="mt-1 text-sm text-zinc-400">Create your account to start building your watchlist.</p>
 

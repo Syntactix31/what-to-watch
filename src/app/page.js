@@ -4,36 +4,31 @@ import Link from "next/link";
 import { useEffect, useState, useCallback } from "react";
 import { SearchBar } from "./components/SearchBar"
 
-
-function LogoImage({ src, ...props }) {
-  return <Image src={src} {...props} />;
-}
-
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const [featureStyle, setFeatureStyle] = useState({});
   const [opaqueStyle, setOpaqueStyle] = useState({ opacity: 0 });
 
   const logoImages = [
-    "/img/regular.png",
-    "/img/golden.png",
-    "/img/golden2.png",
-    "/img/silver.png",
-    "/img/bronze.png",
-    "/img/extrabuttery.png",
-    "/img/candycane.png",
-    "/img/charcoal.png",
-    "/img/keylime.png",
-    "/img/oreo.png",
-    "/img/pink.png",
-    "/img/monster.png",
-    "/img/cheesepowder.png",
-    "/img/caramel.png",
-    "/img/cottoncandy.png",
-    "/img/chocolate.png",
-    "/img/key.png",
-    "/img/whiteout.png",
-    "/img/blackout.png",
+    "regular",
+    "golden",
+    "golden2",
+    "silver",
+    "bronze",
+    "extrabuttery",
+    "candycane",
+    "charcoal",
+    "keylime",
+    "oreo",
+    "pink",
+    "monster",
+    "cheesepowder",
+    "caramel",
+    "cottoncandy",
+    "chocolate",
+    "key",
+    "whiteout",
+    "blackout",
   ];
 
   const [currentLogoIndex, setCurrentLogoIndex] = useState(0);
@@ -79,15 +74,14 @@ export default function Home() {
 
       <div className="flex items-center space-x-4">
         <div onClick={cycleLogo} className="cursor-pointer">
-          <img
-            src={logoImages[currentLogoIndex]}
+          <Image
+            src={`/img/${logoImages[currentLogoIndex]}.png`}
             width={48}
             height={48}
             alt="PopCorn Logo"
             className="w-12 h-12 object-contain"
           />
         </div>
-        
         <div className="hover-container">
           <h1 className="text-shimmer normal-case">WhatToWatch</h1>
         </div>

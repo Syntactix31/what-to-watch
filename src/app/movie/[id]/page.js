@@ -1,5 +1,9 @@
 import Image from "next/image";
 import { notFound } from 'next/navigation';
+import TrackRecentlyViewed from "../../components/TrackRecentlyViewed";
+import AddToPlaylist from "../../components/AddToPlaylist";
+import MovieReview from "../../components/MovieReview";
+
 
 // Fetch function
 async function getMovie(id) {
@@ -146,8 +150,31 @@ export default async function MovieDetailsPage({ params }) {
               </div>
             )}
             
-            {/* User Rating (not implemented yet)*/}
-            <UserRating />
+            <TrackRecentlyViewed
+            movie={{
+              id: movie.id,
+              title: movie.title,
+              poster_path: movie.poster_path,
+              release_date: movie.release_date,
+            }}
+          />
+
+          <AddToPlaylist
+            movie={{
+              id: movie.id,
+              title: movie.title,
+              poster_path: movie.poster_path,
+              release_date: movie.release_date,
+            }}
+          />
+
+          <MovieReview
+            movie={{
+              id: movie.id,
+              title: movie.title,
+            }}
+          />
+
             
           </div>
         </div>
@@ -175,5 +202,7 @@ function UserRating() {
     </div>
   );
 }
+
+
 
 

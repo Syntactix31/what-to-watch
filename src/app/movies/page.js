@@ -36,20 +36,34 @@ export default function MoviesPage() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  async function handleSearchChange(value) {
-    setQuery(value);
-    
-    if (value.length < 2) {
-      setSuggestions([]);
-      setIsSearching(false);
-      return;
-    }
+async function handleSearchChange(value) {
+  setQuery(value);
 
-    setIsSearching(true);
+  if (value.trim().length < 2) {
+    setSuggestions([]);
+    setIsSearching(false);
+    return;
+  }
+
+  setIsSearching(true);
+
+  try {
     const data = await searchMovies(value);
-    setSuggestions(data.results.slice(0, 8));
+
+    const results =
+      Array.isArray(data?.results) ? data.results :
+      Array.isArray(data) ? data :
+      [];
+
+    setSuggestions(results.slice(0, 8));
+  } catch (err) {
+    console.error("searchMovies failed:", err);
+    setSuggestions([]);
+  } finally {
     setIsSearching(false);
   }
+}
+
 
   function clearSearch() {
     setQuery("");

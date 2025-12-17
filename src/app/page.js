@@ -11,8 +11,7 @@ export default function Home() {
   const handleScroll = useCallback(() => {
     const fromTop = window.scrollY;
     setScrollY(fromTop);
-    
-    // Parallax zoom/blur effect
+
     const featureEl = document.querySelector('.feature');
     if (featureEl) {
       const size = 1.5 * featureEl.offsetWidth; // Initial zoom
@@ -27,7 +26,6 @@ export default function Home() {
       });
     }
     
-    // Opaque overlay for non-Webkit browsers
     if (!/Chrome|Safari/.test(navigator.userAgent)) {
       setOpaqueStyle({ opacity: Math.min(fromTop / 5000, 1) });
     }
@@ -35,12 +33,12 @@ export default function Home() {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
   return (
-    <main className="pt-20"> {/* Offset for fixed nav */}
+    <main className="pt-20 relative">
       <nav className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 px-6 py-4 flex items-center justify-between">
         <div className="hover-container">
           <h1 className="explosive-text">What To Watch?</h1>
@@ -53,22 +51,27 @@ export default function Home() {
         </Link>
       </nav>
 
-      <header className="mt-40">
+    <div className="content relative z-20 pt-48 pb-20"></div>
+      {/* <header className="mt-40">
         <div className="container-text">
           <h1>What to</h1>
           <h1>Watch?</h1>
         </div>
-      </header>  
+      </header>   */}
 
-      <div>
-        <Image src="/movietheatre1.jpg" alt="Movie Theatre" fill className="object-cover -z-10"/>
-      </div>
 
       <div>
         <div 
           className="feature fixed top-0 left-0 w-full h-screen bg-cover bg-center bg-[url('/movietheatre1.jpg')] z-10"
           style={featureStyle}
         >
+
+        <header className="mt-40">
+          <div className="container-text">
+            <h1>What to</h1>
+            <h1>Watch?</h1>
+          </div>
+        </header>  
           <div className="opaque absolute inset-0" style={opaqueStyle}></div>
         </div>
         <div className="content relative z-20 bg-black/50 p-12 text-white max-w-4xl mx-auto">

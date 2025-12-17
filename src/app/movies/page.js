@@ -3,13 +3,14 @@
 import { useEffect, useState, useRef } from "react";
 import MovieCard from "../components/MovieCard";
 import MovieSection from "../components/MovieSection";
+import { useRouter } from "next/navigation";
 import {
   getTrendingMovies,
   getTopRatedMovies,
   getPopularMovies,
-  searchMovies
-} from "../utils/tmdb";
-
+  searchMovies,
+  searchAllMovies
+} from "../utils/tmdb.js";
 
 export default function MoviesPage() {
   const [trending, setTrending] = useState([]);
@@ -19,13 +20,13 @@ export default function MoviesPage() {
   const [suggestions, setSuggestions] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const searchRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
-    getTrendingMovies().then(d => setTrending(d.results));
-    getTopRatedMovies().then(d => setTopRated(d.results));
-    getPopularMovies().then(d => setPopular(d.results));
+    getTrendingMovies().then(d => setTrending(d.results || []));
+    getTopRatedMovies().then(d => setTopRated(d.results || []));
+    getPopularMovies().then(d => setPopular(d.results || []));
     
-  
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setSuggestions([]);
@@ -46,9 +47,39 @@ export default function MoviesPage() {
     }
 
     setIsSearching(true);
-    const data = await searchMovies(value);
-    setSuggestions(data.results.slice(0, 8));
-    setIsSearching(false);
+    try {
+      const data = await searchMovies(value);
+      setSuggestions(data.results?.slice(0, 16) || []);
+    } catch (error) {
+      console.error('Search error:', error);
+      setSuggestions([]);
+    } finally {
+      setIsSearching(false);
+    }
+  }
+
+  async function handleViewAllResults() {
+    if (!query.trim()) return;
+    
+    setIsSearching(true);
+    
+    try {
+      const allData = await searchAllMovies(query, 20);
+      sessionStorage.setItem('searchQuery', query);
+      sessionStorage.setItem('searchResults', JSON.stringify(allData.results));
+      sessionStorage.setItem('totalResults', allData.total_results.toString());
+      
+      router.push(`/search?q=${encodeURIComponent(query)}`);
+    } catch (error) {
+      console.error('Error fetching all results:', error);
+      router.push(`/search?q=${encodeURIComponent(query)}`);
+    } finally {
+      setIsSearching(false);
+    }
+  }
+
+  function handleSuggestionClick(movieId) {
+    router.push(`/movie/${movieId}`);
   }
 
   function clearSearch() {
@@ -57,17 +88,14 @@ export default function MoviesPage() {
   }
 
   return (
-    //  backdrop-blur-sm or md for a glass effect
     <main className="min-h-screen bg-transparent text-white p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        {/* header with search */}
         <div className="mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
             Discover Amazing Movies
           </h1>
           <p className="text-gray-400 mb-8">Find your next favorite film</p>
           
-          {/* enchaned search bar*/}
           <div className="relative max-w-2xl mx-auto" ref={searchRef}>
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full blur opacity-0 group-hover:opacity-70 transition-all duration-500"></div>
@@ -97,6 +125,12 @@ export default function MoviesPage() {
                   placeholder="Search for movies"
                   className="w-full py-4 pr-5 bg-transparent outline-none text-white placeholder-gray-500 text-lg"
                   autoComplete="off"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && query.trim()) {
+                      e.preventDefault();
+                      handleViewAllResults();
+                    }
+                  }}
                 />
                 
                 {/* loading */}
@@ -120,7 +154,7 @@ export default function MoviesPage() {
               </div>
             </div>
 
-            {/* search suggestions (autofill) */}
+            {/* search suggestions (autofill) with 16 now */}
             {suggestions.length > 0 && (
               <div className="absolute mt-3 w-full bg-black border border-gray-800 z-50 max-h-96 overflow-y-auto scrollbar-hide rounded-2xl shadow-2xl animate-fadeIn">
                 <div className="p-4">
@@ -129,59 +163,60 @@ export default function MoviesPage() {
                     <span className="text-sm text-gray-400">{suggestions.length} found</span>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {suggestions.map(movie => (
-                      <div 
-                        key={movie.id} 
-                        className="group bg-gray-900 hover:bg-gray-800 rounded-xl p-3 transition-all duration-200 border border-gray-800 hover:border-gray-600 cursor-pointer"
-                        onClick={() => {
-                          window.location.href = `/movie/${movie.id}`;
-                        }}
-                      >
-                        <div className="flex gap-3">
-                          {movie.poster_path && (
-                            <div className="flex-shrink-0">
-                              <img 
-                                src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`} 
-                                alt={movie.title}
-                                className="w-16 h-24 object-cover rounded-lg"
-                              />
-                            </div>
-                          )}
-                          
-                          <div className="flex-1 min-w-0">
-                            <h4 className="font-semibold truncate group-hover:text-white transition-colors">
-                              {movie.title}
-                            </h4>
-                            
-                            <div className="flex items-center gap-2 mt-1">
-                              <span className="text-sm text-gray-400">⭐ {movie.vote_average?.toFixed(1)}</span>
-                              <span className="text-gray-500 text-sm">•</span>
-                              <span className="text-gray-500 text-sm">
-                                {movie.release_date?.split('-')[0] || 'N/A'}
-                              </span>
-                            </div>
-                            
-                            {movie.overview && (
-                              <p className="text-gray-500 text-sm line-clamp-2 mt-2">
-                                {movie.overview}
-                              </p>
+                  <div className="max-h-[32rem] overflow-y-auto pr-2 custom-scrollbar">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {suggestions.map(movie => (
+                        <div 
+                          key={movie.id} 
+                          className="group bg-gray-800/60 hover:bg-gray-700/80 rounded-xl p-3 transition-all duration-200 border border-transparent hover:border-white cursor-pointer"
+                          onClick={() => handleSuggestionClick(movie.id)}
+                        >
+                          <div className="flex gap-3">
+                            {movie.poster_path && (
+                              <div className="flex-shrink-0">
+                                <img 
+                                  src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`} 
+                                  alt={movie.title}
+                                  className="w-16 h-24 object-cover rounded-lg"
+                                />
+                              </div>
                             )}
+                            
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-semibold truncate group-hover:text-yellow-300 transition-colors">
+                                {movie.title}
+                              </h4>
+                              
+                              <div className="flex items-center gap-2 mt-1">
+                                <span className="text-sm text-yellow-400">⭐ {movie.vote_average?.toFixed(1)}</span>
+                                <span className="text-gray-400 text-sm">•</span>
+                                <span className="text-gray-400 text-sm">
+                                  {movie.release_date?.split('-')[0] || 'N/A'}
+                                </span>
+                              </div>
+                              
+                              {movie.overview && (
+                                <p className="text-gray-400 text-sm line-clamp-2 mt-2">
+                                  {movie.overview}
+                                </p>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                   
+                  {/* Added the view all */}
                   <div className="mt-4 pt-4 border-t border-gray-800 text-center">
                     <button 
-                      onClick={() => {
-                        // too lazy but could add a page for this
-                        console.log('View all results for:', query);
-                      }}
-                      className="text-gray-400 hover:text-gray-200 text-sm font-medium transition-colors"
+                      onClick={handleViewAllResults}
+                      className="text-yellow-400 hover:text-yellow-300 text-sm font-medium transition-colors inline-flex items-center gap-1 group"
                     >
-                      View all results for "{query}"
+                      <span>View all results for "{query}"</span>
+                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
                     </button>
                   </div>
                 </div>
@@ -214,6 +249,3 @@ export default function MoviesPage() {
     </main>
   );
 }
-
-
-

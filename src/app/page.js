@@ -33,6 +33,7 @@ export default function Home() {
     "cottoncandy",
     "chocolate",
     "whiteout",
+    "empty",
     "blackout",
   ];
 

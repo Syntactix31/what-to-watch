@@ -2,12 +2,14 @@
 
 import { useEffect, useState, useRef } from "react";
 import MovieCard from "../components/MovieCard";
+import MovieSection from "../components/MovieSection";
 import {
   getTrendingMovies,
   getTopRatedMovies,
   getPopularMovies,
   searchMovies
 } from "../utils/tmdb";
+
 
 export default function MoviesPage() {
   const [trending, setTrending] = useState([]);
@@ -212,21 +214,5 @@ export default function MoviesPage() {
   );
 }
 
-function MovieSection({ title, subtitle, movies }) {
-  return (
-    <section>
-      <div className="mb-6">
-        <h2 className="text-3xl font-bold mb-2">{title}</h2>
-        {subtitle && <p className="text-gray-400">{subtitle}</p>}
-      </div>
-      
-      <div className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide">
-        {movies.map(movie => (
-          <div key={movie.id} className="flex-shrink-0 w-48 md:w-56">
-            <MovieCard movie={movie} />
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
+
+

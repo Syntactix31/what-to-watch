@@ -189,17 +189,16 @@ export default function Home() {
         </header>  
           <div className="opaque absolute inset-0" style={opaqueStyle}></div>
         </div>
-        <div className="content relative z-20  p-12 text-white max-w-4xl mx-auto">
-          <div className="content relative z-20 p-12 text-white max-w-4xl mx-auto">
-            <MovieContent 
-              query={query}
-              suggestions={suggestions}
-              onSuggestionClick={(movieId) => {
-                window.location.href = `/movie/${movieId}`;
-              }}/>
-          </div>
-
+        <div className="content relative z-20 p-12 text-white max-w-7xl mx-auto w-full">
+          <MovieContent 
+            query={query}
+            suggestions={suggestions}
+            onSuggestionClick={(movieId) => {
+              window.location.href = `/movie/${movieId}`;
+            }}
+          />
         </div>
+
       </div>
     </main>
   );

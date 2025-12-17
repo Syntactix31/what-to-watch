@@ -192,10 +192,16 @@ body {background:#000000; color:#fff}
   min-height: 100vh;
   padding-top: 12rem;
   padding-bottom: 4rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-@media only screen and (min-width:36.250em) {
-  .content {width:60%; padding-top:35% }
+@media (min-width: 768px) {
+  .content {
+    padding-inline: 3rem;
+  }
 }
 
 

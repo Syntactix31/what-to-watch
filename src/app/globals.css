@@ -182,7 +182,7 @@ body {
 
 * {box-sizing:border-box}
 body, html {padding:0; margin:0} 
-body {background:#232323; color:#fff}
+body {background:#000000; color:#fff}
 .opaque {
   position: absolute;
   inset: 0;
@@ -196,8 +196,7 @@ body {background:#232323; color:#fff}
   z-index: 10;
   width: 100%;
   height: 100vh;
-  background-size: 150% !important;
-  box-shadow: inset 0 -50px 20px -20px #232323;
+  box-shadow: none;
 }
 
 .content {
@@ -210,4 +209,15 @@ body {background:#232323; color:#fff}
 
 @media only screen and (min-width:36.250em) {
   .content {width:60%; padding-top:35% }
+}
+
+
+/* Search Icon */
+.line-md--search {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath stroke-dasharray='40' stroke-dashoffset='40' d='M10.76 13.24c-2.34 -2.34 -2.34 -6.14 0 -8.49c2.34 -2.34 6.14 -2.34 8.49 0c2.34 2.34 2.34 6.14 0 8.49c-2.34 2.34 -6.14 2.34 -8.49 0Z'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' dur='1.025s' values='40;0'/%3E%3C/path%3E%3Cpath stroke-dasharray='12' stroke-dashoffset='12' d='M10.5 13.5l-7.5 7.5'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='1.025s' dur='0.41s' values='12;0'/%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
 }

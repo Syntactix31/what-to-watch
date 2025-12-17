@@ -14,7 +14,7 @@ export default function Home() {
 
     const featureEl = document.querySelector('.feature');
     if (featureEl) {
-      const size = 1.5 * featureEl.offsetWidth; // Initial zoom
+      const size = 1.5 * featureEl.offsetWidth;
       const newSize = Math.max(size - (fromTop / 3), featureEl.offsetWidth);
       const blur = Math.min(0 + (fromTop / 100), 5);
       const opacity = Math.max(1 - ((fromTop / document.documentElement.scrollHeight) * 1.3), 0);
@@ -41,7 +41,18 @@ export default function Home() {
     <main className="pt-20 relative">
       <nav className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 px-6 py-4 flex items-center justify-between">
         <div className="hover-container">
-          <h1 className="explosive-text">What To Watch?</h1>
+          <h1 className="explosive-text">WhatToWatch</h1>
+        </div>
+        {/* <div className="ml-200">
+          <h2 className="font-bold border-2 rounded-4xl border-white py-2 px-15 text-[#6e6d6d]"> Search</h2>
+        </div> */}
+        <div className="flex items-center border-2 border-white rounded-full px-4 py-2 text-[#6e6d6d] bg-transparent hover:border-yellow-200 transition-colors focus-within:border-yellow-200">
+          <span className="line-md--search mr-2"></span>
+          <input
+            type="text"
+            placeholder="Search"
+            className="bg-transparent outline-none text-white placeholder-[#6e6d6d] w-32 sm:w-40 focus:w-64 transition-all duration-300"
+          />
         </div>
         <Link 
           href="/login" 

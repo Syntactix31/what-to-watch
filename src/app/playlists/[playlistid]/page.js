@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useEffect, useMemo, useState, useCallback } from "react";
+import { useParams } from "next/navigation";
 import { db } from "../../utils/firebase";
 import { useRequireAuth } from "../../utils/useRequireAuth";
 import {
@@ -20,9 +20,19 @@ import {
 export default function Page() {
   const { user, loading } = useRequireAuth("/login");
   const params = useParams();
-  const playlistId = params?.playlistId ?? params?.id;
 
-  const router = useRouter();
+  // Works even if your folder is [id] or [playlistID], etc.
+  const playlistId = useMemo(() => {
+    if (!params) return null;
+    const raw =
+      params.playlistId ??
+      params.id ??
+      params.playlistID ??
+      params.playlistid ??
+      Object.values(params)[0];
+
+    return Array.isArray(raw) ? raw[0] : raw;
+  }, [params]);
 
   const [playlist, setPlaylist] = useState(null);
   const [movies, setMovies] = useState([]);
@@ -36,16 +46,18 @@ export default function Page() {
     return doc(db, `users/${user.uid}/playlists/${playlistId}`);
   }, [user?.uid, playlistId]);
 
-  async function load() {
-    if (!playlistDocRef || !user?.uid) return;
-    setError("");
+  const load = useCallback(async () => {
+    if (!playlistDocRef || !user?.uid || !playlistId) return;
 
+    setError("");
     try {
       const pSnap = await getDoc(playlistDocRef);
+
       if (!pSnap.exists()) {
-        setError("Playlist not found.");
         setPlaylist(null);
         setMovies([]);
+        setDraft("");
+        setError("Playlist not found (doc does not exist).");
         return;
       }
 
@@ -57,16 +69,18 @@ export default function Page() {
       const q = query(moviesCol, orderBy("addedAt", "desc"));
       const mSnap = await getDocs(q);
       setMovies(mSnap.docs.map((d) => ({ id: d.id, ...d.data() })));
-    } catch {
-      setError("Could not load playlist.");
+    } catch (e) {
+      console.error(e);
       setPlaylist(null);
       setMovies([]);
+      setDraft("");
+      setError(e?.message || "Could not load playlist.");
     }
-  }
+  }, [playlistDocRef, user?.uid, playlistId]);
 
   useEffect(() => {
     if (!loading && user && playlistId) load();
-  }, [loading, user?.uid, playlistId]);
+  }, [loading, user?.uid, playlistId, load]);
 
   async function rename() {
     const trimmed = draft.trim();
@@ -78,8 +92,9 @@ export default function Page() {
       await updateDoc(playlistDocRef, { name: trimmed, updatedAt: serverTimestamp() });
       setEditing(false);
       await load();
-    } catch {
-      setError("Rename failed.");
+    } catch (e) {
+      console.error(e);
+      setError(e?.message || "Rename failed.");
     } finally {
       setBusy(false);
     }
@@ -87,14 +102,16 @@ export default function Page() {
 
   async function removeMovie(movieDocId) {
     if (!user?.uid || !playlistId) return;
+
     setBusy(true);
     setError("");
     try {
       await deleteDoc(doc(db, `users/${user.uid}/playlists/${playlistId}/movies/${movieDocId}`));
       await updateDoc(playlistDocRef, { updatedAt: serverTimestamp() });
       await load();
-    } catch {
-      setError("Could not remove movie.");
+    } catch (e) {
+      console.error(e);
+      setError(e?.message || "Could not remove movie.");
     } finally {
       setBusy(false);
     }
@@ -104,6 +121,22 @@ export default function Page() {
     return (
       <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 py-16">
         <div className="max-w-5xl mx-auto">Loading…</div>
+      </main>
+    );
+  }
+
+  if (!playlistId) {
+    return (
+      <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 py-16">
+        <div className="max-w-5xl mx-auto">
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-900/20 p-6">
+            <div className="text-red-300 font-semibold">Missing playlist id in the URL.</div>
+            <div className="text-zinc-400 mt-2">Go back and open the playlist again.</div>
+            <Link href="/playlists" className="inline-block mt-4 text-red-400 hover:text-red-300">
+              ← Back to Playlists
+            </Link>
+          </div>
+        </div>
       </main>
     );
   }
@@ -146,6 +179,13 @@ export default function Page() {
               <input
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") rename();
+                  if (e.key === "Escape") {
+                    setDraft(playlist?.name || "");
+                    setEditing(false);
+                  }
+                }}
                 className="rounded-xl border border-zinc-800 bg-zinc-950/50 px-3 py-2 outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
               />
               <button
@@ -183,12 +223,10 @@ export default function Page() {
             </div>
           ) : (
             movies.map((m) => (
-              <div
-                key={m.id}
-                className="rounded-2xl border border-zinc-800 bg-zinc-900/20 overflow-hidden"
-              >
+              <div key={m.id} className="rounded-2xl border border-zinc-800 bg-zinc-900/20 overflow-hidden">
                 <div className="aspect-[2/3] bg-zinc-950/40">
                   {m.poster_path ? (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={`https://image.tmdb.org/t/p/w500${m.poster_path}`}
                       alt={m.title || "Movie poster"}
@@ -203,9 +241,7 @@ export default function Page() {
 
                 <div className="p-4">
                   <div className="font-semibold">{m.title || "Untitled movie"}</div>
-                  {m.release_date && (
-                    <div className="text-sm text-zinc-500">{m.release_date}</div>
-                  )}
+                  {m.release_date && <div className="text-sm text-zinc-500">{m.release_date}</div>}
 
                   <button
                     disabled={busy}

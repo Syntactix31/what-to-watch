@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { SearchBar } from "./components/SearchBar";
 import MovieContent from "./components/MovieContent";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "./utils/firebase";
+
 
 
 export default function Home() {
@@ -15,6 +18,10 @@ export default function Home() {
   const [suggestions, setSuggestions] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const searchRef = useRef(null);
+  
+
+  const [user, setUser] = useState(null);
+  const [authReady, setAuthReady] = useState(false);
 
   const logoImages = [
     "regular",
@@ -125,6 +132,18 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+  const unsub = onAuthStateChanged(auth, (u) => {
+    setUser(u);
+    setAuthReady(true);
+  });
+  return () => unsub();
+  }, []);
+
+  async function handleLogout() {
+  await signOut(auth);
+  }
+
 
   return (
     <main className="pt-20 relative">
@@ -176,12 +195,42 @@ export default function Home() {
         >
           Browse Movies
         </Link> */}
-        <Link
-          href="/login"
-          className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent mr-10"
-        >
-          Log In / Sign Up
-        </Link>
+        {authReady && user ? (
+  <div className="flex items-center gap-4">
+    <span className="text-[#FFD700] text-sm max-w-[220px] truncate">
+      {user.displayName || user.email}
+    </span>
+
+      <Link
+        href="/dashboard"
+        className="hover:border-yellow-200 text-[#FFD700] px-4 py-2 rounded-lg font-medium transition-colors border border-transparent"
+      >
+        Dashboard
+      </Link>
+
+      <Link
+        href="/playlists"
+        className="hover:border-yellow-200 text-[#FFD700] px-4 py-2 rounded-lg font-medium transition-colors border border-transparent"
+      >
+        Playlists
+      </Link>
+
+      <button
+        onClick={handleLogout}
+        className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent whitespace-nowrap"
+      >
+        Logout
+      </button>
+    </div>
+  ) : (
+    <Link
+      href="/login"
+      className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent mr-10"
+    >
+      Log In / Sign Up
+    </Link>
+  )}
+
       </div>
     </nav>
 

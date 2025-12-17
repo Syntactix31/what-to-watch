@@ -15,14 +15,12 @@ const SearchBar = forwardRef(({
         <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full blur opacity-30 group-hover:opacity-70 transition duration-500"></div>
         
         <div className="relative flex items-center bg-gray-800/80 backdrop-blur-sm rounded-full border border-gray-700 hover:border-yellow-400/50 transition-all duration-300">
-          {/* Search icon */}
           <div className="pl-5 pr-3">
             <svg className="w-6 h-6 text-gray-400 group-hover:text-yellow-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
           
-          {/* Input */}
           <input
             value={query}
             onChange={e => onSearchChange(e.target.value)}
@@ -31,7 +29,6 @@ const SearchBar = forwardRef(({
             autoComplete="off"
           />
           
-          {/* Loading & Clear */}
           <div className="pr-4 flex items-center">
             {isSearching && (
               <div className="w-5 h-5 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin mr-3"></div>
@@ -94,3 +91,4 @@ const SearchBar = forwardRef(({
 
 SearchBar.displayName = 'SearchBar';
 export { SearchBar };
+

@@ -70,9 +70,9 @@ export default function MoviesPage() {
           {/* enchaned search bar*/}
           <div className="relative max-w-2xl mx-auto" ref={searchRef}>
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full blur opacity-30 group-hover:opacity-70 transition duration-500"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full blur opacity-0 group-hover:opacity-70 transition-all duration-500"></div>
               
-              <div className="relative flex items-center bg-black backdrop-blur-sm rounded-full border border-white hover:border-yellow-400/50 transition-all duration-300">
+              <div className="relative flex items-center bg-black backdrop-blur-sm rounded-full border-2 border-white hover:border-orange-400 transition-all duration-300 shadow-lg hover:shadow-orange-500/25">
                 {/* search icon */}
                 <div className="pl-5 pr-3">
                   <svg 
@@ -122,10 +122,10 @@ export default function MoviesPage() {
 
             {/* search suggestions (autofill) */}
             {suggestions.length > 0 && (
-              <div className="absolute mt-3 w-full bg-gray-900/95 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 z-50 overflow-hidden animate-fadeIn">
+              <div className="absolute mt-3 w-full bg-black border border-gray-800 z-50 max-h-96 overflow-y-auto scrollbar-hide rounded-2xl shadow-2xl animate-fadeIn">
                 <div className="p-4">
                   <div className="flex justify-between items-center mb-3">
-                    <h3 className="font-semibold text-yellow-400">Search Results</h3>
+                    <h3 className="font-semibold text-gray-500">Search Results</h3>
                     <span className="text-sm text-gray-400">{suggestions.length} found</span>
                   </div>
                   
@@ -133,7 +133,7 @@ export default function MoviesPage() {
                     {suggestions.map(movie => (
                       <div 
                         key={movie.id} 
-                        className="group bg-gray-800/60 hover:bg-gray-700/80 rounded-xl p-3 transition-all duration-200 border border-transparent hover:border-white cursor-pointer"
+                        className="group bg-gray-900 hover:bg-gray-800 rounded-xl p-3 transition-all duration-200 border border-gray-800 hover:border-gray-600 cursor-pointer"
                         onClick={() => {
                           window.location.href = `/movie/${movie.id}`;
                         }}
@@ -150,20 +150,20 @@ export default function MoviesPage() {
                           )}
                           
                           <div className="flex-1 min-w-0">
-                            <h4 className="font-semibold truncate group-hover:text-yellow-300 transition-colors">
+                            <h4 className="font-semibold truncate group-hover:text-white transition-colors">
                               {movie.title}
                             </h4>
                             
                             <div className="flex items-center gap-2 mt-1">
-                              <span className="text-sm text-yellow-400">⭐ {movie.vote_average?.toFixed(1)}</span>
-                              <span className="text-gray-400 text-sm">•</span>
-                              <span className="text-gray-400 text-sm">
+                              <span className="text-sm text-gray-400">⭐ {movie.vote_average?.toFixed(1)}</span>
+                              <span className="text-gray-500 text-sm">•</span>
+                              <span className="text-gray-500 text-sm">
                                 {movie.release_date?.split('-')[0] || 'N/A'}
                               </span>
                             </div>
                             
                             {movie.overview && (
-                              <p className="text-gray-400 text-sm line-clamp-2 mt-2">
+                              <p className="text-gray-500 text-sm line-clamp-2 mt-2">
                                 {movie.overview}
                               </p>
                             )}
@@ -179,7 +179,7 @@ export default function MoviesPage() {
                         // too lazy but could add a page for this
                         console.log('View all results for:', query);
                       }}
-                      className="text-yellow-400 hover:text-yellow-300 text-sm font-medium transition-colors"
+                      className="text-gray-400 hover:text-gray-200 text-sm font-medium transition-colors"
                     >
                       View all results for "{query}"
                     </button>

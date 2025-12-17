@@ -102,12 +102,10 @@ body {
 
 
 /* Typing Text */
-.container-text{
+.container-text {
   width: 100%;
-  margin-left: auto;
-  margin-right: auto;
   text-align: center;
-  /* background-color: transparent; */
+  overflow: hidden;
 }
 
 .container-text h1:nth-child(1) {
@@ -118,58 +116,48 @@ body {
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
-  width: 170px;
-  animation: type 2s steps(12,end) forwards;
+  width: 0ch;
+  border-right: 1px solid orange;
+  animation: 
+    typeLine1 2.4s steps(18, end) forwards, 
+    blink .5s step-end infinite alternate;
+  animation-delay: 0s, 0s;
+  animation-fill-mode: forwards;
+}
+
+.container-text h1:nth-child(1).no-cursor {
+  border-right: none;
+  animation: none;
 }
 
 .container-text h1:nth-child(2) {
   opacity: 0;
   font-family: "Work Sans", sans-serif;
-  margin: 0 auto auto auto;
+  margin: 0 auto;
   background: linear-gradient(to right, #f8b195, #f67280, #c06c84);
   font-weight: 800;
-  font-size: 100px;  
-  width: 430px;
+  font-size: 100px;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  white-space: nowrap;
   overflow: hidden;
-  animation: shring-animation 2s steps(12,end) 2s forwards, blink .5s step-end infinite alternate;
+  width: 0ch;
+  border-right: 1px solid orange;
+  animation:
+    typeLine2 2.2s steps(6, end) 2.4s forwards, 
+    blink .5s step-end infinite alternate 2.4s;
 }
 
-@keyframes shring-animation {
-  0% {
-    background-position: 0 0;
-    opacity: 0;
-    width: 0;
-  }
-  1% {
-    background-position: 0 0;
-    opacity: 1;
-    border-right: 1px solid orange;
-  }
-  50% {
-    background-position: 150px 0;
-    opacity: 1;
-    border-right: 1px solid orange;
-  }
-  100% {
-    background-position: 400px 0;
-    opacity: 1;
-    border-right: 1px solid orange;
-  }
+@keyframes typeLine1 {
+  0% { width: 0ch; border-right: 1px solid orange; }
+  99% { border-right: 1px solid orange; }
+  100% { width: 17ch; border-right: none; }
 }
 
-@keyframes type {
-  0% {
-    width: 0;
-  }
-  1%, 99%{
-    border-right: 1px solid orange;
-  }
-  100%{
-    width: 170px;
-    border-right: none;
-  }
+
+@keyframes typeLine2 {
+  from { width: 0ch; opacity: 1; border-right: 1px solid orange; }
+  to { width: 6ch; opacity: 1; border-right: 1px solid orange; }
 }
 
 @keyframes blink {

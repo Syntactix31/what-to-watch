@@ -2,7 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useCallback } from "react";
-import { SearchBar } from "./components/SearchBar"
+import { SearchBar } from "./components/SearchBar";
+import { MovieContent } from "./components/MovieContent";
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
@@ -74,14 +75,16 @@ export default function Home() {
 
       <div className="flex items-center space-x-4">
         <div onClick={cycleLogo} className="cursor-pointer">
-          <Image
+          <img
             src={`/img/${logoImages[currentLogoIndex]}.png`}
             width={48}
             height={48}
             alt="PopCorn Logo"
-            className="w-12 h-12 object-contain"
+            className="w-12 h-12 object-contain rounded-full hover:scale-110 transition-transform"
+            loading="eager" 
           />
         </div>
+
         <div className="hover-container">
           <h1 className="text-shimmer normal-case">WhatToWatch</h1>
         </div>
@@ -132,21 +135,17 @@ export default function Home() {
 
         <header className="mt-40">
           <div className="container-text">
-            <h1>What to</h1>
+            <h1>Don't know what to</h1>
             <h1>Watch?</h1>
           </div>
         </header>  
           <div className="opaque absolute inset-0" style={opaqueStyle}></div>
         </div>
         <div className="content relative z-20  p-12 text-white max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold mb-8">Heading</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscfing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. </p>
-          <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. </p>
-          <p>Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. </p>
-          <h2>Heading</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. </p>
-          <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. </p>
-          <p>Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. </p>
+          <div className="content relative z-20 p-12 text-white max-w-4xl mx-auto">
+            <MovieContent />
+          </div>
+
         </div>
       </div>
     </main>

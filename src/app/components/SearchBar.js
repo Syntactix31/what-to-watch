@@ -51,7 +51,6 @@ const SearchBar = forwardRef(({
         </div>
       </div>
 
-      {/* 👇 Suggestions dropdown */}
       {suggestions.length > 0 && (
         <div className="absolute mt-2 w-full bg-gray-900/95 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 z-50 overflow-hidden animate-fadeIn max-h-96 overflow-y-auto">
           <div className="p-4">

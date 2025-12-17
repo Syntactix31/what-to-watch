@@ -19,13 +19,12 @@ export default function Home() {
   const logoImages = [
     "regular",
     "golden",
-    "golden2",
     "silver",
     "bronze",
     "extrabuttery",
     "candycane",
     "charcoal",
-    "keylime",
+    "key",
     "oreo",
     "pink",
     "monster",
@@ -33,7 +32,6 @@ export default function Home() {
     "caramel",
     "cottoncandy",
     "chocolate",
-    "key",
     "whiteout",
     "blackout",
   ];

@@ -46,7 +46,7 @@ export default function Home() {
         {/* <div className="ml-200">
           <h2 className="font-bold border-2 rounded-4xl border-white py-2 px-15 text-[#6e6d6d]"> Search</h2>
         </div> */}
-        <div className="flex items-center border-2 border-white rounded-full px-4 py-2 text-[#6e6d6d] bg-transparent hover:border-yellow-200 transition-colors focus-within:border-yellow-200">
+        <div className="search-container flex items-center border-2 border-white rounded-full px-4 py-2 text-[#6e6d6d] bg-transparent transition-colors focus-within:border-yellow-200">
           <span className="line-md--search mr-2"></span>
           <input
             type="text"
@@ -54,6 +54,7 @@ export default function Home() {
             className="bg-transparent outline-none text-white placeholder-[#6e6d6d] w-32 sm:w-40 focus:w-64 transition-all duration-300"
           />
         </div>
+
         <Link 
           href="/login" 
           className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent hover:border-yellow-200"

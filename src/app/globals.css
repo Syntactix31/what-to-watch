@@ -179,7 +179,6 @@ body {
 }
 
 /* Scroll effect */
-
 * {box-sizing:border-box}
 body, html {padding:0; margin:0} 
 body {background:#000000; color:#fff}
@@ -219,5 +218,10 @@ body {background:#000000; color:#fff}
   height: 24px;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath stroke-dasharray='40' stroke-dashoffset='40' d='M10.76 13.24c-2.34 -2.34 -2.34 -6.14 0 -8.49c2.34 -2.34 6.14 -2.34 8.49 0c2.34 2.34 2.34 6.14 0 8.49c-2.34 2.34 -6.14 2.34 -8.49 0Z'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' dur='1.025s' values='40;0'/%3E%3C/path%3E%3Cpath stroke-dasharray='12' stroke-dashoffset='12' d='M10.5 13.5l-7.5 7.5'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='1.025s' dur='0.41s' values='12;0'/%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath stroke-dasharray='40' stroke-dashoffset='40' d='M10.76 13.24c-2.34 -2.34 -2.34 -6.14 0 -8.49c2.34 -2.34 6.14 -2.34 8.49 0c2.34 2.34 2.34 6.14 0 8.49c-2.34 2.34 -6.14 2.34 -8.49 0Z'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' dur='1s' values='40;0'/%3E%3C/path%3E%3Cpath stroke-dasharray='12' stroke-dashoffset='12' d='M10.5 13.5l-7.5 7.5'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='1s' dur='0.4s' values='12;0'/%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+}
+
+
+.search-container:focus-within .line-md--search {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath stroke-dasharray='40' stroke-dashoffset='40' d='M10.76 13.24c-2.34 -2.34 -2.34 -6.14 0 -8.49c2.34 -2.34 6.14 -2.34 8.49 0c2.34 2.34 2.34 6.14 0 8.49c-2.34 2.34 -6.14 2.34 -8.49 0Z'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' dur='1s' values='40;0'/%3E%3C/path%3E%3Cpath stroke-dasharray='12' stroke-dashoffset='12' d='M10.5 13.5l-7.5 7.5'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='1s' dur='0.4s' values='12;0'/%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
 }

@@ -14,7 +14,7 @@ const SearchBar = forwardRef(({
     <div className="relative" ref={searchRef}>
       <div className="relative group">
 
-        <div className="absolute -inset-1 bg-gradient-to-r from-white to-white rounded-full blur opacity-20 group-hover:opacity-50 transition duration-500"></div>
+        <div className="absolute -inset-1 bg-linear-to-r from-white to-white rounded-full blur opacity-20 group-hover:opacity-50 transition duration-500"></div>
         
 
         <div className="relative flex items-center bg-black backdrop-blur-sm rounded-full border border-white hover:border-gray-400 transition-all duration-300">
@@ -98,7 +98,7 @@ const SearchBar = forwardRef(({
                       <img 
                         src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`} 
                         alt={movie.title}
-                        className="w-12 h-18 object-cover rounded-lg flex-shrink-0"
+                        className="w-12 h-18 object-cover rounded-lg shrink-0"
                       />
                     )}
                     <div className="min-w-0 flex-1">

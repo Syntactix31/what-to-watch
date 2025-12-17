@@ -26,7 +26,7 @@ export default function MovieCard({ movie, compact = false }) {
           </div>
           
           {/* hovering overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
             <p className="text-white text-sm line-clamp-2">{movie.overview}</p>
           </div>
         </div>

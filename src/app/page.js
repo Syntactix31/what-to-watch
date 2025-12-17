@@ -136,15 +136,17 @@ export default function Home() {
       </div>
 
       <div className="flex items-center space-x-6">
-        <SearchBar 
-          query={query}
-          onSearchChange={handleSearchChange}
-          isSearching={isSearching}
-          onClearSearch={clearSearch}
-          suggestions={suggestions}
-          searchRef={searchRef}
-          hideHeader={true}
-        />
+        <div className="p-2.5">
+          <SearchBar 
+            query={query}
+            onSearchChange={handleSearchChange}
+            isSearching={isSearching}
+            onClearSearch={clearSearch}
+            suggestions={suggestions}
+            searchRef={searchRef}
+            hideHeader={true}
+          />
+        </div>
 
         {/* <div className="search-container flex items-center border-2 border-white rounded-full px-4 py-2 text-[#6e6d6d] bg-transparent transition-colors focus-within:border-yellow-200">
           <span className="line-md--search mr-2"></span>
@@ -164,7 +166,7 @@ export default function Home() {
         </Link> */}
         <Link
           href="/login"
-          className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent hover:border-yellow-200 mr-5"
+          className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent hover:border-yellow-200 mr-10"
         >
           Log In / Sign Up
         </Link>
@@ -180,26 +182,30 @@ export default function Home() {
       </header>   */}
 
 
-      <div>
+      <div className="relative z-40">
         <div 
           className="feature fixed top-0 left-0 w-full h-screen bg-cover bg-center bg-[url('/movietheatre1.jpg')] z-10"
           style={featureStyle}
         >
+        <div className="opaque absolute inset-0 pointer-events-none" style={opaqueStyle}></div>
 
-        <header className="mt-40 flex flex-col items-center">
+        <header className="mt-30 flex flex-col items-center z-20 pt-20">
           <div className="container-text text-center">
             <h1>Don't know what to</h1>
             <h1>Watch?</h1>
           </div>
           <Link
             href="/movies"
-            className="text-white ml-60 font-bold text-lg hover:scale-110 transition-all duration-300 shadow-2xl hover:underline white"
+            className="bg-transparent text-white px-1 rounded-xl font-bold text-xl shadow-2xl hover:scale-105 active:scale-100 transition-all duration-300  m-auto pointer-events-auto"
+
+            // text-white ml-60 font-bold text-lg hover:text-xl transition-all duration-300 shadow-2xl bg-transparent shover
           >
-            Browse Movies
+            Browse Catalogue
           </Link>         
         </header>  
-          <div className="opaque absolute inset-0" style={opaqueStyle}></div>
         </div>
+
+
         <div className="content relative z-20 p-12 text-white max-w-7xl mx-auto w-full">
           <MovieContent 
             query={query}

@@ -40,9 +40,13 @@ export default function Home() {
 
   return (
     <main className="pt-20 relative">
-      <nav className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 px-6 py-4 flex items-center justify-between">
+      <nav className="fixed top-0 left-10 right-0 bg-black/80 backdrop-blur-md z-50 px-6 py-4 flex items-center justify-between">
+      <div className="m">
+        <Image src="/img/regular.png" width={1} height={1} alt="PopCorn Logo" className="m-auto w-15 h-12 "/>
+      </div>
+ 
         <div className="hover-container">
-          <h1 className="explosive-text">WhatToWatch</h1>
+          <h1 className="explosive-text text-shimmer">WhatToWatch</h1>
         </div>
 
         <SearchBar />

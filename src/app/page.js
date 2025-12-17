@@ -156,15 +156,15 @@ export default function Home() {
         </div> */}
 
 
-        <Link
+        {/* <Link
           href="/movies"
           className="bg-yellow-400 text-black p-2 rounded-lg font-medium hover:bg-yellow-300 transition mx-10 w-40"
         >
           Browse Movies
-        </Link>
+        </Link> */}
         <Link
           href="/login"
-          className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent hover:border-yellow-200 mr-10"
+          className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent hover:border-yellow-200 mr-5"
         >
           Log In / Sign Up
         </Link>
@@ -186,11 +186,17 @@ export default function Home() {
           style={featureStyle}
         >
 
-        <header className="mt-40">
-          <div className="container-text">
+        <header className="mt-40 flex flex-col items-center">
+          <div className="container-text text-center">
             <h1>Don't know what to</h1>
             <h1>Watch?</h1>
           </div>
+          <Link
+            href="/movies"
+            className="text-white ml-60 font-bold text-lg hover:scale-110 transition-all duration-300 shadow-2xl hover:underline white"
+          >
+            Browse Movies
+          </Link>         
         </header>  
           <div className="opaque absolute inset-0" style={opaqueStyle}></div>
         </div>

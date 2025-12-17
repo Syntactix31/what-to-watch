@@ -98,8 +98,10 @@ export default function MoviesPage() {
           
           <div className="relative max-w-2xl mx-auto" ref={searchRef}>
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full blur opacity-30 group-hover:opacity-70 transition duration-500"></div>
-              <div className="relative flex items-center bg-black backdrop-blur-sm rounded-full border border-white hover:border-yellow-400/50 transition-all duration-300">
+              <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full blur opacity-0 group-hover:opacity-70 transition-all duration-500"></div>
+              
+              <div className="relative flex items-center bg-black backdrop-blur-sm rounded-full border-2 border-white hover:border-orange-400 transition-all duration-300 shadow-lg hover:shadow-orange-500/25">
+                {/* search icon */}
                 <div className="pl-5 pr-3">
                   <svg 
                     className="w-6 h-6 text-gray-400 group-hover:text-yellow-400 transition-colors" 
@@ -154,10 +156,10 @@ export default function MoviesPage() {
 
             {/* search suggestions (autofill) with 16 now */}
             {suggestions.length > 0 && (
-              <div className="absolute mt-3 w-full bg-gray-900/95 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 z-50 overflow-hidden animate-fadeIn">
+              <div className="absolute mt-3 w-full bg-black border border-gray-800 z-50 max-h-96 overflow-y-auto scrollbar-hide rounded-2xl shadow-2xl animate-fadeIn">
                 <div className="p-4">
                   <div className="flex justify-between items-center mb-3">
-                    <h3 className="font-semibold text-yellow-400">Search Results</h3>
+                    <h3 className="font-semibold text-gray-500">Search Results</h3>
                     <span className="text-sm text-gray-400">{suggestions.length} found</span>
                   </div>
                   

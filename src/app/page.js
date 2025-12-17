@@ -6,6 +6,8 @@ import { SearchBar } from "./components/SearchBar";
 import MovieContent from "./components/MovieContent";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./utils/firebase";
+import { useRouter } from "next/navigation";
+
 
 
 
@@ -15,6 +17,7 @@ export default function Home() {
   const [opaqueStyle, setOpaqueStyle] = useState({ opacity: 0 });
 
   const [query, setQuery] = useState("");
+  const router = useRouter();
   const [suggestions, setSuggestions] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const searchRef = useRef(null);
@@ -175,7 +178,7 @@ export default function Home() {
             onClearSearch={clearSearch}
             suggestions={suggestions}
             searchRef={searchRef}
-            hideHeader={true}
+            onSuggestionClick={(id) => router.push(`/movie/${id}`)}  // or /movies/${id}
           />
         </div>
 

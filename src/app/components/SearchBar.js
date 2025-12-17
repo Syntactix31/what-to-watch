@@ -1,15 +1,17 @@
 "use client";
 import { forwardRef } from "react";
 
-const SearchBar = forwardRef(({ 
-  query, 
-  onSearchChange, 
-  isSearching, 
-  onClearSearch, 
-  suggestions, 
-  searchRef, 
+const SearchBar = forwardRef(({
+  query,
+  onSearchChange,
+  isSearching,
+  onClearSearch,
+  suggestions,
+  searchRef,
   hideHeader = false,
+  onSuggestionClick = () => {},
 }, ref) => {
+
   return (
     <div className="relative" ref={searchRef}>
       <div className="relative group">
@@ -81,17 +83,14 @@ const SearchBar = forwardRef(({
               </div>
             )}
             
-            <div className="flex justify-between items-center mb-3">
-              <h3 className="font-semibold text-white">Search Results</h3>
-              <span className="text-sm text-gray-400">{suggestions.length} found</span>
-            </div>
+
             
             <div className="space-y-2">
               {suggestions.map(movie => (
                 <div 
                   key={movie.id} 
                   className="group bg-gray-800/60 hover:bg-gray-700/80 rounded-xl p-3 transition-all duration-200 border border-transparent hover:border-gray-400/50 cursor-pointer"
-                  onClick={() => onSuggestionClick?.(movie.id)}
+                  onClick={() => onSuggestionClick(movie.id)}
                 >
                   <div className="flex gap-3 items-center">
                     {movie.poster_path && (

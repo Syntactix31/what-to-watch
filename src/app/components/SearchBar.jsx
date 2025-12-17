@@ -20,7 +20,7 @@ export function SearchBar() {
 
   return (
     <div 
-      className="flex items-center border-2 border-white rounded-full px-4 py-2 bg-transparent transition-all duration-300 hover:border-yellow-200 focus-within:border-yellow-400 focus-within:shadow-[0_0_20px_rgba(255,215,0,0.5)] m-"
+      className="flex items-center border-2 border-white rounded-full px-4 py-2 bg-transparent transition-all duration-300 hover:border-yellow-200 focus-within:border-yellow-400 focus-within:shadow-[0_0_20px_rgba(255,215,0,0.5)] ml-175"
       tabIndex={0}
       onFocus={handleFocus}
       onBlur={handleBlur}

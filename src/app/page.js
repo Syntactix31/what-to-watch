@@ -1,14 +1,20 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { SearchBar } from "./components/SearchBar";
-import { MovieContent } from "./components/MovieContent";
+import MovieContent from "./components/MovieContent";
+
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const [featureStyle, setFeatureStyle] = useState({});
   const [opaqueStyle, setOpaqueStyle] = useState({ opacity: 0 });
+
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const searchRef = useRef(null);
 
   const logoImages = [
     "regular",
@@ -33,6 +39,39 @@ export default function Home() {
   ];
 
   const [currentLogoIndex, setCurrentLogoIndex] = useState(0);
+
+  const handleSearchChange = async (value) => {
+    setQuery(value);
+    if (value.trim().length < 2) {
+      setSuggestions([]);
+      setIsSearching(false);
+      return;
+    }
+    setIsSearching(true);
+    try {
+      const { searchMovies } = await import("./utils/tmdb");
+      const data = await searchMovies(value);
+      const results = Array.isArray(data?.results) ? data.results : Array.isArray(data) ? data : [];
+      setSuggestions(results.slice(0, 8));
+    } catch (err) {
+      console.error("searchMovies failed:", err);
+      setSuggestions([]);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const clearSearch = () => {
+    setQuery("");
+    setSuggestions([]);
+  };
+
+  const handleClickOutside = (event) => {
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setSuggestions([]);
+    }
+  };
+
 
   const cycleLogo = () => {
     setCurrentLogoIndex((prevIndex) => 
@@ -64,6 +103,11 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
@@ -91,7 +135,13 @@ export default function Home() {
       </div>
 
       <div className="flex items-center space-x-6">
-        <SearchBar />
+        <SearchBar 
+            query={query}
+            onSearchChange={handleSearchChange}
+            isSearching={isSearching}
+            onClearSearch={clearSearch}
+            suggestions={suggestions}
+            searchRef={searchRef}/>
 
         {/* <div className="search-container flex items-center border-2 border-white rounded-full px-4 py-2 text-[#6e6d6d] bg-transparent transition-colors focus-within:border-yellow-200">
           <span className="line-md--search mr-2"></span>
@@ -143,7 +193,12 @@ export default function Home() {
         </div>
         <div className="content relative z-20  p-12 text-white max-w-4xl mx-auto">
           <div className="content relative z-20 p-12 text-white max-w-4xl mx-auto">
-            <MovieContent />
+            <MovieContent 
+              query={query}
+              suggestions={suggestions}
+              onSuggestionClick={(movieId) => {
+                window.location.href = `/movie/${movieId}`;
+              }}/>
           </div>
 
         </div>

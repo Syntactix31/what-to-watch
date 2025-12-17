@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { MovieCard } from "./MovieCard";
-import { MovieSection } from "./MovieSection";
+import  MovieSection  from "./MovieSection";
 import {
   getTrendingMovies,
   getTopRatedMovies,

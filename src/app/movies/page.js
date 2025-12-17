@@ -1,5 +1,8 @@
 "use client";
 
+import Link from "next/link";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../utils/firebase";
 import { useEffect, useState, useRef } from "react";
 import MovieCard from "../components/MovieCard";
 import MovieSection from "../components/MovieSection";
@@ -21,6 +24,22 @@ export default function MoviesPage() {
   const [isSearching, setIsSearching] = useState(false);
   const searchRef = useRef(null);
   const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [authReady, setAuthReady] = useState(false);
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (u) => {
+      setUser(u);
+      setAuthReady(true);
+    });
+    return () => unsub();
+  }, []);
+
+  async function handleLogout() {
+    await signOut(auth);
+    router.push("/");
+  }
+
 
   useEffect(() => {
     getTrendingMovies().then(d => setTrending(d.results || []));
@@ -89,6 +108,48 @@ export default function MoviesPage() {
 
   return (
     <main className="min-h-screen bg-transparent text-white p-4 md:p-8">
+      <header className="max-w-7xl mx-auto mb-8 flex items-center justify-between">
+      <Link href="/" className="text-lg font-bold">
+        <span className="text-red-500">What</span> To Watch
+      </Link>
+
+      {authReady && user ? (
+        <div className="flex items-center gap-4">
+          <span className="text-sm text-gray-300 max-w-[220px] truncate">
+            {user.displayName || user.email}
+          </span>
+
+          <Link
+            href="/dashboard"
+            className="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-400 transition"
+          >
+            Dashboard
+          </Link>
+
+          <Link
+            href="/playlists"
+            className="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-400 transition"
+          >
+            Playlists
+          </Link>
+
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-400 transition whitespace-nowrap"
+          >
+            Logout
+          </button>
+        </div>
+      ) : (
+        <Link
+          href="/login"
+          className="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-400 transition"
+        >
+          Log In / Sign Up
+        </Link>
+      )}
+    </header>
+
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-linear-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">

@@ -54,7 +54,12 @@ export default function Home() {
             className="bg-transparent outline-none text-white placeholder-[#6e6d6d] w-32 sm:w-40 focus:w-64 transition-all duration-300"
           />
         </div> */}
-
+        <Link 
+          href="/movies"
+          className="bg-yellow-400 text-black px-6 py-2 rounded-lg font-medium hover:bg-yellow-300 transition"
+        >
+          Browse Movies
+        </Link>
         <Link 
           href="/login" 
           className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent hover:border-yellow-200"

@@ -151,7 +151,7 @@ body {
 @keyframes typeLine1 {
   0% { width: 0ch; border-right: 1px solid orange; }
   99% { border-right: 1px solid orange; }
-  100% { width: 17ch; border-right: none; }
+  100% { width: 18ch; border-right: none; }
 }
 
 

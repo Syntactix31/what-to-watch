@@ -60,6 +60,8 @@ export default function Home() {
     }
   };
 
+  
+
   const clearSearch = () => {
     setQuery("");
     setSuggestions([]);
@@ -135,12 +137,17 @@ export default function Home() {
 
       <div className="flex items-center space-x-6">
         <SearchBar 
-            query={query}
-            onSearchChange={handleSearchChange}
-            isSearching={isSearching}
-            onClearSearch={clearSearch}
-            suggestions={suggestions}
-            searchRef={searchRef}/>
+          query={query}
+          onSearchChange={handleSearchChange}
+          isSearching={isSearching}
+          onClearSearch={clearSearch}
+          suggestions={suggestions}
+          searchRef={searchRef}
+          hideHeader={true}
+          onSuggestionClick={(movieId) => {
+            window.location.href = `/movie/${movieId}`;
+          }}
+        />
 
         {/* <div className="search-container flex items-center border-2 border-white rounded-full px-4 py-2 text-[#6e6d6d] bg-transparent transition-colors focus-within:border-yellow-200">
           <span className="line-md--search mr-2"></span>

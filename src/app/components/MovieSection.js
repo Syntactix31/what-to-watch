@@ -74,7 +74,7 @@ export default function MovieSection({ title, subtitle, movies }) {
         onMouseMove={handleMouseMove}
       >
         {movies.map((movie) => (
-          <div key={movie.id} className="flex-shrink-0 w-48 md:w-56 snap-start">
+          <div key={movie.id} className="shrink-0 w-48 md:w-56 snap-start">
             <MovieCard movie={movie} />
           </div>
         ))}

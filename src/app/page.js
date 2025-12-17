@@ -1,13 +1,48 @@
-"use client"; // Add this at top for client-side only
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useCallback } from "react";
 import { SearchBar } from "./components/SearchBar"
 
+
+function LogoImage({ src, ...props }) {
+  return <Image src={src} {...props} />;
+}
+
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const [featureStyle, setFeatureStyle] = useState({});
   const [opaqueStyle, setOpaqueStyle] = useState({ opacity: 0 });
+
+  const logoImages = [
+    "/img/regular.png",
+    "/img/golden.png",
+    "/img/golden2.png",
+    "/img/silver.png",
+    "/img/bronze.png",
+    "/img/extrabuttery.png",
+    "/img/candycane.png",
+    "/img/charcoal.png",
+    "/img/keylime.png",
+    "/img/oreo.png",
+    "/img/pink.png",
+    "/img/monster.png",
+    "/img/cheesepowder.png",
+    "/img/caramel.png",
+    "/img/cottoncandy.png",
+    "/img/chocolate.png",
+    "/img/key.png",
+    "/img/whiteout.png",
+    "/img/blackout.png",
+  ];
+
+  const [currentLogoIndex, setCurrentLogoIndex] = useState(0);
+
+  const cycleLogo = () => {
+    setCurrentLogoIndex((prevIndex) => 
+      prevIndex === logoImages.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
   const handleScroll = useCallback(() => {
     const fromTop = window.scrollY;
@@ -40,16 +75,27 @@ export default function Home() {
 
   return (
     <main className="pt-20 relative">
-      <nav className="fixed top-0 left-10 right-0 bg-black/80 backdrop-blur-md z-50 px-6 py-4 flex items-center justify-between">
-      <div className="m">
-        <Image src="/img/regular.png" width={1} height={1} alt="PopCorn Logo" className="m-auto w-15 h-12 "/>
-      </div>
- 
-        <div className="hover-container">
-          <h1 className="explosive-text text-shimmer">WhatToWatch</h1>
-        </div>
+      <nav className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 px-8 py-4 flex items-center justify-between">
 
+      <div className="flex items-center space-x-4">
+        <div onClick={cycleLogo} className="cursor-pointer">
+          <img
+            src={logoImages[currentLogoIndex]}
+            width={48}
+            height={48}
+            alt="PopCorn Logo"
+            className="w-12 h-12 object-contain"
+          />
+        </div>
+        
+        <div className="hover-container">
+          <h1 className="text-shimmer normal-case">WhatToWatch</h1>
+        </div>
+      </div>
+
+      <div className="flex items-center space-x-6">
         <SearchBar />
+
         {/* <div className="search-container flex items-center border-2 border-white rounded-full px-4 py-2 text-[#6e6d6d] bg-transparent transition-colors focus-within:border-yellow-200">
           <span className="line-md--search mr-2"></span>
           <input
@@ -58,19 +104,22 @@ export default function Home() {
             className="bg-transparent outline-none text-white placeholder-[#6e6d6d] w-32 sm:w-40 focus:w-64 transition-all duration-300"
           />
         </div> */}
-        <Link 
+
+
+        <Link
           href="/movies"
-          className="bg-yellow-400 text-black px-6 py-2 rounded-lg font-medium hover:bg-yellow-300 transition"
+          className="bg-yellow-400 text-black p-2 rounded-lg font-medium hover:bg-yellow-300 transition mx-10 w-40"
         >
           Browse Movies
         </Link>
-        <Link 
-          href="/login" 
-          className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent hover:border-yellow-200"
+        <Link
+          href="/login"
+          className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent hover:border-yellow-200 mr-10"
         >
           Log In
         </Link>
-      </nav>
+      </div>
+    </nav>
 
     <div className="content relative z-20 pt-48 pb-20"></div>
       {/* <header className="mt-40">

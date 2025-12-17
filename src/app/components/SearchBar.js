@@ -38,7 +38,7 @@ export function SearchBar() {
             filter: "drop-shadow(0 0 8px #FFD700)"
           })
         }}
-        className="mr-3 flex-shrink-0"
+        className="mr-3 shrink-0"
       />
       
       <input

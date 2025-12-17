@@ -57,7 +57,8 @@ export default function MoviesPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white p-4 md:p-8">
+    // For a cooler look backdrop-blur-sm or md for a glass effect ( but not on main page )
+    <main className="min-h-screen bg-transparent text-white p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         {/* header with search */}
         <div className="mb-12">

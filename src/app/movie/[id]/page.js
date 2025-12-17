@@ -47,7 +47,7 @@ export default async function MovieDetailsPage({ params }) {
   }
 
   return (
-    <main className="min-h-screen bg-gray-900 text-white p-6">
+    <main className="min-h-screen bg-transparent text-white p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
         {/* back button */}
         <div className="mb-6">

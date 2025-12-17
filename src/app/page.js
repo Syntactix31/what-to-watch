@@ -144,9 +144,6 @@ export default function Home() {
           suggestions={suggestions}
           searchRef={searchRef}
           hideHeader={true}
-          onSuggestionClick={(movieId) => {
-            window.location.href = `/movie/${movieId}`;
-          }}
         />
 
         {/* <div className="search-container flex items-center border-2 border-white rounded-full px-4 py-2 text-[#6e6d6d] bg-transparent transition-colors focus-within:border-yellow-200">

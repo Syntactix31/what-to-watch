@@ -9,17 +9,28 @@ const SearchBar = forwardRef(({
   suggestions, 
   searchRef, 
   hideHeader = false,
-  onSuggestionClick  
 }, ref) => {
   return (
     <div className="relative" ref={searchRef}>
       <div className="relative group">
+
         <div className="absolute -inset-1 bg-gradient-to-r from-white to-white rounded-full blur opacity-20 group-hover:opacity-50 transition duration-500"></div>
         
+
         <div className="relative flex items-center bg-black backdrop-blur-sm rounded-full border border-white hover:border-gray-400 transition-all duration-300">
           <div className="pl-5 pr-3">
-            <svg className="w-6 h-6 text-gray-400 group-hover:text-gray-200 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <svg 
+              className="w-6 h-6 text-gray-400 group-hover:text-gray-200 transition-colors" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
+              />
             </svg>
           </div>
           
@@ -41,8 +52,18 @@ const SearchBar = forwardRef(({
                 className="text-gray-400 hover:text-white transition-colors p-1 rounded-full hover:bg-gray-800"
                 aria-label="Clear search"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg 
+                  className="w-5 h-5" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M6 18L18 6M6 6l12 12" 
+                  />
                 </svg>
               </button>
             )}
@@ -51,7 +72,7 @@ const SearchBar = forwardRef(({
       </div>
 
       {suggestions.length > 0 && (
-        <div className="absolute mt-2 w-full bg-black border border-gray-800 z-50 overflow-hidden animate-fadeIn max-h-96 overflow-y-auto rounded-2xl">
+        <div className="absolute mt-2 w-full bg-black border border-gray-800 z-50 overflow-hidden animate-fadeIn max-h-96 overflow-y-auto rounded-2xl scrollbar-hide">
           <div className="p-4">
             {!hideHeader && (
               <div className="flex justify-between items-center mb-3">
@@ -60,11 +81,16 @@ const SearchBar = forwardRef(({
               </div>
             )}
             
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="font-semibold text-white">Search Results</h3>
+              <span className="text-sm text-gray-400">{suggestions.length} found</span>
+            </div>
+            
             <div className="space-y-2">
               {suggestions.map(movie => (
                 <div 
                   key={movie.id} 
-                  className="group bg-gray-900 hover:bg-gray-800 rounded-xl p-3 transition-all duration-200 border border-transparent hover:border-gray-600 cursor-pointer"
+                  className="group bg-gray-800/60 hover:bg-gray-700/80 rounded-xl p-3 transition-all duration-200 border border-transparent hover:border-gray-400/50 cursor-pointer"
                   onClick={() => onSuggestionClick?.(movie.id)}
                 >
                   <div className="flex gap-3 items-center">

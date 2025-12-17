@@ -178,7 +178,7 @@ export default function Home() {
         </Link> */}
         <Link
           href="/login"
-          className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent hover:border-yellow-200 mr-10"
+          className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent mr-10"
         >
           Log In / Sign Up
         </Link>

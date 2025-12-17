@@ -91,14 +91,14 @@ export default function MoviesPage() {
     <main className="min-h-screen bg-transparent text-white p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-linear-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
             Discover Amazing Movies
           </h1>
           <p className="text-gray-400 mb-8">Find your next favorite film</p>
           
           <div className="relative max-w-2xl mx-auto" ref={searchRef}>
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full blur opacity-0 group-hover:opacity-70 transition-all duration-500"></div>
+              <div className="absolute -inset-1 bg-linear-to-r from-yellow-400 to-orange-500 rounded-full blur opacity-0 group-hover:opacity-70 transition-all duration-500"></div>
               
               <div className="relative flex items-center bg-black backdrop-blur-sm rounded-full border-2 border-white hover:border-orange-400 transition-all duration-300 shadow-lg hover:shadow-orange-500/25">
                 {/* search icon */}
@@ -163,7 +163,7 @@ export default function MoviesPage() {
                     <span className="text-sm text-gray-400">{suggestions.length} found</span>
                   </div>
                   
-                  <div className="max-h-[32rem] overflow-y-auto pr-2 custom-scrollbar">
+                  <div className="max-h-128 overflow-y-auto pr-2 custom-scrollbar">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {suggestions.map(movie => (
                         <div 
@@ -173,7 +173,7 @@ export default function MoviesPage() {
                         >
                           <div className="flex gap-3">
                             {movie.poster_path && (
-                              <div className="flex-shrink-0">
+                              <div className="shrink-0">
                                 <img 
                                   src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`} 
                                   alt={movie.title}

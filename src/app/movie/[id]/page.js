@@ -62,7 +62,7 @@ export default async function MovieDetailsPage({ params }) {
         {/* Movie Content */}
         <div className="flex flex-col lg:flex-row gap-8">
           {/* poser for movie */}
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             {movie.poster_path ? (
               <Image
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -73,7 +73,7 @@ export default async function MovieDetailsPage({ params }) {
                 priority
               />
             ) : (
-              <div className="w-[400px] h-[600px] bg-gray-800 rounded-lg flex items-center justify-center">
+              <div className="w-100 h-150 bg-gray-800 rounded-lg flex items-center justify-center">
                 <span className="text-gray-400">No Image Available</span>
               </div>
             )}

@@ -35,21 +35,18 @@ export default function Page() {
     try {
       const q = query(playlistsRef, orderBy("updatedAt", "desc"));
       const snap = await getDocs(q);
-      setPlaylists(
-        snap.docs.map((d) => ({
-          id: d.id,
-          ...d.data(),
-        }))
-      );
-    } catch (e) {
-      setError("Could not load playlists.");
-      setPlaylists([]);
-    }
+      setPlaylists(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+
+      } catch (e) {
+        console.error(e);
+        setError(e?.code ? `${e.code}: ${e.message}` : (e?.message || "Could not load data."));
+        setPlaylists([]);
+      }
+
   }
 
   useEffect(() => {
     if (!loading && user) loadPlaylists();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, user?.uid]);
 
   async function createPlaylist(e) {
@@ -101,7 +98,6 @@ export default function Page() {
     setBusy(true);
     setError("");
     try {
-      // delete subcollection movies first (client-side recursive delete)
       const moviesCol = collection(db, `users/${user.uid}/playlists/${playlistId}/movies`);
       const moviesSnap = await getDocs(moviesCol);
       const batch = writeBatch(db);

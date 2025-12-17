@@ -43,12 +43,13 @@ export default function Page() {
         setRecent(r1.docs.map((d) => ({ id: d.id, ...d.data() })));
         setPlaylists(r2.docs.map((d) => ({ id: d.id, ...d.data() })));
         setReviews(r3.docs.map((d) => ({ id: d.id, ...d.data() })));
-      } catch {
-        setError("Could not load dashboard data.");
-        setRecent([]);
-        setPlaylists([]);
-        setReviews([]);
-      }
+
+        } catch (e) {
+          console.error(e);
+          setError(e?.code ? `${e.code}: ${e.message}` : (e?.message || "Could not load data."));
+          setPlaylists([]);
+        }
+
     })();
   }, [loading, user, refs]);
 

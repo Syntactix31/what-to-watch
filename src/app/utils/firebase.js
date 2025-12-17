@@ -1,8 +1,7 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
- 
-// Your web app's Firebase configuration
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -11,14 +10,12 @@ const firebaseConfig = {
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
- 
-let app, auth, db;
 
-if (typeof window !== 'undefined') {
-  app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
-  db = getFirestore(app);
+if (!firebaseConfig.apiKey) {
+  throw new Error("Missing NEXT_PUBLIC_FIREBASE_API_KEY (check .env.local + restart dev server)");
 }
 
-export { auth, db };
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
+export const auth = getAuth(app);
+export const db = getFirestore(app);

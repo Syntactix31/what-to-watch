@@ -19,7 +19,9 @@ import {
 
 export default function Page() {
   const { user, loading } = useRequireAuth("/login");
-  const { playlistId } = useParams();
+  const params = useParams();
+  const playlistId = params?.playlistId ?? params?.id;
+
   const router = useRouter();
 
   const [playlist, setPlaylist] = useState(null);
@@ -64,7 +66,6 @@ export default function Page() {
 
   useEffect(() => {
     if (!loading && user && playlistId) load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, user?.uid, playlistId]);
 
   async function rename() {
@@ -188,7 +189,6 @@ export default function Page() {
               >
                 <div className="aspect-[2/3] bg-zinc-950/40">
                   {m.poster_path ? (
-                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={`https://image.tmdb.org/t/p/w500${m.poster_path}`}
                       alt={m.title || "Movie poster"}

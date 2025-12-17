@@ -39,6 +39,9 @@ export default function Home() {
 
   const [currentLogoIndex, setCurrentLogoIndex] = useState(0);
 
+  const [showButton, setShowButton] = useState(false);
+
+
   const handleSearchChange = async (value) => {
     setQuery(value);
     if (value.trim().length < 2) {
@@ -113,6 +116,15 @@ export default function Home() {
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowButton(true);
+    }, 6000);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
 
   return (
     <main className="pt-20 relative">
@@ -189,19 +201,28 @@ export default function Home() {
         >
         <div className="opaque absolute inset-0 pointer-events-none" style={opaqueStyle}></div>
 
-        <header className="mt-30 flex flex-col items-center z-20 pt-20">
+        <header className="mt-25 flex flex-col items-center z-20 pt-20">
           <div className="container-text text-center">
             <h1>Don't know what to</h1>
             <h1>Watch?</h1>
           </div>
-          <Link
-            href="/movies"
-            className="bg-transparent text-white px-1 rounded-xl font-bold text-xl shadow-2xl hover:scale-105 active:scale-100 transition-all duration-300  m-auto pointer-events-auto"
+          {showButton && (
 
-            // text-white ml-60 font-bold text-lg hover:text-xl transition-all duration-300 shadow-2xl bg-transparent shover
-          >
-            Browse Catalogue
-          </Link>         
+            
+            <Link
+              href="/movies"
+              className="bg-transparent text-white  rounded-xl font-bold text-xl shadow-2xl hover:scale-105 active:scale-100 transition-all duration-500 border-2 border-white p-2 m-auto pointer-events-auto mt-2 fade-in-button"
+              // Change to px-1 and no border for written text effect
+
+
+
+
+
+              // text-white ml-60 font-bold text-lg hover:text-xl transition-all duration-300 shadow-2xl bg-transparent shover
+            >
+              Browse Catalogue
+            </Link>
+          )}        
         </header>  
         </div>
 

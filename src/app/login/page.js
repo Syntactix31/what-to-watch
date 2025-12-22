@@ -45,10 +45,9 @@ export default function Page() {
 
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 relative overflow-hidden">
-      {/* Background glow (diagonal red like screenshot) */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-zinc-950" />
-        <div className="absolute -top-32 -right-32 h-[900px] w-[900px] rotate-12 bg-red-600/20 blur-3xl rounded-full" />
+        <div className="absolute -top-32 -right-32 h-[900px] w-[900px] rotate-12 bg-yellow-600/20 blur-3xl rounded-full" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.55)_55%,rgba(0,0,0,0.85)_100%)]" />
       </div>
 
@@ -56,7 +55,7 @@ export default function Page() {
         <div className="grid w-full items-center gap-12 lg:grid-cols-2">
           {/* Left text block */}
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-red-500 drop-shadow">
+            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-shimmer drop-shadow">
               WhatToWatch
             </h1>
             <p className="mt-4 text-zinc-200">
@@ -70,11 +69,11 @@ export default function Page() {
               <h2 className="text-2xl font-bold">Welcome back</h2>
               <p className="mt-1 text-sm text-zinc-400">
                 Log in to continue to{" "}
-                <span className="text-red-400">WhatToWatch</span>.
+                <span className="text-yellow-400">WhatToWatch</span>.
               </p>
 
               {error && (
-                <div className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                <div className="mt-5 rounded-xl border border-yellow-500/30 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-200">
                   {error}
                 </div>
               )}
@@ -90,7 +89,7 @@ export default function Page() {
                     type="email"
                     autoComplete="email"
                     placeholder="you@example.com"
-                    className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-3 text-zinc-100 placeholder:text-zinc-600 outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+                    className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-3 text-zinc-100 placeholder:text-zinc-600 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
                   />
                 </div>
 
@@ -105,7 +104,7 @@ export default function Page() {
                       type={showPw ? "text" : "password"}
                       autoComplete="current-password"
                       placeholder="••••••••"
-                      className="w-full rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-3 pr-16 text-zinc-100 placeholder:text-zinc-600 outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+                      className="w-full rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-3 pr-16 text-zinc-100 placeholder:text-zinc-600 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
                     />
                     <button
                       type="button"
@@ -139,7 +138,7 @@ export default function Page() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full rounded-xl bg-red-500 py-3 font-semibold text-zinc-950 hover:bg-red-400 disabled:opacity-60 disabled:cursor-not-allowed transition"
+                  className="w-full rounded-xl bg-yellow-500 py-3 font-semibold text-zinc-950 hover:bg-yellow-400 disabled:opacity-60 disabled:cursor-not-allowed transition"
                 >
                   {loading ? "Signing in…" : "Sign in"}
                 </button>
@@ -163,7 +162,7 @@ export default function Page() {
                   New here?{" "}
                   <Link
                     href="/signup"
-                    className="text-red-400 hover:text-red-300 font-semibold"
+                    className="text-yellow-400 hover:text-yellow-300 font-semibold"
                   >
                     Create an account
                   </Link>

@@ -38,10 +38,10 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 grid place-items-center px-6">
       <div className="w-full max-w-md rounded-3xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-xl p-6 md:p-8">
-        <h1 className="text-2xl font-extrabold">
-          <span className="mr-1">Join</span>
+        <h1 className="text-2xl font-bold">
+          <span className="mr-2">Join</span>
           <span className="hover-container">
-            <span className="text-shimmer normal-case align-middle">
+            <span className="text-shimmer normal-case">
               WhatToWatch
             </span>
           </span>
@@ -61,7 +61,7 @@ export default function Page() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Johnappleseed"
-              className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+              className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
             />
           </div>
 
@@ -73,7 +73,7 @@ export default function Page() {
               type="email"
               autoComplete="email"
               placeholder="you@example.com"
-              className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+              className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
             />
           </div>
 
@@ -85,7 +85,7 @@ export default function Page() {
               type="password"
               autoComplete="new-password"
               placeholder="••••••••"
-              className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+              className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
             />
           </div>
 
@@ -97,7 +97,7 @@ export default function Page() {
               type="password"
               autoComplete="new-password"
               placeholder="••••••••"
-              className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+              className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
             />
           </div>
 

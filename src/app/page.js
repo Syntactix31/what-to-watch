@@ -165,7 +165,7 @@ export default function Home() {
         </div>
 
         <div className="hover-container">
-          <h1 className="text-shimmer normal-case">WhatToWatch</h1>
+          <h1 className="text-shimmer shimmer-fontsize normal-case">WhatToWatch</h1>
         </div>
       </div>
 
@@ -226,6 +226,7 @@ export default function Home() {
       </button>
     </div>
   ) : (
+                        //   Maybe change the primary colours to: hover:border-red-200 text-red-300 from gold
     <Link
       href="/login"
       className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent mr-10"

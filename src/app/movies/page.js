@@ -156,7 +156,7 @@ export default function MoviesPage() {
 
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-linear-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold bg-linear-to-r pb-2 from-yellow-400 to-orange-500 bg-clip-text text-transparent">
             Discover Amazing Movies
           </h1>
           <p className="text-gray-400 mb-8">Find your next favorite film</p>

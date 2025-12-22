@@ -30,14 +30,14 @@ export default function Page() {
     <main className="min-h-screen bg-zinc-950 text-zinc-100 grid place-items-center px-6">
       <div className="w-full max-w-md rounded-3xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-xl p-6 md:p-8">
         <h1 className="text-2xl font-extrabold">
-          Reset your <span className="text-red-500">password</span>
+          Reset your <span className="text-yellow-500">password</span>
         </h1>
         <p className="mt-1 text-sm text-zinc-400">
           Enter your email and we’ll send you a reset link.
         </p>
 
         {error && (
-          <div className="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+          <div className="mt-4 rounded-xl border border-yellow-500/30 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-200">
             {error}
           </div>
         )}
@@ -57,21 +57,21 @@ export default function Page() {
               type="email"
               autoComplete="email"
               placeholder="you@example.com"
-              className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+              className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-red-500 px-4 py-3 font-semibold text-zinc-950 hover:bg-red-400 disabled:opacity-60 disabled:cursor-not-allowed transition"
+            className="w-full rounded-xl bg-yellow-500 px-4 py-3 font-semibold text-zinc-950 hover:bg-yellow-400 disabled:opacity-60 disabled:cursor-not-allowed transition"
           >
             {loading ? "Sending…" : "Send reset link"}
           </button>
 
           <p className="text-sm text-zinc-400 text-center">
             Back to{" "}
-            <Link href="/login" className="text-red-400 hover:text-red-300 font-semibold">
+            <Link href="/login" className="text-yellow-400 hover:text-yellow-300 font-semibold">
               Sign in
             </Link>
           </p>

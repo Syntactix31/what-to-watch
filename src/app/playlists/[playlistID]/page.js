@@ -132,7 +132,7 @@ export default function Page() {
           <div className="rounded-2xl border border-zinc-800 bg-zinc-900/20 p-6">
             <div className="text-red-300 font-semibold">Missing playlist id in the URL.</div>
             <div className="text-zinc-400 mt-2">Go back and open the playlist again.</div>
-            <Link href="/playlists" className="inline-block mt-4 text-red-400 hover:text-red-300">
+            <Link href="/playlists" className="inline-block mt-4 text-yellow-400 hover:text-yellow-300">
               ← Back to Playlists
             </Link>
           </div>
@@ -145,7 +145,7 @@ export default function Page() {
     <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 py-16">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-between gap-3 flex-wrap">
-          <Link href="/playlists" className="text-zinc-300 hover:text-red-400">
+          <Link href="/playlists" className="text-zinc-300 hover:text-yellow-400">
             ← Back to Playlists
           </Link>
 
@@ -163,7 +163,7 @@ export default function Page() {
           {!editing ? (
             <div className="flex items-center justify-between gap-3 flex-wrap">
               <h1 className="text-3xl font-extrabold">
-                <span className="text-red-500">{playlist?.name || "Untitled"}</span>
+                <span className="text-yellow-500">{playlist?.name || "Untitled"}</span>
               </h1>
 
               <button
@@ -186,12 +186,12 @@ export default function Page() {
                     setEditing(false);
                   }
                 }}
-                className="rounded-xl border border-zinc-800 bg-zinc-950/50 px-3 py-2 outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+                className="rounded-xl border border-zinc-800 bg-zinc-950/50 px-3 py-2 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
               />
               <button
                 disabled={busy}
                 onClick={rename}
-                className="rounded-xl bg-red-500 px-4 py-2 font-semibold text-zinc-950 hover:bg-red-400 disabled:opacity-60"
+                className="rounded-xl bg-yellow-500 px-4 py-2 font-semibold text-zinc-950 hover:bg-yellow-400 disabled:opacity-60"
               >
                 Save
               </button>

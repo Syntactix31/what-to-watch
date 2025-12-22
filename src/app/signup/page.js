@@ -39,12 +39,17 @@ export default function Page() {
     <main className="min-h-screen bg-zinc-950 text-zinc-100 grid place-items-center px-6">
       <div className="w-full max-w-md rounded-3xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-xl p-6 md:p-8">
         <h1 className="text-2xl font-extrabold">
-          Join <span className="text-red-500">WhatToWatch</span>
+          <span className="mr-1">Join</span>
+          <span className="hover-container">
+            <span className="text-shimmer normal-case align-middle">
+              WhatToWatch
+            </span>
+          </span>
         </h1>
         <p className="mt-1 text-sm text-zinc-400">Create your account to start building your watchlist.</p>
 
         {error && (
-          <div className="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+          <div className="mt-4 rounded-xl border border-yellow-500/30 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-200">
             {error}
           </div>
         )}
@@ -101,7 +106,7 @@ export default function Page() {
               type="checkbox"
               checked={remember}
               onChange={(e) => setRemember(e.target.checked)}
-              className="h-4 w-4 rounded border-zinc-700 bg-zinc-950 text-red-500 focus:ring-red-500/30"
+              className="h-4 w-4 rounded border-zinc-700 bg-zinc-950 text-yellow-500 focus:ring-yellow-500/30"
             />
             Remember me
           </label>
@@ -109,14 +114,14 @@ export default function Page() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-red-500 px-4 py-3 font-semibold text-zinc-950 hover:bg-red-400 disabled:opacity-60 disabled:cursor-not-allowed transition"
+            className="w-full rounded-xl bg-yellow-500 px-4 py-3 font-semibold text-zinc-950 hover:bg-yellow-400 disabled:opacity-60 disabled:cursor-not-allowed transition"
           >
             {loading ? "Creating…" : "Create account"}
           </button>
 
           <p className="text-sm text-zinc-400 text-center">
             Already have an account?{" "}
-            <Link href="/login" className="text-red-400 hover:text-red-300 font-semibold">
+            <Link href="/login" className="text-yellow-400 hover:text-yellow-300 font-semibold">
               Sign in
             </Link>
           </p>

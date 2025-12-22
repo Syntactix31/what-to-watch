@@ -67,7 +67,7 @@ export default function Page() {
         <header className="flex items-end justify-between gap-4 flex-wrap">
           <div>
             <h1 className="text-4xl font-extrabold">
-              <span className="text-red-500">User Dashboard</span>
+              <span className="text-yellow-500">User Dashboard</span>
             </h1>
             <p className="mt-2 text-zinc-400">
               Your activity overview — recently viewed, playlists, and reviews.
@@ -77,7 +77,7 @@ export default function Page() {
           <div className="flex gap-2">
             <Link
               href="/playlists"
-              className="rounded-xl bg-red-500 px-4 py-2 font-semibold text-zinc-950 hover:bg-red-400"
+              className="rounded-xl bg-yellow-500 px-4 py-2 font-semibold text-zinc-950 hover:bg-yellow-400"
             >
               Edit Playlists
             </Link>
@@ -91,7 +91,7 @@ export default function Page() {
         </header>
 
         {error && (
-          <div className="mt-6 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+          <div className="mt-6 rounded-xl border border-yellow-500/30 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-200">
             {error}
           </div>
         )}
@@ -112,7 +112,7 @@ export default function Page() {
           <Card
             title="Your Playlists"
             subtitle="Quick access to your lists"
-            action={<Link href="/playlists" className="text-sm text-red-400 hover:text-red-300">Manage</Link>}
+            action={<Link href="/playlists" className="text-sm text-yellow-400 hover:text-yellow-300">Manage</Link>}
           >
             {playlists.length === 0 ? (
               <Empty text="No playlists yet." />

@@ -66,7 +66,7 @@ export default function Page() {
           {/* Right card */}
           <div className="flex justify-center lg:justify-end">
             <div className="w-full max-w-md rounded-3xl border border-zinc-800/80 bg-zinc-900/30 backdrop-blur-xl shadow-[0_30px_80px_-50px_rgba(0,0,0,0.9)] p-8">
-              <h2 className="text-2xl font-bold">Welcome back</h2>
+              <h2 className="text-2xl font-bold">Welcome back!</h2>
               <p className="mt-1 text-sm text-zinc-400">
                 Log in to continue to{" "}
                 <span className="text-yellow-400">WhatToWatch</span>.
@@ -138,7 +138,7 @@ export default function Page() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full rounded-xl bg-yellow-500 py-3 font-semibold text-zinc-950 hover:bg-yellow-400 disabled:opacity-60 disabled:cursor-not-allowed transition"
+                  className="w-full rounded-xl bg-gradient-to-r from-yellow-400 to-orange-600 py-3 font-semibold text-zinc-950 hover:from-yellow-300 hover:to-orange-500 disabled:opacity-60 disabled:cursor-not-allowed transition"
                 >
                   {loading ? "Signing in…" : "Sign in"}
                 </button>

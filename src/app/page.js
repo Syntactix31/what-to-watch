@@ -230,7 +230,7 @@ export default function Home() {
                         //   Maybe change the primary colours to: hover:border-red-200 text-red-300 or hover:border-yellow-200 text-gold-[#FFD700] or hover:border-yellow-200 hover:text-yellow-200 with the zinc text
     <Link
       href="/login"
-      className="hover:border-zinc-400 text-zinc-200 px-6 py-2 rounded-lg font-medium transition-colors border border-transparent mr-10 active:scale-95"
+      className="hover:border-zinc-400 text-zinc-200 px-4 py-2 rounded-lg font-medium transition-colors border border-transparent mr-10 active:scale-95"
     >
       Log In / Sign Up
     </Link>

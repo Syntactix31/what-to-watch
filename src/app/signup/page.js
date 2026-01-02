@@ -114,7 +114,7 @@ export default function Page() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-gradient-to-r from-yellow-400 to-orange-600 px-4 py-3 font-semibold text-zinc-950 hover:from-yellow-300 hover:to-orange-500 disabled-opacity-60 disabled:cursor-not-allowed transition"
+            className="w-full rounded-xl bg-gradient-to-r from-yellow-400 to-orange-600 px-4 py-3 font-semibold text-zinc-950 hover:from-yellow-300 hover:to-orange-500 disabled-opacity-60 disabled:cursor-not-allowed transition cursor-pointer"
           >
             {loading ? "Creating…" : "Create account"}
           </button>

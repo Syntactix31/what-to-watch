@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { SearchBar } from "./components/SearchBar";
+import Footer from "./components/Footer";
 import MovieContent from "./components/MovieContent";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./utils/firebase";
@@ -289,6 +290,9 @@ export default function Home() {
             }}
           />
         </div>
+
+        <Footer/>
+
 
       </div>
     </main>

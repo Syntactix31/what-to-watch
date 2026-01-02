@@ -159,7 +159,7 @@ export default function Home() {
             width={48}
             height={48}
             alt="PopCorn Logo"
-            className="w-12 h-12 object-contain rounded-full hover:scale-110 transition-transform active:scale-95"
+            className="w-12 h-12 object-contain rounded-full hover:scale-110 transition-transform active:scale-100"
             loading="eager" 
           />
         </div>

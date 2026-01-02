@@ -54,14 +54,23 @@ export default function Page() {
       <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-24 min-h-screen flex items-center">
         <div className="grid w-full items-center gap-12 lg:grid-cols-2">
           {/* Left text block */}
+{/* Left text block */}
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-shimmer drop-shadow">
-              WhatToWatch
-            </h1>
+            <div className="flex items-center justify-center lg:justify-start gap-3">
+              <img src="/favicon.ico" alt="Popcorn Logo"
+                className="w-10 h-10 md:w-15 md:h-15 lg:w-20 lg:h-20"
+              />
+
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-shimmer drop-shadow md:pt-2 lg:pt-5 sm:pt-2">
+                WhatToWatch
+              </h1>
+            </div>
+
             <p className="mt-4 text-zinc-200">
               Sign in to save watchlists, rate movies, and get recommendations.
             </p>
           </div>
+
 
           {/* Right card */}
           <div className="flex justify-center lg:justify-end">

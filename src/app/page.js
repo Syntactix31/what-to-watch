@@ -248,7 +248,7 @@ export default function Home() {
       </header>   */}
 
 
-      <div className="relative z-40">
+      <div className="relative z-40 mb-8">
         <div 
           className="feature fixed top-0 left-0 w-full h-screen bg-cover bg-center bg-[url('/movietheatre1.jpg')] z-10"
           style={featureStyle}

@@ -5,6 +5,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useEffect, useState, useRef } from "react";
 import MovieCard from "../components/MovieCard";
+import Footer from "../components/Footer";
 import MovieSection from "../components/MovieSection";
 import { useRouter } from "next/navigation";
 import {
@@ -310,6 +311,9 @@ export default function MoviesPage() {
             movies={popular} 
           />
         </div>
+
+        <Footer/>
+
       </div>
     </main>
   );

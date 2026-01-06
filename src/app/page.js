@@ -207,23 +207,23 @@ export default function Home() {
 
       <Link
         href="/dashboard"
-        className="hover:border-yellow-200 text-[#FFD700] px-4 py-2 rounded-lg font-medium transition-colors border border-transparent"
+        className="hover:border-zinc-400 text-zinc-200 px-4 py-2 rounded-lg font-medium transition-colors border border-transparent active:scale-95"
       >
         Dashboard
       </Link>
 
       <Link
         href="/playlists"
-        className="hover:border-yellow-200 text-[#FFD700] px-4 py-2 rounded-lg font-medium transition-colors border border-transparent"
+        className="hover:border-zinc-400 text-zinc-200 px-4 py-2 rounded-lg font-medium transition-colors border border-transparent active:scale-95"
       >
         Playlists
       </Link>
 
       <button
         onClick={handleLogout}
-        className="hover:border-yellow-200 text-[#FFD700] px-6 py-2 rounded-lg font-medium transition-colors border border-transparent whitespace-nowrap"
+        className="hover:border-zinc-400 text-zinc-200 px-4 py-2 rounded-lg font-medium transition-colors border border-transparent mr-10 active:scale-95"
       >
-        Logout
+        Log Out
       </button>
     </div>
   ) : (

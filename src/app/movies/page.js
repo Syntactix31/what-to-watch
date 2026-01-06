@@ -108,7 +108,9 @@ export default function MoviesPage() {
   }
 
   return (
-    <main className="min-h-screen bg-transparent text-white p-4 md:p-8">
+    <main className="">
+      
+      <div className="min-h-screen bg-transparent text-white p-4 md:p-8">
       <header className="max-w-7xl mx-auto mb-8 flex items-center justify-between">
       <Link href="/" className="text-lg font-bold">
         <span className="hover-container">
@@ -314,6 +316,7 @@ export default function MoviesPage() {
 
         <Footer/>
 
+      </div>
       </div>
     </main>
   );

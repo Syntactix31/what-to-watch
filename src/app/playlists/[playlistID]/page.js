@@ -130,7 +130,7 @@ export default function Page() {
       <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 py-16">
         <div className="max-w-5xl mx-auto">
           <div className="rounded-2xl border border-zinc-800 bg-zinc-900/20 p-6">
-            <div className="text-red-300 font-semibold">Missing playlist id in the URL.</div>
+            <div className="text-yellow-300 font-semibold">Missing playlist id in the URL.</div>
             <div className="text-zinc-400 mt-2">Go back and open the playlist again.</div>
             <Link href="/playlists" className="inline-block mt-4 text-yellow-400 hover:text-yellow-300">
               ← Back to Playlists

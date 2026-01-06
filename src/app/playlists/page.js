@@ -127,7 +127,7 @@ export default function Page() {
         <header className="flex items-end justify-between gap-4 flex-wrap">
           <div>
             <h1 className="text-4xl font-extrabold">
-              <span className="text-red-500">Playlists</span>
+              <span className="text-4xl md:text-5xl font-bold bg-linear-to-r pb-2 from-yellow-400 to-orange-500 bg-clip-text text-transparent">Playlists</span>
             </h1>
             <p className="mt-2 text-zinc-400">
               Create, rename, and delete your lists. Click one to open it.
@@ -143,7 +143,7 @@ export default function Page() {
         </header>
 
         {error && (
-          <div className="mt-6 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+          <div className="mt-6 rounded-xl border border-yellow-500/30 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-200">
             {error}
           </div>
         )}
@@ -153,11 +153,11 @@ export default function Page() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="New playlist name (e.g., Late Night Thrillers)"
-            className="flex-1 min-w-[240px] rounded-xl border border-zinc-800 bg-zinc-900/30 px-4 py-3 outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+            className="flex-1 min-w-[240px] rounded-xl border border-zinc-800 bg-zinc-900/30 px-4 py-3 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
           />
           <button
             disabled={busy}
-            className="rounded-xl bg-red-500 px-5 py-3 font-semibold text-zinc-950 hover:bg-red-400 disabled:opacity-60"
+            className="rounded-xl bg-yellow-500 px-5 py-3 font-semibold text-zinc-950 hover:bg-yellow-400 disabled:opacity-60"
           >
             Create
           </button>
@@ -201,7 +201,7 @@ function PlaylistRow({ playlist, busy, onRename, onDelete }) {
             <input
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
-              className="rounded-xl border border-zinc-800 bg-zinc-950/50 px-3 py-2 outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+              className="rounded-xl border border-zinc-800 bg-zinc-950/50 px-3 py-2 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
             />
             <button
               disabled={busy}
@@ -209,7 +209,7 @@ function PlaylistRow({ playlist, busy, onRename, onDelete }) {
                 await onRename(playlist.id, draft);
                 setEditing(false);
               }}
-              className="rounded-xl bg-red-500 px-4 py-2 font-semibold text-zinc-950 hover:bg-red-400 disabled:opacity-60"
+              className="rounded-xl bg-yellow-500 px-4 py-2 font-semibold text-zinc-950 hover:bg-yellow-400 disabled:opacity-60"
               type="button"
             >
               Save

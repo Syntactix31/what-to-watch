@@ -201,7 +201,7 @@ export default function Home() {
         </Link> */}
         {authReady && user ? (
   <div className="flex items-center gap-4">
-    <span className="text-[#FFD700] text-sm max-w-[220px] truncate">
+    <span className="text-shimmer text-sm max-w-[220px] truncate">
       {user.displayName || user.email}
     </span>
 

@@ -95,6 +95,63 @@ body {
   }
 }
 
+/* Responsive Hero Text Container */
+.responsive-hero {
+  scale: clamp(0.5, 0.08 * 100vw / 16, 1);
+  transform-origin: center top;
+}
+
+/* Line 1 - Responsive base styling */
+.hero-line-1 {
+  font-family: "Work Sans", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+  margin: 0 0 0 clamp(20%, 28%, 35%);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0ch;
+  border-right: 1px solid orange;
+  animation: 
+    typeLine1 2.4s steps(18, end) forwards, 
+    blink .5s step-end infinite alternate;
+  line-height: 1;
+  animation-fill-mode: forwards;
+}
+
+/* Line 2 - Responsive base styling */
+.hero-line-2 {
+  opacity: 0;
+  font-family: "Work Sans", sans-serif;
+  margin: 0 auto;
+  background: linear-gradient(to right, #f8b195, #f67280, #c06c84);
+  font-weight: 800;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0ch;
+  border-right: 1px solid orange;
+  animation:
+    typeLine2 2.2s steps(6, end) 2.4s forwards, 
+    blink .5s step-end infinite alternate 2.4s;
+  line-height: 1;
+}
+
+/* Override animations for typed state (add 'typed' class after animation completes) */
+.container-text.responsive-hero.typed .hero-line-1 {
+  border-right: none;
+  animation: none;
+  width: 18ch;
+}
+
+.container-text.responsive-hero.typed .hero-line-2 {
+  border-right: 1px solid orange;
+}
+
+
+
 /* Scroll effect */
 * {box-sizing:border-box}
 body, html {padding:0; margin:0} 

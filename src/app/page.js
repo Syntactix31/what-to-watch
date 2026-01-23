@@ -250,7 +250,7 @@ export default function Home() {
 
       <div className="relative z-40 mb-8">
         <div 
-          className="feature fixed top-0 left-0 w-full h-screen bg-cover bg-center bg-[url('/movietheatre1.jpg')] z-10"
+          className="feature fixed top-0 left-0 w-full h-screen bg-cover bg-no-repeat bg-center bg-[url('/movietheatre1.jpg')] z-10"
           style={featureStyle}
         >
         <div className="opaque absolute inset-0 pointer-events-none" style={opaqueStyle}></div>
@@ -281,7 +281,7 @@ export default function Home() {
         </div>
 
 
-        <div className="content relative z-20 p-12 text-white max-w-7xl mx-auto w-full">
+        <div className="content relative z-20 p-4 sm:p-12 text-white max-w-7xl mx-auto w-full">
           <MovieContent 
             query={query}
             suggestions={suggestions}
@@ -298,3 +298,21 @@ export default function Home() {
     </main>
   );
 }
+
+
+
+
+
+/**  TODO
+ * 
+ * Fix nav bar formatting on small viewport sizes + logo button shows on mobile nav with login text -> replace with login image
+ * (should just have title and login - users will have to navigate to movie dashboard to search)
+ * 
+ * On signin the nav should have the profile photo in the top right corner when pressed has drop down menu with list: Username, Dashboard, Playlists, Logout
+ * 
+ * Include tv shows search
+ * Add tv-shows and additional tv preview content on movie page only (not homepage)
+ * 
+ * 
+ * 
+ */

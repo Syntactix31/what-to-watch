@@ -164,7 +164,7 @@ export default function SearchResultsPage() {
                   onClick={() => handleSort("relevance")}
                   className={getSortButtonClass("relevance")}
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 cursor-pointer">
                     {activeSort === "relevance" && (
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -178,7 +178,7 @@ export default function SearchResultsPage() {
                   onClick={() => handleSort("popularity")}
                   className={getSortButtonClass("popularity")}
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 cursor-pointer">
                     {activeSort === "popularity" && (
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -192,7 +192,7 @@ export default function SearchResultsPage() {
                   onClick={() => handleSort("rating")}
                   className={getSortButtonClass("rating")}
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 cursor-pointer">
                     {activeSort === "rating" && (
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -206,7 +206,7 @@ export default function SearchResultsPage() {
                   onClick={() => handleSort("date")}
                   className={getSortButtonClass("date")}
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 cursor-pointer">
                     {activeSort === "date" && (
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

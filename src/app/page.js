@@ -22,6 +22,8 @@ export default function Home() {
   const [suggestions, setSuggestions] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const searchRef = useRef(null);
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
 
   const [user, setUser] = useState(null);
@@ -151,8 +153,9 @@ export default function Home() {
 
   return (
     <main className="pt-20 relative">
-      <nav className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 px-8 py-4 flex items-center justify-between">
+      <nav className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 px-8 py-4 flex items-center sm:justify-between justify-center">
 
+      {/* Left side: Logo + Title + Hamburger (mobile only) */}
       <div className="flex items-center space-x-4">
         <div onClick={cycleLogo} className="cursor-pointer">
           <img
@@ -168,9 +171,26 @@ export default function Home() {
         <div className="hover-container">
           <h1 className="text-shimmer shimmer-fontsize normal-case">WhatToWatch</h1>
         </div>
+
+        {/* Hamburger Menu - Mobile Only */}
+        <button
+          className="sm:hidden p-2 -mr-2 hover:text-white transition-colors ml-10"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
       </div>
 
-      <div className="flex items-center space-x-6">
+
+      <div className="items-center space-x-6 hidden sm:flex">
         <div className="p-2.5">
           <SearchBar 
             query={query}
@@ -201,7 +221,7 @@ export default function Home() {
         </Link> */}
         {authReady && user ? (
   <div className="flex items-center gap-4">
-    <span className="text-shimmer text-sm max-w-[220px] truncate">
+    <span className="text-shimmer text-sm max-w-55 truncate">
       {user.displayName || user.email}
     </span>
 
@@ -237,6 +257,50 @@ export default function Home() {
   )}
 
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      {isMenuOpen && (
+        <div className="absolute top-full left-0 right-0 bg-black/95 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6 sm:hidden z-50 animate-fadeIn">
+          <div className="px-8 space-y-3 text-center">
+            {authReady && user ? (
+              <>
+                <Link 
+                  href="/dashboard"
+                  className="text-shimmer block w-full px-4 py-3 rounded-xl hover:bg-zinc-800 transition-all text-lg font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Dashboard
+                </Link>
+                <Link 
+                  href="/playlists"
+                  className="text-shimmer block w-full px-4 py-3 rounded-xl hover:bg-zinc-800 transition-all text-lg font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Playlists
+                </Link>
+                <button
+                  onClick={async () => {
+                    await handleLogout();
+                    setIsMenuOpen(false);
+                  }}
+                  className="text-shimmer w-full px-4 py-3 rounded-xl hover:bg-zinc-800 transition-all text-lg font-medium"
+                >
+                  Log Out
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                className="text-shimmer block w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-zinc-700/50 to-zinc-600 hover:from-zinc-600 hover:to-zinc-500 text-lg font-semibold border-2 border-zinc-500 hover:border-zinc-400 transition-all shadow-lg"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Log In / Sign Up
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
+
     </nav>
 
     <div className="content relative z-20 pt-48 pb-20"></div>
@@ -255,17 +319,20 @@ export default function Home() {
         >
         <div className="opaque absolute inset-0 pointer-events-none" style={opaqueStyle}></div>
 
-        <header className="mt-25 flex flex-col items-center z-20 pt-20">
-          <div className="container-text text-center">
-            <h1>Don't know what to</h1>
-            <h1>Watch?</h1>
-          </div>
+        <header className="mt-35 flex flex-col items-center z-20 pt-20">
+            <div className="container-text text-center scale-80 sm:scale-100 transition-all">
+              <div className=""><h1 className="ml-0 lg:ml-[35%]!">Don't know what to</h1></div>
+
+              {/* sm:ml-[19%] md:ml-[27.5%] lg:ml-[35%] */}
+
+              <h1 className="">Watch?</h1>
+            </div>
           {showButton && (
 
             
             <Link
               href="/movies"
-              className="bg-transparent text-white  rounded-xl font-bold text-xl shadow-2xl hover:scale-105 active:scale-100 transition-all duration-500 border-2 border-white p-2 m-auto pointer-events-auto mt-2 fade-in-button"
+              className="bg-transparent text-white  rounded-xl font-bold text-xl shadow-2xl sm:hover:scale-105 sm:active:scale-100 hover:scale-85 active:scale-80 transition-all duration-500 border-2 border-white p-2 m-auto pointer-events-auto sm:mt-2 fade-in-button scale-80 sm:scale-100"
               // Change to px-1 and no border for written text effect
 
 
@@ -291,7 +358,10 @@ export default function Home() {
           />
         </div>
 
-        <Footer/>
+        <div className="relative z-20 pointer-events-auto">
+          <Footer />
+
+        </div>
 
 
       </div>

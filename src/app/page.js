@@ -153,39 +153,42 @@ export default function Home() {
 
   return (
     <main className="pt-20 relative">
-      <nav className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 px-8 py-4 flex items-center sm:justify-between justify-center">
+      <nav className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 pr-8 pl-4 sm:px-8 py-4 sm:flex sm:items-center sm:justify-between">
 
       {/* Left side: Logo + Title + Hamburger (mobile only) */}
-      <div className="flex items-center space-x-4">
-        <div onClick={cycleLogo} className="cursor-pointer">
-          <img
-            src={`/img/${logoImages[currentLogoIndex]}.png`}
-            width={64}
-            height={64}
-            
-            alt="PopCorn Logo"
-            className="object-contain hover:scale-110 transition-transform active:scale-100 w-12 h-12"
-            loading="eager" 
-          />
 
-          {/* Alternate image format for betetr mobile view */}
-          {/* <Image
-            src={`/img/${logoImages[currentLogoIndex]}.png`}
-            alt="PopCorn Logo"
-            fill
-            className="object-contain"
-            sizes="(max-width: 640px) 40px, 48px"
-            priority  // Since it's above-the-fold logo
-          /> */}
-        </div>
+<div className=" max-sm:flex max-sm:items-center max-sm:justify-between">
+        <div className="sm:flex sm:gap-4   max-sm:flex max-sm:items-center max-sm:gap-2">
+          <div onClick={cycleLogo} className="cursor-pointer max-[330px]:hidden">
+            <img
+              src={`/img/${logoImages[currentLogoIndex]}.png`}
+              width={64}
+              height={64}
+              
+              alt="PopCorn Logo"
+              className="object-contain hover:scale-110 transition-transform active:scale-100 w-12 h-12"
+              loading="eager" 
+            />
 
-        <div className="hover-container">
-          <h1 className="text-shimmer shimmer-fontsize normal-case">WhatToWatch</h1>
+            {/* Alternate image format for betetr mobile view */}
+            {/* <Image
+              src={`/img/${logoImages[currentLogoIndex]}.png`}
+              alt="PopCorn Logo"
+              fill
+              className="object-contain"
+              sizes="(max-width: 640px) 40px, 48px"
+              priority  // Since it's above-the-fold logo
+            /> */}
+          </div>
+
+          <div className="hover-container">
+            <h1 className="text-shimmer shimmer-fontsize normal-case">WhatToWatch</h1>
+          </div>
         </div>
 
         {/* Hamburger Menu - Mobile Only */}
         <button
-          className="sm:hidden p-2 -mr-2 hover:text-white transition-colors ml-10"
+          className="sm:hidden p-2 -mr-2 hover:text-white transition-colors ml-4"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -193,13 +196,12 @@ export default function Home() {
             <path 
               strokeLinecap="round" 
               strokeLinejoin="round" 
-              strokeWidth={2} 
+              strokeWidth={1.5} 
               d="M4 6h16M4 12h16M4 18h16"
             />
           </svg>
         </button>
-      </div>
-
+</div>
 
       <div className="items-center space-x-6 hidden sm:flex">
         <div className="p-2.5">
@@ -271,20 +273,20 @@ export default function Home() {
 
       {/* Mobile Menu Dropdown */}
       {isMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-black/95 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6 sm:hidden z-50 animate-fadeIn">
+        <div className="absolute top-full left-0 right-0 bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6 sm:hidden z-50 animate-fadeIn">
           <div className="px-8 space-y-3 text-center">
             {authReady && user ? (
               <>
                 <Link 
                   href="/dashboard"
-                  className="text-shimmer block w-full px-4 py-3 rounded-xl hover:bg-zinc-800 transition-all text-lg font-medium"
+                  className="text-shimmer block w-full px-4 py-3 rounded-xl bg-black hover:bg-zinc-800 transition-all text-lg font-medium z-60"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Dashboard
                 </Link>
                 <Link 
                   href="/playlists"
-                  className="text-shimmer block w-full px-4 py-3 rounded-xl hover:bg-zinc-800 transition-all text-lg font-medium"
+                  className="text-shimmer block w-full px-4 py-3 rounded-xl bg-black hover:bg-zinc-800 transition-all text-lg font-medium z-60"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Playlists
@@ -294,7 +296,7 @@ export default function Home() {
                     await handleLogout();
                     setIsMenuOpen(false);
                   }}
-                  className="text-shimmer w-full px-4 py-3 rounded-xl hover:bg-zinc-800 transition-all text-lg font-medium"
+                  className="text-shimmer w-full px-4 py-3 rounded-xl bg-black hover:bg-zinc-800 transition-all text-lg font-medium z-60"
                 >
                   Log Out
                 </button>
@@ -302,7 +304,7 @@ export default function Home() {
             ) : (
               <Link
                 href="/login"
-                className="text-shimmer block w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-zinc-700/50 to-zinc-600 hover:from-zinc-600 hover:to-zinc-500 text-lg font-semibold border-2 border-zinc-500 hover:border-zinc-400 transition-all shadow-lg"
+                className="text-shimmer block w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-zinc-700/50 to-zinc-600 hover:from-zinc-600 hover:to-zinc-500 text-lg font-semibold border-2 bg-black border-zinc-500 hover:border-zinc-400 transition-all shadow-lg z-60"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Log In / Sign Up
@@ -330,9 +332,9 @@ export default function Home() {
         >
         <div className="opaque absolute inset-0 pointer-events-none" style={opaqueStyle}></div>
 
-        <header className="mt-35 flex flex-col items-center z-20 pt-20">
+        <header className="mt-20 md:mt-20 lg:mt-35 flex flex-col items-center z-20 pt-20">
             <div className="container-text text-center scale-80 sm:scale-100 transition-all">
-              <div className=""><h1 className="ml-0 lg:ml-[35%]!">Don't know what to</h1></div>
+              <div className=""><h1 className="ml-0 md:ml-[27.5%] lg:ml-[35%]!">Don't know what to</h1></div>
 
               {/* sm:ml-[19%] md:ml-[27.5%] lg:ml-[35%] */}
 

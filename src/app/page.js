@@ -160,12 +160,23 @@ export default function Home() {
         <div onClick={cycleLogo} className="cursor-pointer">
           <img
             src={`/img/${logoImages[currentLogoIndex]}.png`}
-            width={48}
-            height={48}
+            width={64}
+            height={64}
+            
             alt="PopCorn Logo"
-            className="w-12 h-12 object-contain rounded-full hover:scale-110 transition-transform active:scale-100"
+            className="object-contain hover:scale-110 transition-transform active:scale-100 w-12 h-12"
             loading="eager" 
           />
+
+          {/* Alternate image format for betetr mobile view */}
+          {/* <Image
+            src={`/img/${logoImages[currentLogoIndex]}.png`}
+            alt="PopCorn Logo"
+            fill
+            className="object-contain"
+            sizes="(max-width: 640px) 40px, 48px"
+            priority  // Since it's above-the-fold logo
+          /> */}
         </div>
 
         <div className="hover-container">

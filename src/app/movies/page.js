@@ -108,7 +108,7 @@ export default function MoviesPage() {
   }
 
   return (
-    <main className="">
+    <main>
       
       <div className="min-h-screen bg-transparent text-white p-4 md:p-8">
       <header className="max-w-7xl mx-auto mb-8 flex items-center justify-between">
@@ -314,10 +314,15 @@ export default function MoviesPage() {
           />
         </div>
 
-        <Footer/>
+        
 
       </div>
       </div>
+
+      <div className="mb-9">
+        <Footer/>
+      </div>
+
     </main>
   );
 }

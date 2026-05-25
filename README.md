@@ -29,10 +29,10 @@ Levi
 > [Portfolio](https://levi1901.wixsite.com/levimportfolio)
 
 Jiro Roales
-> Backend Developer
+- Backend Developer
 
 Theo Sanchez
-> Authentication and APIs
+- Authentication and APIs
 
 
 

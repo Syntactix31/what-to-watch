@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## What To Watch
 
-## Getting Started
+What To Watch is a centralized hub for all your cinema needs, as movie lovers will find themseleves captivated by its interactive elements and practical functionality. This website provides users with a way to search the large database of movies for just the right one that suits the mood, with additional insight into the movie's plot synopsis, actor list, and audience ratings. Upon signing in, users can personalize their own playlists of movies for every occasion and rate, review, and comment on their favourite movies.
 
-First, run the development server:
+## Package Installations
 
 ```bash
+npm install
+# and
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# and
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Check out our live Webiste!
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+[WhatToWatch](https://what-to-watch-auof.vercel.app)
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about our website, please reach out to the developers:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Accreditation:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Levi
+- Project Manager, Frontend Developer, AI Integration
+> [LinkedIn](https://www.linkedin.com/in/levi-moreau/)
+> [Portfolio](https://levi1901.wixsite.com/levimportfolio)
 
-## Deploy on Vercel
+Jiro Roales
+> Backend Developer
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Theo Sanchez
+> Authentication and APIs
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+

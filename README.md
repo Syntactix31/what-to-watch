@@ -13,7 +13,7 @@ npm run dev
 ```
 
 
-## Check out our live Webiste!
+## Check out our live Website!
 
 [WhatToWatch](https://what-to-watch-auof.vercel.app)
 

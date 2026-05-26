@@ -35,7 +35,7 @@ export default function MovieReview({ movie }) {
         },
         { merge: true }
       );
-      setMsg("Saved ✅");
+      setMsg("Saved!🔥");
     } catch {
       setMsg("Could not save review.");
     } finally {

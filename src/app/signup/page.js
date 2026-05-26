@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signUpWithEmail } from "../utils/auth";
+import TermsModal from "../components/TermsModal";
 
 export default function Page() {
   const router = useRouter();
@@ -15,6 +16,9 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const [showTerms, setShowTerms] = useState(false);
+  const [agreed, setAgreed] = useState(false);
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
@@ -23,7 +27,16 @@ export default function Page() {
       setError("Passwords do not match.");
       return;
     }
+    
+    if (!agreed) {
+      setShowTerms(true);
+      return;
+    }
 
+    await createAccount();
+  }
+
+    async function createAccount() {
     setLoading(true);
     try {
       await signUpWithEmail(name, email, pw, remember);
@@ -34,6 +47,8 @@ export default function Page() {
       setLoading(false);
     }
   }
+
+
 
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 grid place-items-center px-6">
@@ -61,6 +76,8 @@ export default function Page() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Johnappleseed"
+              maxLength={100}
+              required
               className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
             />
           </div>
@@ -71,7 +88,10 @@ export default function Page() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               type="email"
+              pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+              required
               autoComplete="email"
+              maxLength={100}
               placeholder="you@example.com"
               className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
             />
@@ -85,6 +105,8 @@ export default function Page() {
               type="password"
               autoComplete="new-password"
               placeholder="••••••••"
+              maxLength={50}
+              required
               className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
             />
           </div>
@@ -96,7 +118,9 @@ export default function Page() {
               onChange={(e) => setPw2(e.target.value)}
               type="password"
               autoComplete="new-password"
+              maxLength={50}
               placeholder="••••••••"
+              required
               className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
             />
           </div>
@@ -127,6 +151,19 @@ export default function Page() {
           </p>
         </form>
       </div>
+
+      <TermsModal
+        open={showTerms}
+        onClose={() => setShowTerms(false)}
+        agreed={agreed}
+        setAgreed={setAgreed}
+        onAccept={async () => {
+          setShowTerms(false);
+          await createAccount();
+        }}
+      />
+
     </main>
   );
 }
+

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { db } from "../../utils/firebase";
 import { useRequireAuth } from "../../utils/useRequireAuth";
 import {
@@ -20,6 +21,7 @@ import {
 export default function Page() {
   const { user, loading } = useRequireAuth("/login");
   const params = useParams();
+  const router = useRouter();
 
   // Works even if your folder is [id] or [playlistID], etc.
   const playlistId = useMemo(() => {
@@ -141,6 +143,10 @@ export default function Page() {
     );
   }
 
+  function handlePlaylistMovieClick(movieId) {
+    router.push(`/movie/${movieId}?from=playlist&playlistId=${playlistId}`);
+  }
+
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 py-16">
       <div className="max-w-5xl mx-auto">
@@ -230,7 +236,9 @@ export default function Page() {
                     <img
                       src={`https://image.tmdb.org/t/p/w500${m.poster_path}`}
                       alt={m.title || "Movie poster"}
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover hover:cursor-pointer transition-all hover:brightness-110 hover:scale-105 active:scale-100"
+                      // onClick={() => window.open(`https://www.themoviedb.org/movie/${m.movieId}`, "_blank")}
+                      onClick={() => handlePlaylistMovieClick(m.movieId)}
                     />
                   ) : (
                     <div className="h-full w-full grid place-items-center text-zinc-500 text-sm">

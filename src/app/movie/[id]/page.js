@@ -5,24 +5,31 @@ import AddToPlaylist from "../../components/AddToPlaylist";
 import MovieReview from "../../components/MovieReview";
 
 
-// Fetch function
+// Fetch function - NOTE (Levi): The api connection is very slow on authenticate users that have signed in because of congested handling. To resolve this, I have added better error handling and timeouts this does not fully resolve the issue but mitigates the server crashes 
 async function getMovie(id) {
   if (!id) return null;
   
   const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-  
+
   if (!apiKey) {
     console.error('TMDB API Key is missing');
     return null;
   }
 
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+
+
   try {
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=credits`,
       { 
-        next: { revalidate: 3600 } 
+        next: { revalidate: 3600 },
+        signal: controller.signal
       }
     );
+
+    clearTimeout(timeout);
 
     if (!response.ok) {
       console.error(`TMDB API error: ${response.status}`);
@@ -31,41 +38,70 @@ async function getMovie(id) {
 
     return await response.json();
   } catch (error) {
+    clearTimeout(timeout);
     console.error('Error fetching movie:', error);
     return null;
   }
 }
 
 // Main component
-export default async function MovieDetailsPage({ params }) {
+export default async function MovieDetailsPage({ params, searchParams }) {
   const { id } = await params;
-  
+  const sp = await searchParams;
+
   if (!id) {
     return <div className="p-10">No movie ID provided</div>;
   }
 
   const movie = await getMovie(id);
 
+  //  Replaced the below notFound() with a UI that allows the user to navigate back to the movies page
+  // if (!movie) {
+  //   notFound();
+  // }
+
   if (!movie) {
-    notFound();
+    return (
+      <main className="min-h-screen bg-transparent text-white p-4 md:p-8">
+        <div className="max-w-6xl mx-auto">
+          <a
+            href={backHref}
+            className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 mb-6"
+          >
+            ← {backLabel}
+          </a>
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/30 p-6">
+            Unable to load this movie right now.
+          </div>
+        </div>
+      </main>
+    );
   }
+
+  const fromPlaylist = sp?.from === "playlist";
+  const playlistId = sp?.playlistId;
+  const backHref = fromPlaylist && playlistId ? `/playlists/${playlistId}` : "/movies";
+  const backLabel = fromPlaylist && playlistId ? "Back to Playlist" : "Back to Movies";
 
   return (
     <main className="min-h-screen bg-transparent text-white p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
         {/* back button */}
         <div className="mb-6">
-          <a 
-            href="/movies" 
-            className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300"
+          <a
+            href={backHref}
+            className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 group"
           >
-            ← Back to Movies
+            <svg className="w-3 h-3 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            {backLabel}
           </a>
         </div>
 
         {/* Movie Content */}
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* poser for movie */}
+          {/* poster for movie */}
           <div className="shrink-0">
             {movie.poster_path ? (
               <Image

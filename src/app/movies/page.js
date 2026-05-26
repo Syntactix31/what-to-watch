@@ -110,11 +110,11 @@ export default function MoviesPage() {
   return (
     <main>
       
-      <div className="min-h-screen bg-transparent text-white p-4 md:p-8">
-      <header className="max-w-7xl mx-auto mb-8 flex items-center justify-between">
+      <div className="min-h-screen bg-transparent text-white p-4 md:p-5.5"> {/* md:p-8 */}
+      <header className="max-w-7xl mx-auto mb-8 flex items-center justify-between"> {/* mb-8 */}
       <Link href="/" className="text-lg font-bold">
         <span className="hover-container">
-          <span className="text-shimmer normal-case text-3xl">
+          <span className="text-shimmer normal-case shimmer-fontsize"> {/* Original text-3xl */}
             WhatToWatch
           </span>
         </span>

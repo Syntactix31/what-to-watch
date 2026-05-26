@@ -4,7 +4,7 @@ import Link from 'next/link';
 // Footer with sited developer info and accreditation
 export default function Footer() {
   return (
-    <footer className="bg-black text-white font-light pt-20 pb-5 items-center text-center mt-20 sm:mt-40">
+    <footer className="bg-black text-white font-light pt-20 items-center text-center mt-20 sm:mt-40">
       
       {/* Just use flex box and have the mx static */}
       <div className='mx-auto'>
@@ -22,6 +22,12 @@ export default function Footer() {
 
         <p className='mt-1'>Jiro Roales</p>
         <p className='mt-1'>Theo Sanchez</p>
+      </div>
+
+      <div>
+        <Link href="/terms" className="inline-flex scale-80 text-xs mt-10 hover:underline">
+          Terms and Conditions
+        </Link>
       </div>
 
     </footer>

@@ -152,7 +152,7 @@ export default function Home() {
 
 
   return (
-    <main className="pt-20 relative">
+    <main className="pt-20 relative custom-scrollbar-gold">
       <nav className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 pr-8 pl-4 sm:px-8 py-4 sm:flex sm:items-center sm:justify-between">
 
       {/* Left side: Logo + Title + Hamburger (mobile only) */}
@@ -235,7 +235,11 @@ export default function Home() {
         {authReady && user ? (
   <div className="flex items-center gap-4">
     <span className="text-shimmer text-sm max-w-55 truncate">
-      {user.displayName || user.email}
+      {/* {user.displayName.trim(10) || user.email} */}
+      {user.displayName? user.displayName.length > 10
+      ? `${user.displayName.slice(0, 10)}...`
+      : user.displayName
+    : user.email}
     </span>
 
       <Link
@@ -260,7 +264,7 @@ export default function Home() {
       </button>
     </div>
   ) : (
-                        //   Maybe change the primary colours to: hover:border-red-200 text-red-300 or hover:border-yellow-200 text-gold-[#FFD700] or hover:border-yellow-200 hover:text-yellow-200 with the zinc text
+    //   Maybe change the primary colours to: hover:border-red-200 text-red-300 or hover:border-yellow-200 text-gold-[#FFD700] or hover:border-yellow-200 hover:text-yellow-200 with the zinc text
     <Link
       href="/login"
       className="hover:border-zinc-400 text-zinc-200 px-4 py-2 rounded-lg font-medium transition-colors border border-transparent mr-10 active:scale-95"

@@ -153,12 +153,12 @@ export default function Home() {
 
   return (
     <main className="pt-20 relative custom-scrollbar-gold">
-      <nav className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 pr-8 pl-4 sm:px-8 py-4 sm:flex sm:items-center sm:justify-between">
+      <nav className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 pr-8 pl-4 lg:px-8 py-4 lg:flex lg:items-center lg:justify-between">
 
       {/* Left side: Logo + Title + Hamburger (mobile only) */}
 
-<div className=" max-sm:flex max-sm:items-center max-sm:justify-between">
-        <div className="sm:flex sm:gap-4   max-sm:flex max-sm:items-center max-sm:gap-2">
+<div className=" max-lg:flex max-lg:items-center max-lg:justify-between">
+        <div className="sm:flex sm:gap-4 transition-all sm:justify-between max-sm:flex max-sm:items-center max-sm:gap-2">
           <div onClick={cycleLogo} className="cursor-pointer max-[330px]:hidden">
             <img
               src={`/img/${logoImages[currentLogoIndex]}.png`}
@@ -188,11 +188,11 @@ export default function Home() {
 
         {/* Hamburger Menu - Mobile Only */}
         <button
-          className="sm:hidden p-2 -mr-2 hover:text-white transition-colors ml-4"
+          className="lg:hidden p-2 -mr-2 hover:text-white transition-colors ml-4 hover:cursor-pointer"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="active:scale-80 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path 
               strokeLinecap="round" 
               strokeLinejoin="round" 
@@ -203,7 +203,7 @@ export default function Home() {
         </button>
 </div>
 
-      <div className="items-center space-x-6 hidden sm:flex">
+      <div className="items-center space-x-6 hidden lg:flex">
         <div className="p-2.5">
           <SearchBar 
             query={query}
@@ -277,7 +277,7 @@ export default function Home() {
 
       {/* Mobile Menu Dropdown */}
       {isMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6 sm:hidden z-50 animate-fadeIn">
+        <div className="absolute top-full left-0 right-0 bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6 lg:hidden z-50 animate-fadeIn">
           <div className="px-8 space-y-3 text-center">
             {authReady && user ? (
               <>
@@ -336,10 +336,12 @@ export default function Home() {
         >
         <div className="opaque absolute inset-0 pointer-events-none" style={opaqueStyle}></div>
 
-        <header className="mt-20 md:mt-20 lg:mt-35 flex flex-col items-center z-20 pt-20">
+        <header className="mt-20 lg:mt-35 flex flex-col items-center z-20 pt-20">
             <div className="container-text text-center scale-80 sm:scale-100 transition-all">
-              <div className=""><h1 className="ml-0 md:ml-[27.5%] lg:ml-[35%]!">Don't know what to</h1></div>
+              <div className="mx-auto flex justify-start max-w-[440px] "><h1 className="">Don't know what to</h1>{/* ml-0 md:ml-[27.5%] lg:ml-[35%]! */}</div>
+                {/* MAKE  ADJUSTMENT SO THE DONT KNOW WHAT TO HEADER IS SKEWED FROM WATCH HEADER AND GIVES A "STACKED EFFECT" - It should align the W with the inner right edge of the inside of the "o" */}
 
+                
               {/* sm:ml-[19%] md:ml-[27.5%] lg:ml-[35%] */}
 
               <h1 className="">Watch?</h1>

@@ -56,7 +56,7 @@ export default function TermsModal({
 
           <p>
             For full terms, please refer to the official documentation or contact support.
-            <a href="mailto:whattowatch@gmail.com" className="text-yellow-500 hover:underline mt-4 block">
+            <a href="mailto:whattowatch.support@gmail.com" className="text-yellow-500 hover:underline mt-4 block">
               Send Email
             </a>
             <a href="/terms" className="text-yellow-500 hover:underline mt-4 block">

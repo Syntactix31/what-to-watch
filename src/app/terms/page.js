@@ -13,7 +13,7 @@ export default function Page() {
         <p className="mb-6">
           Effective Date: May 25, 2026<br />
           Website Name: WhatToWatch<br />
-          Contact: <span className="font-bold hover:underline"><a href="mailto:whattowatch@gmail.com">whattowatch@gmail.com</a></span>
+          Contact: <span className="font-bold hover:underline"><a href="mailto:whattowatch.support@gmail.com">whattowatch.support@gmail.com</a></span>
         </p>
         <p className="mb-8">These Terms and Conditions govern your use of the WhatToWatch website and services. By accessing or using the website, you agree to these Terms. If you do not agree, you should not use the website.</p>
 
@@ -57,7 +57,7 @@ export default function Page() {
 
         <h2 className="text-xl font-bold mb-4">11. Contact</h2>
         <p>If you have questions about these Terms, contact us at:</p>
-        <h3 className="font-bold mb-10 hover:underline"><a href="mailto:whattowatch@gmail.com">whattowatch@gmail.com</a></h3>
+        <h3 className="font-bold mb-10 hover:underline"><a href="mailto:whattowatch.support@gmail.com">whattowatch.support@gmail.com</a></h3>
 
 
         <p>By using WhatToWatch, you agree to our Terms and Conditions and acknowledge that your data is handled in accordance with our Privacy Policy. </p>

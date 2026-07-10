@@ -38,6 +38,7 @@ const SearchBar = forwardRef(({
           
           <input
             value={query}
+            maxLength={100}
             onChange={e => onSearchChange(e.target.value)}
             placeholder="Search for movies you love"   // "Search for movies, shows..."
             className="bg-transparent outline-none text-white placeholder-gray-500 w-32 sm:w-40 focus:w-64 transition-all duration-300 px-4 py-2"

@@ -76,6 +76,17 @@ export default function TermsModal({
             <span>
               I have read and agree to the Terms and Conditions.
             </span>
+
+{/* *******NOTE********* */}
+{/* Add Section for Privacy Policy acknowledgement or say the following: "I have read and agree to the Terms and Conditions and Privacy Policy." */}
+
+
+            {/* <span>
+              I have read the Privacy Policy and understand how my data is collected, used, and protected.
+            </span> */}
+
+
+
           </label>
 
           <div className="mt-5 flex flex-wrap justify-end gap-3">

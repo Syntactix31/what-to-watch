@@ -100,7 +100,7 @@ export default function AddToPlaylist({ movie }) {
         <button
           disabled={busy || !selected}
           onClick={add}
-          className="rounded-lg bg-yellow-400 px-4 py-2 font-semibold text-black disabled:opacity-60"
+          className="rounded-lg bg-yellow-400 px-4 py-2 font-semibold text-black disabled:opacity-60 hover:cursor-pointer active:scale-95"
           type="button"
         >
           {busy ? "Adding…" : "Add"}

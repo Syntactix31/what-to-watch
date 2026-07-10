@@ -320,3 +320,34 @@ html::-webkit-scrollbar-thumb:hover {
     background-color: #9ca3af;          /* gray-400 on hover */
   }
 }
+
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slideInRight {
+  animation: slideInRight 250ms ease-out forwards;
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0.8;
+  }
+}
+
+.animate-slideOutRight {
+  animation: slideOutRight 300ms ease-out forwards;
+}

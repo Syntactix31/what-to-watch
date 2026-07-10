@@ -67,7 +67,7 @@ export default function MovieReview({ movie }) {
               setRating(n);
               save(n);
             }}
-            className={`text-3xl hover:scale-110 transition ${
+            className={`text-3xl hover:scale-110 hover:cursor-pointer transition ${
               n <= rating ? "text-yellow-400" : "text-gray-600"
             }`}
             type="button"
@@ -90,7 +90,7 @@ export default function MovieReview({ movie }) {
         <button
           disabled={busy || rating === 0}
           onClick={() => save(rating)}
-          className="rounded-lg bg-yellow-400 px-4 py-2 font-semibold text-black disabled:opacity-60"
+          className="rounded-lg bg-yellow-400 px-4 py-2 font-semibold text-black disabled:opacity-60 hover:cursor-pointer active:scale-95"
           type="button"
         >
           {busy ? "Saving…" : "Save review"}

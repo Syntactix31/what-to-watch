@@ -67,10 +67,10 @@ export default function Page() {
         <header className="flex items-end justify-between gap-4 flex-wrap">
           <div>
             <h1 className="text-4xl font-extrabold">
-              <span className="text-4xl md:text-5xl font-bold bg-linear-to-r pb-2 from-yellow-400 to-orange-500 bg-clip-text text-transparent">User Dashboard</span>
+              <span className="text-4xl md:text-5xl font-bold bg-linear-to-r pb-2 from-yellow-400 to-orange-500 bg-clip-text text-transparent">{user?.displayName || user?.email}'s Dashboard</span>
             </h1>
             <p className="mt-2 text-zinc-400">
-              Your activity overview — recently viewed, playlists, and reviews.
+              Your activity overview: recently viewed, playlists, and reviews.
             </p>
           </div>
 

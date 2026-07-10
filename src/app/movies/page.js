@@ -189,6 +189,7 @@ export default function MoviesPage() {
                 {/* input */}
                 <input
                   value={query}
+                  maxLength={100}
                   onChange={e => handleSearchChange(e.target.value)}
                   placeholder="Search for movies"
                   className="w-full py-4 pr-5 bg-transparent outline-none text-white placeholder-gray-500 text-lg"

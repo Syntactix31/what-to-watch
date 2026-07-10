@@ -17,6 +17,7 @@ import {
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
+import MovieDeleteModal from "../../components/MovieDeleteModal";
 
 export default function Page() {
   const { user, loading } = useRequireAuth("/login");
@@ -42,6 +43,28 @@ export default function Page() {
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+
+  // Testing delete movie delete modal
+  const [movieToDelete, setMovieToDelete] = useState(null);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+
+  function askDeleteMovie(movie) {
+    setMovieToDelete(movie);
+    setDeleteOpen(true);
+  }
+
+  function closeDeleteModal() {
+    setDeleteOpen(false);
+    setMovieToDelete(null);
+  }
+
+  async function confirmDeleteMovie() {
+    if (!movieToDelete) return;
+    await removeMovie(movieToDelete.id);
+    closeDeleteModal();
+  }
+
+
 
   const playlistDocRef = useMemo(() => {
     if (!user?.uid || !playlistId) return null;
@@ -253,8 +276,11 @@ export default function Page() {
 
                   <button
                     disabled={busy}
-                    onClick={() => removeMovie(m.id)}
-                    className="mt-3 w-full rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-2 text-red-200 hover:bg-red-500/15 disabled:opacity-60"
+                    // Replace with delete modal flow
+                    // onClick={() => removeMovie(m.id)}
+
+                    onClick={() => askDeleteMovie(m)}
+                    className="mt-3 w-full rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-2 text-red-200 hover:cursor-pointer hover:scale-105 hover:bg-red-500/15 disabled:opacity-60 active:scale-95"
                   >
                     Remove
                   </button>
@@ -264,6 +290,16 @@ export default function Page() {
           )}
         </div>
       </div>
+
+    {deleteOpen && movieToDelete && (
+      <MovieDeleteModal
+        movie={movieToDelete}
+        onClose={closeDeleteModal}
+        onDelete={confirmDeleteMovie}
+        loading={busy}
+      />
+    )}
+
     </main>
   );
 }

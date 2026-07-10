@@ -53,7 +53,7 @@ export default function Page() {
         <p className="mb-8">We may restrict or terminate access to the website at our discretion if we believe you have violated these Terms or if necessary to protect the service, our users, or our systems.</p>
 
         <h2 className="text-xl font-bold mb-4">10. Governing Law</h2>
-        <p className="mb-8">These Terms will be governed by the laws of Calgary, Alberta, Canada, without regard to conflict-of-law rules. Any disputes will be handled in the courts or legal venue applicable in that jurisdiction.</p>
+        <p className="mb-8">These Terms will be governed by the laws of the Province of Alberta and the federal laws of Canada applicable therein without regard to conflict-of-law rules. Any disputes will be handled in the courts or legal venue applicable in that jurisdiction.</p>
 
         <h2 className="text-xl font-bold mb-4">11. Contact</h2>
         <p>If you have questions about these Terms, contact us at:</p>

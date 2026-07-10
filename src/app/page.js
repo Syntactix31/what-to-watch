@@ -276,21 +276,28 @@ export default function Home() {
       </div>
 
       {/* Mobile Menu Dropdown */}
-      {isMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6 lg:hidden z-50 animate-fadeIn">
+      {(
+        // <div className={`absolute top-full left-0 right-0 bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6 lg:hidden z-50 animate-fadeIn`}>
+  <div className="absolute top-full left-0 right-0 overflow-hidden lg:hidden z-50">
+    <div
+      className={`bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6   ${authReady && user ? 'max-w-[50%] sm:w-50' : 'sm:w-82 md:w-100 w-full'} ml-auto transition-transform duration-300 ${
+        isMenuOpen ? "animate-slideInRight" : " animate-slideOutRight"
+      }`}
+    >
+
           <div className="px-8 space-y-3 text-center">
             {authReady && user ? (
               <>
                 <Link 
                   href="/dashboard"
-                  className="text-shimmer block w-full px-4 py-3 rounded-xl bg-black hover:bg-zinc-800 transition-all text-lg font-medium z-60"
+                  className="text-shimmer block w-full px-4 py-3 rounded-xl bg-black border-b-zinc-700 border-b-2   hover:bg-zinc-800 transition-all text-lg font-medium z-60"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Dashboard
                 </Link>
                 <Link 
                   href="/playlists"
-                  className="text-shimmer block w-full px-4 py-3 rounded-xl bg-black hover:bg-zinc-800 transition-all text-lg font-medium z-60"
+                  className="text-shimmer block w-full px-4 py-3 rounded-xl bg-black border-b-zinc-700 border-b-2 hover:bg-zinc-800 transition-all text-lg font-medium z-60"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Playlists
@@ -308,13 +315,14 @@ export default function Home() {
             ) : (
               <Link
                 href="/login"
-                className="text-shimmer block w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-zinc-700/50 to-zinc-600 hover:from-zinc-600 hover:to-zinc-500 text-lg font-semibold border-2 bg-black border-zinc-500 hover:border-zinc-400 transition-all shadow-lg z-60"
+                className="text-shimmer block w-full px-6 py-4 rounded-2xl text-lg font-semibold border-2 bg-black border-zinc-500 hover:border-zinc-400 transition-all shadow-lg z-60"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Log In / Sign Up
               </Link>
             )}
           </div>
+        </div>
         </div>
       )}
 

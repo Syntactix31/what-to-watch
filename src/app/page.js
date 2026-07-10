@@ -24,7 +24,10 @@ export default function Home() {
   const searchRef = useRef(null);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  const [wasMenuOpen, setWasMenuOpen] = useState(false);
 
   const [user, setUser] = useState(null);
   const [authReady, setAuthReady] = useState(false);
@@ -189,7 +192,26 @@ export default function Home() {
         {/* Hamburger Menu - Mobile Only */}
         <button
           className="lg:hidden p-2 -mr-2 hover:text-white transition-colors ml-4 hover:cursor-pointer"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          onClick={() => { const newOpen = !isMenuOpen; setWasMenuOpen(isMenuOpen);
+
+            // Logic for controlling visibility of menu animations
+                if (newOpen) {
+                setIsMenuOpen(true);
+
+                if (!isVisible) {
+                  setIsVisible(true);
+                }
+
+                } else {
+                  setIsMenuOpen(false);
+
+                  setTimeout(() => {
+                    setIsVisible(false);
+                  }, 300);
+                }
+
+           }}
+
           aria-label="Toggle menu"
         >
           <svg className="active:scale-80 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -276,13 +298,11 @@ export default function Home() {
       </div>
 
       {/* Mobile Menu Dropdown */}
-      {(
+      {isVisible && (
         // <div className={`absolute top-full left-0 right-0 bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6 lg:hidden z-50 animate-fadeIn`}>
   <div className="absolute top-full left-0 right-0 overflow-hidden lg:hidden z-50">
     <div
-      className={`bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6   ${authReady && user ? 'max-w-[50%] sm:w-50' : 'sm:w-82 md:w-100 w-full'} ml-auto transition-transform duration-300 ${
-        isMenuOpen ? "animate-slideInRight" : " animate-slideOutRight"
-      }`}
+      className={`bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6   ${authReady && user ? 'max-w-[50%] sm:w-50' : 'sm:w-82 md:w-100 w-full'} ml-auto transition-transform duration-300 ${ wasMenuOpen ? "animate-slideOutRight" :  "animate-slideInRight"} `}
     >
 
           <div className="px-8 space-y-3 text-center">

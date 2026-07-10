@@ -3,13 +3,16 @@
 export default function MovieDeleteModal({ movie, onClose, onDelete, loading }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-      <div className="w-full max-w-md rounded-2xl border border-zinc-600 bg-zinc-950 text-zinc-100 p-6 shadow-2xl">
-        <div className="relative">
-          <h3 className="text-2xl font-bold mb-3 text-shimmer w-55">Delete This Movie?</h3>
+      <div className="w-full max-w-md rounded-2xl border sm:scale-100 scale-85 border-zinc-600 bg-zinc-950 text-zinc-100 pb-6 px-6 shadow-2xl">
+        <div className="relative ">
+          <h3 className="text-2xl font-bold mb-3 text-shimmer w-55 pt-6">Delete This Movie?</h3>
 
-          {/* NOTE: ************   "x" CLOSE BUTTON IS NOT FORMATTING PROPERLY FOR SMALLER SCREENS IMMEDIATE FIX NEEDED ************** */}
+          {/* NOTE (FIXED): ************   "x" CLOSE BUTTON IS NOT FORMATTING PROPERLY FOR SMALLER SCREENS IMMEDIATE FIX NEEDED ************** */}
 
-          <button className="absolute left-99 bottom-5 h-fit align-right text-end text-lg hover:cursor-pointer active:scale-95" onClick={onClose}>x</button>
+          <button className="absolute right-0 top-0 pt-3 h-fit text-lg hover:cursor-pointer active:scale-95"
+            onClick={onClose}>
+            x
+          </button>        
         </div>
         <p className="text-zinc-300 mb-6">
           Are you sure you want to delete{" "}
@@ -38,3 +41,4 @@ export default function MovieDeleteModal({ movie, onClose, onDelete, loading }) 
     </div>
   );
 }
+

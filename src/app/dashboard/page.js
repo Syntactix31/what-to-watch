@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { db } from "../utils/firebase";
 import { useRequireAuth } from "../utils/useRequireAuth";
 import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const { user, loading } = useRequireAuth("/login");
@@ -12,6 +13,8 @@ export default function Page() {
   const [playlists, setPlaylists] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState("");
+
+  const router = useRouter();
 
   const uid = user?.uid;
 
@@ -103,7 +106,7 @@ export default function Page() {
             ) : (
               <div className="grid gap-3">
                 {recent.map((m) => (
-                  <MiniRow key={m.id} title={m.title} meta={m.release_date} />
+                    <MiniRow key={m.id} title={m.title} meta={m.release_date} movieId={m.id} onClick={(id) => router.push(`/movie/${id}`)}/>
                 ))}
               </div>
             )}
@@ -140,6 +143,8 @@ export default function Page() {
                   <MiniRow
                     key={r.id}
                     title={r.movieTitle || "Movie review"}
+                    movieId={r.movieId}
+                    onClick={(id) => router.push(`/movie/${id}`)}
                     meta={typeof r.rating === "number" ? `Rating: ${r.rating}/10` : ""}
                     extra={r.text ? r.text : ""}
                   />
@@ -176,9 +181,9 @@ function Empty({ text }) {
   );
 }
 
-function MiniRow({ title, meta, extra }) {
+function MiniRow({ title, meta, extra, movieId, onClick }) {
   return (
-    <div className="rounded-2xl border border-zinc-800 bg-zinc-950/30 p-3">
+    <div className="rounded-2xl border border-zinc-800 bg-zinc-950/30 p-3 active:scale-95 hover:cursor-pointer" onClick={() => onClick(movieId)}>
       <div className="font-semibold">{title || "Untitled"}</div>
       {meta && <div className="text-sm text-zinc-500">{meta}</div>}
       {extra && <div className="mt-1 text-sm text-zinc-400 line-clamp-2">{extra}</div>}

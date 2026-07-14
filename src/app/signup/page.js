@@ -76,7 +76,7 @@ export default function Page() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Johnappleseed"
-              maxLength={100}
+              maxLength={50}
               required
               className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
             />

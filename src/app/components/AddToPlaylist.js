@@ -60,7 +60,7 @@ export default function AddToPlaylist({ movie }) {
         updatedAt: serverTimestamp(),
       });
 
-      setMsg("Added to playlist ✅");
+      setMsg("Added to playlist ✔");
     } catch {
       setMsg("Could not add to playlist.");
     } finally {

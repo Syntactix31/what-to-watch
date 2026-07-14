@@ -134,7 +134,7 @@ export default function Page() {
             )}
           </Card>
 
-          <Card title="Review History" subtitle="Recent reviews (if you store them)">
+          <Card title="Review History" subtitle="Recent reviews you've written">
             {reviews.length === 0 ? (
               <Empty text="No reviews yet." />
             ) : (
@@ -163,7 +163,7 @@ function Card({ title, subtitle, action, children }) {
     <div className="rounded-3xl border border-zinc-800 bg-zinc-900/20 p-6">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <div className="text-xl font-bold">{title}</div>
+          <div className="text-xl font-bold text-shimmer">{title}</div>
           <div className="text-sm text-zinc-500">{subtitle}</div>
         </div>
         {action}

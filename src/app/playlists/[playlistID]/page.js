@@ -192,7 +192,7 @@ export default function Page() {
           {!editing ? (
             <div className="flex items-center justify-between gap-3 flex-wrap">
               <h1 className="text-3xl font-extrabold">
-                <span className="text-yellow-500">{playlist?.name || "Untitled"}</span>
+                <span className="bg-linear-to-r pb-2 from-yellow-400 to-orange-500 bg-clip-text text-transparent">{playlist?.name || "Untitled"}</span>
               </h1>
 
               <button
@@ -207,6 +207,7 @@ export default function Page() {
             <div className="mt-3 flex gap-2 flex-wrap">
               <input
                 value={draft}
+                maxLength={50}
                 onChange={(e) => setDraft(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") rename();

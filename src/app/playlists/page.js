@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import PlaylistDeleteModal from "../components/PlaylistDeleteModal";
 import { useEffect, useMemo, useState } from "react";
 import { db } from "../utils/firebase";
 import { useRequireAuth } from "../utils/useRequireAuth";
@@ -23,6 +24,9 @@ export default function Page() {
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [playlistToDelete, setPlaylistToDelete] = useState(null);
 
   const playlistsRef = useMemo(() => {
     if (!user?.uid) return null;
@@ -90,10 +94,28 @@ export default function Page() {
     }
   }
 
+  function closeDeleteModal() {
+    setDeleteOpen(false);
+    setPlaylistToDelete(null);
+  }
+
+  function confirmDeletePlaylist() {
+    if (!playlistToDelete) return;
+    deletePlaylist(playlistToDelete);
+    closeDeleteModal();
+
+  }
+  
+  function askDeletePlaylist(playlist) {
+    setPlaylistToDelete(playlist.id);
+    setDeleteOpen(true);
+  }
+
   async function deletePlaylist(playlistId) {
     if (!user?.uid) return;
-    const ok = confirm("Delete this playlist? This cannot be undone.");
-    if (!ok) return;
+
+    // const ok = confirm("Delete this playlist? This cannot be undone.");
+    // if (!ok) return;
 
     setBusy(true);
     setError("");
@@ -151,6 +173,7 @@ export default function Page() {
         <form onSubmit={createPlaylist} className="mt-8 flex gap-3 flex-wrap">
           <input
             value={name}
+            maxLength={50}
             onChange={(e) => setName(e.target.value)}
             placeholder="New playlist name (e.g., Late Night Thrillers)"
             className="flex-1 min-w-[240px] rounded-xl border border-zinc-800 bg-zinc-900/30 px-4 py-3 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
@@ -175,12 +198,25 @@ export default function Page() {
                 playlist={p}
                 busy={busy}
                 onRename={renamePlaylist}
-                onDelete={deletePlaylist}
+                onDelete={askDeletePlaylist}
               />
             ))
           )}
         </div>
       </div>
+
+
+      {deleteOpen && playlistToDelete && (
+        <PlaylistDeleteModal
+          playlist={playlists.find(p => p.id === playlistToDelete)}
+          onClose={closeDeleteModal}
+          onDelete={confirmDeletePlaylist}
+          loading={busy}
+        />
+      )}
+
+
+
     </main>
   );
 }
@@ -195,7 +231,7 @@ function PlaylistRow({ playlist, busy, onRename, onDelete }) {
         <div className="text-sm text-zinc-500">Playlist</div>
 
         {!editing ? (
-          <div className="text-xl font-bold text-zinc-100">{playlist?.name || "Untitled"}</div>
+          <div className="text-xl font-bold text-shimmer">{playlist?.name || "Untitled"}</div>
         ) : (
           <div className="mt-2 flex gap-2 flex-wrap">
             <input
@@ -246,7 +282,7 @@ function PlaylistRow({ playlist, busy, onRename, onDelete }) {
         </button>
         <button
           disabled={busy}
-          onClick={() => onDelete(playlist.id)}
+          onClick={() => onDelete(playlist)}
           className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-2 text-red-200 hover:bg-red-500/15 disabled:opacity-60"
           type="button"
         >

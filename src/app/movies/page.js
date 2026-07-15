@@ -28,6 +28,10 @@ export default function MoviesPage() {
   const [user, setUser] = useState(null);
   const [authReady, setAuthReady] = useState(false);
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [wasMenuOpen, setWasMenuOpen] = useState(false);
+
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
       setUser(u);
@@ -120,29 +124,66 @@ export default function MoviesPage() {
         </span>
       </Link>
 
+
+        {/* Hamburger Menu - Mobile Only */}
+        <button
+          className="sm:hidden p-2 -mr-2 hover:text-white transition-colors ml-4 hover:cursor-pointer"
+          onClick={() => { const newOpen = !isMenuOpen; setWasMenuOpen(isMenuOpen);
+
+            // Logic for controlling visibility of menu animations
+                if (newOpen) {
+                setIsMenuOpen(true);
+
+                if (!isVisible) {
+                  setIsVisible(true);
+                }
+
+                } else {
+                  setIsMenuOpen(false);
+
+                  setTimeout(() => {
+                    setIsVisible(false);
+                  }, 300);
+                }
+
+           }}
+
+          aria-label="Toggle menu visibility"
+        >
+          <svg className="active:scale-80 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={1.5} 
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+
+
       {authReady && user ? (
-        <div className="flex items-center gap-4">
+        <div className="sm:flex items-center gap-4 hidden">
           <span className="text-sm text-gray-300 max-w-[220px] truncate">
             {user.displayName || user.email}
           </span>
 
           <Link
             href="/dashboard"
-            className="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-400 transition"
+            className="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-400 transition active:scale-95"
           >
             Dashboard
           </Link>
 
           <Link
             href="/playlists"
-            className="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-400 transition"
+            className="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-400 transition active:scale-95"
           >
             Playlists
           </Link>
 
           <button
             onClick={handleLogout}
-            className="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-400 transition whitespace-nowrap"
+            className="px-4 py-2 rounded-lg border border-gray-700 hover:border-red-700 transition active:scale-95"
           >
             Logout
           </button>
@@ -150,11 +191,66 @@ export default function MoviesPage() {
       ) : (
         <Link
           href="/login"
-          className="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-400 transition"
+          className="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-400 transition sm:block hidden active:scale-95"
         >
           Log In / Sign Up
         </Link>
       )}
+
+
+      {/* Mobile Menu Dropdown */}
+      {isVisible && (
+        // <div className={`absolute top-full left-0 right-0 bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6 lg:hidden z-50 animate-fadeIn`}>
+  <div className="absolute top-20 left-0 right-0 overflow-hidden sm:hidden z-99">
+    <div
+      className={`bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6   ${authReady && user ? 'max-w-[50%] sm:w-50' : 'sm:w-82 md:w-100 w-full'} ml-auto transition-transform duration-300 ${ wasMenuOpen ? "animate-slideOutRight" :  "animate-slideInRight"} `}
+    >
+
+          <div className="px-8 space-y-3 text-center">
+            {authReady && user ? (
+              <>
+                <Link 
+                  href="/dashboard"
+                  className="text-shimmer block w-full px-4 py-3 rounded-xl bg-black border-b-zinc-700 border-b-2   hover:bg-zinc-800 transition-all text-lg font-medium z-60"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Dashboard
+                </Link>
+                <Link 
+                  href="/playlists"
+                  className="text-shimmer block w-full px-4 py-3 rounded-xl bg-black border-b-zinc-700 border-b-2 hover:bg-zinc-800 transition-all text-lg font-medium z-60"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Playlists
+                </Link>
+                <button
+                  onClick={async () => {
+                    await handleLogout();
+                    setIsMenuOpen(false);
+                  }}
+                  className="text-shimmer w-full px-4 py-3 rounded-xl bg-black hover:bg-zinc-800 transition-all text-lg font-medium z-60"
+                >
+                  Log Out
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                className="text-shimmer block w-full px-6 py-4 rounded-2xl text-lg font-semibold border-2 bg-black border-zinc-500 hover:border-zinc-400 transition-all shadow-lg z-60"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Log In / Sign Up
+              </Link>
+            )}
+          </div>
+        </div>
+        </div>
+      )}
+
+
+
+
+
     </header>
 
       <div className="max-w-7xl mx-auto">

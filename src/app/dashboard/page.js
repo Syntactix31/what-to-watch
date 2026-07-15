@@ -58,14 +58,14 @@ export default function Page() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 py-16">
+      <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 pt-12 pb-16">
         <div className="max-w-6xl mx-auto">Loading…</div>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 py-16">
+    <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 pt-12 pb-16">
       <div className="max-w-6xl mx-auto">
         <header className="flex items-end justify-between gap-4 flex-wrap">
           <div>
@@ -80,15 +80,15 @@ export default function Page() {
           <div className="flex gap-2">
             <Link
               href="/playlists"
-              className="rounded-xl bg-yellow-500 px-4 py-2 font-semibold text-zinc-950 hover:bg-yellow-400"
+              className="rounded-xl bg-yellow-500 px-4 py-2 font-semibold text-zinc-950 hover:cursor-pointer active:scale-95 hover:bg-yellow-400"
             >
               Edit Playlists
             </Link>
             <Link
               href="/"
-              className="rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-2 hover:bg-zinc-900/60"
+              className="rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-2 hover:border-zinc-500 hover:cursor-pointer hover:bg-zinc-900/60"
             >
-              Main Page
+              Return Home
             </Link>
           </div>
         </header>
@@ -125,7 +125,7 @@ export default function Page() {
                   <Link
                     key={p.id}
                     href={`/playlists/${p.id}`}
-                    className="rounded-xl border border-zinc-800 bg-zinc-950/30 px-3 py-2 hover:bg-zinc-900/50"
+                    className="rounded-xl border border-zinc-800 bg-zinc-950/30 px-3 py-2 hover:scale-102 active:scale-98 hover:bg-zinc-900/50"
                   >
                     <div className="font-semibold">{p.name || "Untitled"}</div>
                   </Link>
@@ -183,7 +183,7 @@ function Empty({ text }) {
 
 function MiniRow({ title, meta, extra, movieId, onClick }) {
   return (
-    <div className="rounded-2xl border border-zinc-800 bg-zinc-950/30 p-3 active:scale-95 hover:cursor-pointer" onClick={() => onClick(movieId)}>
+    <div className="rounded-2xl border border-zinc-800 bg-zinc-950/30 p-3 hover:scale-102 active:scale-98 hover:cursor-pointer" onClick={() => onClick(movieId)}>
       <div className="font-semibold">{title || "Untitled"}</div>
       {meta && <div className="text-sm text-zinc-500">{meta}</div>}
       {extra && <div className="mt-1 text-sm text-zinc-400 line-clamp-2">{extra}</div>}

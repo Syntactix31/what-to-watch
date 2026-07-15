@@ -24,9 +24,7 @@ export default function Home() {
   const searchRef = useRef(null);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const [isVisible, setIsVisible] = useState(false);
-
   const [wasMenuOpen, setWasMenuOpen] = useState(false);
 
   const [user, setUser] = useState(null);
@@ -361,6 +359,10 @@ export default function Home() {
         <div 
           className="feature fixed top-0 left-0 w-full h-screen bg-cover bg-no-repeat bg-center bg-[url('/movietheatre1.jpg')] z-10"
           style={featureStyle}
+
+          // Unfortunately eager loading cannot be applied to the background image render to speed up the initial homepage loading unless the image is converted from CSS background images - search for an alternative to optimize page render
+          // loading="eager"
+
         >
         <div className="opaque absolute inset-0 pointer-events-none" style={opaqueStyle}></div>
 

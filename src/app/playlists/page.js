@@ -144,7 +144,7 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 py-16">
+    <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 pt-12 pb-16">
       <div className="max-w-5xl mx-auto">
         <header className="flex items-end justify-between gap-4 flex-wrap">
           <div>
@@ -158,7 +158,7 @@ export default function Page() {
 
           <Link
             href="/dashboard"
-            className="rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-2 text-sm hover:bg-zinc-900/60"
+            className="rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-2 text-sm hover:border-zinc-500 hover:bg-zinc-900/60"
           >
             Go to Dashboard
           </Link>
@@ -180,7 +180,7 @@ export default function Page() {
           />
           <button
             disabled={busy}
-            className="rounded-xl bg-yellow-500 px-5 py-3 font-semibold text-zinc-950 hover:bg-yellow-400 disabled:opacity-60"
+            className="rounded-xl bg-yellow-500 px-5 py-3 font-semibold text-zinc-950 hover:bg-yellow-400 active:scale-95 hover:cursor-pointer disabled:opacity-60"
           >
             Create
           </button>
@@ -245,7 +245,7 @@ function PlaylistRow({ playlist, busy, onRename, onDelete }) {
                 await onRename(playlist.id, draft);
                 setEditing(false);
               }}
-              className="rounded-xl bg-yellow-500 px-4 py-2 font-semibold text-zinc-950 hover:bg-yellow-400 disabled:opacity-60"
+              className="rounded-xl bg-yellow-500 px-4 py-2 font-semibold text-zinc-950 hover:cursor-pointer active:scale-95 hover:bg-yellow-400 disabled:opacity-60"
               type="button"
             >
               Save
@@ -256,7 +256,7 @@ function PlaylistRow({ playlist, busy, onRename, onDelete }) {
                 setDraft(playlist?.name || "");
                 setEditing(false);
               }}
-              className="rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-2 hover:bg-zinc-900/50 disabled:opacity-60"
+              className="rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-2 hover:cursor-pointer active:scale-95 hover:bg-zinc-900/50 disabled:opacity-60"
               type="button"
             >
               Cancel
@@ -268,14 +268,14 @@ function PlaylistRow({ playlist, busy, onRename, onDelete }) {
       <div className="flex gap-2">
         <Link
           href={`/playlists/${playlist.id}`}
-          className="rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-2 hover:bg-zinc-900/50"
+          className="rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-2 hover:cursor-pointer active:scale-95 hover:bg-zinc-900/50"
         >
           Open
         </Link>
         <button
           disabled={busy}
           onClick={() => setEditing(true)}
-          className="rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-2 hover:bg-zinc-900/50 disabled:opacity-60"
+          className="rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-2 hover:cursor-pointer active:scale-95 hover:bg-zinc-900/50 disabled:opacity-60"
           type="button"
         >
           Rename

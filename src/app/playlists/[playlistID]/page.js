@@ -152,13 +152,13 @@ export default function Page() {
 
   if (!playlistId) {
     return (
-      <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 py-16">
+      <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 pt-12 pb-16">
         <div className="max-w-5xl mx-auto">
           <div className="rounded-2xl border border-zinc-800 bg-zinc-900/20 p-6">
             <div className="text-yellow-300 font-semibold">Missing playlist id in the URL.</div>
             <div className="text-zinc-400 mt-2">Go back and open the playlist again.</div>
             <Link href="/playlists" className="inline-block mt-4 text-yellow-400 hover:text-yellow-300">
-              ← Back to Playlists
+              ← Back to Playlist
             </Link>
           </div>
         </div>
@@ -171,7 +171,7 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 py-16">
+    <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 pt-12 pb-16">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <Link href="/playlists" className="text-zinc-300 hover:text-yellow-400">
@@ -180,7 +180,7 @@ export default function Page() {
 
           <Link
             href="/movies"
-            className="rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-2 text-sm hover:bg-zinc-900/60"
+            className="rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-2 text-sm hover:cursor-pointer hover:border-zinc-500 hover:bg-zinc-900/60"
           >
             Browse Movies
           </Link>
@@ -198,7 +198,7 @@ export default function Page() {
               <button
                 disabled={busy}
                 onClick={() => setEditing(true)}
-                className="rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-2 hover:bg-zinc-900/50 disabled:opacity-60"
+                className="rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-2 hover:cursor-pointer active:scale-95 hover:bg-zinc-900/50 disabled:opacity-60"
               >
                 Rename
               </button>
@@ -221,7 +221,7 @@ export default function Page() {
               <button
                 disabled={busy}
                 onClick={rename}
-                className="rounded-xl bg-yellow-500 px-4 py-2 font-semibold text-zinc-950 hover:bg-yellow-400 disabled:opacity-60"
+                className="rounded-xl bg-yellow-500 px-4 py-2 font-semibold text-zinc-950 hover:cursor-pointer active:scale-95 hover:bg-yellow-400 disabled:opacity-60"
               >
                 Save
               </button>
@@ -231,7 +231,7 @@ export default function Page() {
                   setDraft(playlist?.name || "");
                   setEditing(false);
                 }}
-                className="rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-2 hover:bg-zinc-900/50 disabled:opacity-60"
+                className="rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-2 hover:cursor-pointer active:scale-95 hover:bg-zinc-900/50 disabled:opacity-60"
               >
                 Cancel
               </button>

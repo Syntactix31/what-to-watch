@@ -276,9 +276,10 @@ export default function Home() {
         Playlists
       </Link>
 
+    {/* Might change logout button colour to different one on hover doesn't look good its too dark */}
       <button
         onClick={handleLogout}
-        className="hover:border-zinc-400 text-zinc-200 px-4 py-2 rounded-lg font-medium transition-colors border border-transparent mr-10 active:scale-95"
+        className="hover:border-zinc-400 text-zinc-200 px-4 py-2 rounded-lg font-medium transition-colors border border-transparent mr-10 active:scale-95 active:text-red-700 active:border-red-700"
       >
         Log Out
       </button>

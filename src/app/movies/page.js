@@ -163,27 +163,27 @@ export default function MoviesPage() {
 
       {authReady && user ? (
         <div className="sm:flex items-center gap-4 hidden">
-          <span className="text-sm text-gray-300 max-w-[220px] truncate">
+          <span className="text-sm text-shimmer max-w-[220px] truncate">
             {user.displayName || user.email}
           </span>
 
           <Link
             href="/dashboard"
-            className="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-400 transition active:scale-95"
+            className="px-4 py-2 rounded-lg border border-black hover:border-gray-400 transition active:scale-95"
           >
             Dashboard
           </Link>
 
           <Link
             href="/playlists"
-            className="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-400 transition active:scale-95"
+            className="px-4 py-2 rounded-lg border border-black hover:border-gray-400 transition active:scale-95"
           >
             Playlists
           </Link>
 
           <button
             onClick={handleLogout}
-            className="px-4 py-2 rounded-lg border border-gray-700 hover:border-red-700 transition active:scale-95"
+            className="px-4 py-2 rounded-lg border border-black hover:border-gray-400 active:text-red-700 active:border-red-700 transition active:scale-95"
           >
             Logout
           </button>
@@ -191,7 +191,7 @@ export default function MoviesPage() {
       ) : (
         <Link
           href="/login"
-          className="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-400 transition sm:block hidden active:scale-95"
+          className="px-4 py-2 rounded-lg border border-black hover:border-gray-400 transition sm:block hidden active:scale-95"
         >
           Log In / Sign Up
         </Link>

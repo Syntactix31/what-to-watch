@@ -154,7 +154,7 @@ export default function Home() {
 
   return (
     <main className="pt-20 relative custom-scrollbar-gold">
-      <nav className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 pr-8 pl-4 lg:px-8 py-4 lg:flex lg:items-center lg:justify-between">
+      <nav className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 pr-4 md:pr-8 pl-4 lg:px-8 py-4 lg:flex lg:items-center lg:justify-between">
 
       {/* Left side: Logo + Title + Hamburger (mobile only) */}
 
@@ -223,8 +223,8 @@ export default function Home() {
         </button>
 </div>
 
-      <div className="items-center space-x-6 hidden lg:flex">
-        <div className="p-2.5">
+      <div className="items-center space-x-6 py-2.5 hidden lg:flex">
+        <div className="px-2.5 min-[1248px]:block hidden">
           <SearchBar 
             query={query}
             onSearchChange={handleSearchChange}

@@ -115,7 +115,8 @@ export default function MoviesPage() {
     <main>
       
       <div className="min-h-screen bg-transparent text-white p-4 md:p-5.5"> {/* md:p-8 */}
-      <header className="max-w-7xl mx-auto mb-8 flex items-center justify-between"> {/* mb-8 */}
+<div className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md px-4 md:px-5.5 pt-3.5 lg:pt-5.5">
+      <header className=" max-w-7xl mx-auto mb-4 flex items-center justify-between"> {/* mb-8 */}
       <Link href="/" className="text-lg font-bold">
         <span className="hover-container">
           <span className="text-shimmer normal-case shimmer-fontsize"> {/* Original text-3xl */}
@@ -127,7 +128,7 @@ export default function MoviesPage() {
 
         {/* Hamburger Menu - Mobile Only */}
         <button
-          className="sm:hidden p-2 -mr-2 hover:text-white transition-colors ml-4 hover:cursor-pointer"
+          className="md:hidden px-2 pb-2 pt-2.5 -mr-2 hover:text-white transition-colors ml-4 hover:cursor-pointer"
           onClick={() => { const newOpen = !isMenuOpen; setWasMenuOpen(isMenuOpen);
 
             // Logic for controlling visibility of menu animations
@@ -162,28 +163,28 @@ export default function MoviesPage() {
 
 
       {authReady && user ? (
-        <div className="sm:flex items-center gap-4 hidden">
+        <div className="md:flex items-center gap-4 hidden">
           <span className="text-sm text-shimmer max-w-[220px] truncate">
             {user.displayName || user.email}
           </span>
 
           <Link
             href="/dashboard"
-            className="px-4 py-2 rounded-lg border border-black hover:border-gray-400 transition active:scale-95"
+            className="px-4 py-2 rounded-lg border border-black/0 hover:border-gray-400 transition active:scale-95"
           >
             Dashboard
           </Link>
 
           <Link
             href="/playlists"
-            className="px-4 py-2 rounded-lg border border-black hover:border-gray-400 transition active:scale-95"
+            className="px-4 py-2 rounded-lg border border-black/0 hover:border-gray-400 transition active:scale-95"
           >
             Playlists
           </Link>
 
           <button
             onClick={handleLogout}
-            className="px-4 py-2 rounded-lg border border-black hover:border-gray-400 active:text-red-700 active:border-red-700 transition active:scale-95"
+            className="px-4 py-2 rounded-lg border border-black/0 hover:border-gray-400 active:text-red-700 active:border-red-700 transition active:scale-95"
           >
             Logout
           </button>
@@ -191,7 +192,7 @@ export default function MoviesPage() {
       ) : (
         <Link
           href="/login"
-          className="px-4 py-2 rounded-lg border border-black hover:border-gray-400 transition sm:block hidden active:scale-95"
+          className="px-4 py-2 rounded-lg border border-black/0 hover:border-gray-400 transition sm:block hidden active:scale-95"
         >
           Log In / Sign Up
         </Link>
@@ -201,7 +202,7 @@ export default function MoviesPage() {
       {/* Mobile Menu Dropdown */}
       {isVisible && (
         // <div className={`absolute top-full left-0 right-0 bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6 lg:hidden z-50 animate-fadeIn`}>
-  <div className="absolute top-20 left-0 right-0 overflow-hidden sm:hidden z-99">
+  <div className="absolute top-20 left-0 right-0 overflow-hidden md:hidden z-99">
     <div
       className={`bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6   ${authReady && user ? 'max-w-[50%] sm:w-50' : 'sm:w-82 md:w-100 w-full'} ml-auto transition-transform duration-300 ${ wasMenuOpen ? "animate-slideOutRight" :  "animate-slideInRight"} `}
     >
@@ -252,8 +253,9 @@ export default function MoviesPage() {
 
 
     </header>
+    </div>
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto mt-16.5">
         <div className="mb-12">
           <h1 className="text-4xl md:text-5xl font-bold bg-linear-to-r pb-2 from-yellow-400 to-orange-500 bg-clip-text text-transparent">
             Discover Amazing Movies

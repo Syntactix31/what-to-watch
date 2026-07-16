@@ -106,6 +106,7 @@ export default function Page() {
               autoComplete="new-password"
               placeholder="••••••••"
               maxLength={50}
+              minLength={6}
               required
               className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
             />
@@ -119,6 +120,7 @@ export default function Page() {
               type="password"
               autoComplete="new-password"
               maxLength={50}
+              minLength={6}
               placeholder="••••••••"
               required
               className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"

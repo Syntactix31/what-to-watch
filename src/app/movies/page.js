@@ -124,6 +124,7 @@ export default function MoviesPage() {
           </span>
         </span>
       </Link>
+      {/* Comment to ensure vercel deployment and repository update */}
 
 
         {/* Hamburger Menu - Mobile Only */}

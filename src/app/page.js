@@ -224,7 +224,7 @@ export default function Home() {
 </div>
 
       <div className="items-center space-x-6 py-2.5 hidden lg:flex">
-        <div className="px-2.5 min-[1248px]:block hidden">
+        <div className={`px-2.5 ${authReady && user ? 'min-[1248px]:block hidden' : ''}`}>
           <SearchBar 
             query={query}
             onSearchChange={handleSearchChange}

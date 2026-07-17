@@ -2,7 +2,7 @@
 
 export default function MovieDeleteModal({ movie, onClose, onDelete, loading }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
       <div className="w-full max-w-md rounded-2xl border sm:scale-100 scale-85 border-zinc-600 bg-zinc-950 text-zinc-100 pb-6 px-6 shadow-2xl">
         <div className="relative ">
           <h3 className="text-2xl font-bold mb-3 text-shimmer w-55 pt-6">Delete This Movie?</h3>

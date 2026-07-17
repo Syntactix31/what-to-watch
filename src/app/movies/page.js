@@ -129,7 +129,7 @@ export default function MoviesPage() {
 
         {/* Hamburger Menu - Mobile Only */}
         <button
-          className="md:hidden px-2 pb-2 pt-2.5 -mr-2 hover:text-white transition-colors ml-4 hover:cursor-pointer"
+          className="min-md:hidden px-2 pb-2 pt-2.5 -mr-2 hover:text-white transition-colors ml-4 hover:cursor-pointer"
           onClick={() => { const newOpen = !isMenuOpen; setWasMenuOpen(isMenuOpen);
 
             // Logic for controlling visibility of menu animations
@@ -193,7 +193,7 @@ export default function MoviesPage() {
       ) : (
         <Link
           href="/login"
-          className="px-4 py-2 rounded-lg border border-black/0 hover:border-gray-400 transition sm:block hidden active:scale-95"
+          className="px-4 py-2 rounded-lg border border-black/0 hover:border-gray-400 transition md:block hidden active:scale-95"
         >
           Log In / Sign Up
         </Link>

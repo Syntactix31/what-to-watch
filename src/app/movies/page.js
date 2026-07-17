@@ -116,7 +116,7 @@ export default function MoviesPage() {
       
       <div className="min-h-screen bg-transparent text-white p-4 md:p-5.5"> {/* md:p-8 */}
 <div className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md px-4 md:px-5.5 pt-3.5 lg:pt-5.5">
-      <header className=" max-w-7xl mx-auto mb-4 flex items-center justify-between"> {/* mb-8 */}
+      <header className=" max-w-7xl mx-auto mb-4.5 flex items-center justify-between"> {/* mb-8 */}
       <Link href="/" className="text-lg font-bold">
         <span className="hover-container">
           <span className="text-shimmer normal-case shimmer-fontsize"> {/* Original text-3xl */}

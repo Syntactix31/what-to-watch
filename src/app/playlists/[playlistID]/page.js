@@ -48,7 +48,19 @@ export default function Page() {
   const [movieToDelete, setMovieToDelete] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
+  // Playlist display formatting
+  const [gridView, setGridView] = useState(false);
+  const [listView, setListView] = useState(false);
+  // Was going to use the hover state of the delete button to mitigate overflow of requests
+  // const [deleteHover, setDeleteHover] = useState(false);
+
+  // Sorting Options
+
+
+
+  // Check for guard against congesting requests with busy state, and also check for user and playlistId before making requests
   function askDeleteMovie(movie) {
+    if (busy) return;
     setMovieToDelete(movie);
     setDeleteOpen(true);
   }
@@ -171,12 +183,23 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 pt-12 pb-16">
+    <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 pt-7 pb-16">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-between gap-3 flex-wrap">
-          <Link href="/playlists" className="text-zinc-300 hover:text-yellow-400">
+
+          {/* Removed previous back button link to playlists page to keep everything relatively consistent */}
+          {/* <Link href="/playlists" className="text-zinc-300 hover:text-yellow-400">
             ← Back to Playlists
+          </Link> */}
+
+          <Link href="/playlists" className="inline-flex items-center gap-2 text-zinc-300 hover:text-yellow-400 group">
+            <svg className="w-3 h-3 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Playlists
           </Link>
+
+
 
           <Link
             href="/movies"
@@ -245,16 +268,74 @@ export default function Page() {
           )}
         </div>
 
-        <h2 className="mt-10 text-xl font-bold">Movies in this playlist</h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10">
+          <h2 className="text-xl font-bold">Movies in this playlist</h2>
+          <h3 className="mt-1 text-sm text-zinc-500">
+            Sort By
+          </h3>
+
+          <div className="mt-2 flex gap-2 flex-wrap">
+            <button
+              disabled={busy}
+              className={`rounded-xl border  ${gridView ? 'border-zinc-200' : 'border-zinc-700'} bg-zinc-950/40 w-12 h-12 hover:cursor-pointer active:scale-95 hover:bg-zinc-900/50 disabled:opacity-60`}
+              onClick={() => {
+                if (listView) { setListView(false); }
+                setGridView(!gridView);
+                }
+              }
+              >
+              <div className="flex justify-center items-center"> 
+                <div className={`grid grid-cols-2 gap-1 ${gridView ? '[&>div]:border-zinc-200' : ''}`}>             
+                  <div className="border-2 border-zinc-400 w-2 h-2"></div>
+                  <div className="border-2 border-zinc-400 w-2 h-2"></div>
+                  <div className="border-2 border-zinc-400 w-2 h-2"></div>
+                  <div className="border-2 border-zinc-400 w-2 h-2"></div>
+                </div>  
+              </div>
+            </button>
+
+            <button
+              disabled={busy}
+              className={`rounded-xl border  ${listView ? 'border-zinc-200' : 'border-zinc-700'} bg-zinc-950/40 w-12 h-12 hover:cursor-pointer active:scale-95 hover:bg-zinc-900/50 disabled:opacity-60`} 
+              onClick={() => {
+                if (gridView) { setGridView(false); }
+                setListView(!listView);
+                }               
+              }
+              >
+              <div className="flex flex-col gap-1 justify-center items-center"> 
+                  <div className={`flex gap-1 justify-center items-center ${listView ? '[&>div]:bg-zinc-200' : ''}`}>
+                    <div className="bg-zinc-400 w-1 h-1"></div>
+                    <div className=" bg-zinc-400 w-5 h-0.5"></div>                  
+                  </div>
+                  <div className={`flex gap-1 justify-center items-center ${listView ? '[&>div]:bg-zinc-200' : ''}`}>
+                    <div className="bg-zinc-400 w-1 h-1"></div>
+                    <div className=" bg-zinc-400 w-5 h-0.5"></div>                  
+                  </div>
+                  <div className={`flex gap-1 justify-center items-center ${listView ? '[&>div]:bg-zinc-200' : ''}`}>
+                    <div className="bg-zinc-400 w-1 h-1"></div>
+                    <div className=" bg-zinc-400 w-5 h-0.5"></div>                  
+                  </div>
+                </div>  
+
+            </button>
+
+
+          </div>
+
+        </div>
+        <div className={`mt-4 grid ${gridView ? 'sm:grid-cols-4 grid-cols-2 lg:grid-cols-6 gap-2' : `${listView ? 'gap-2' : 'gap-4 sm:grid-cols-2 lg:grid-cols-3'}` }`}>
           {movies.length === 0 ? (
             <div className="sm:col-span-2 lg:col-span-3 rounded-2xl border border-zinc-800 bg-zinc-900/20 p-6 text-zinc-300">
               No movies yet. Add some from the Movies page.
             </div>
           ) : (
             movies.map((m) => (
-              <div key={m.id} className="rounded-2xl border border-zinc-800 bg-zinc-900/20 overflow-hidden">
-                <div className="aspect-[2/3] bg-zinc-950/40">
+              // hover:scale-101 active:scale-100 hover:cursor-pointer
+
+              <div key={m.id} className={`flex ${listView ? 'flex-row justify-between hover:scale-101 hover:border-zinc-600 border-zinc-800' : 'border-zinc-800 bg-zinc-900/20'}  rounded-2xl border overflow-hidden`}>
+                <div className={` ${listView ? 'flex flex-row gap-4' : 'flex flex-col'}`}>
+                <div className={`bg-zinc-950/40 ${listView ? 'h-30 w-20 flex-shrink-0' : 'aspect-[2/3]'}`}>
                   {m.poster_path ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -271,21 +352,42 @@ export default function Page() {
                   )}
                 </div>
 
-                <div className="p-4">
-                  <div className="font-semibold">{m.title || "Untitled movie"}</div>
-                  {m.release_date && <div className="text-sm text-zinc-500">{m.release_date}</div>}
+              {/* ml-4 */}
+                <div className={` ${listView ? ' mt-4' : 'p-4 flex flex-col flex-1'}`}>
+                  <div className={`font-semibold hover:cursor-pointer active:scale-98`} onClick={() => handlePlaylistMovieClick(m.movieId)}>{m.title || "Untitled movie"}</div>
+                  {m.release_date && <div className="text-sm text-zinc-500 mb-3">{m.release_date}</div>}
 
+  
                   <button
                     disabled={busy}
                     // Replace with delete modal flow
                     // onClick={() => removeMovie(m.id)}
 
                     onClick={() => askDeleteMovie(m)}
-                    className="mt-3 w-full rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-2 text-red-200 hover:cursor-pointer hover:scale-105 hover:bg-red-500/15 disabled:opacity-60 active:scale-95"
+                    className={`${listView ? 'hidden': 'mt-auto w-full rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-2 text-red-200 hover:cursor-pointer hover:scale-105 hover:bg-red-500/15 disabled:opacity-60 active:scale-95'}`}
                   >
                     Remove
                   </button>
+
                 </div>
+                </div>
+
+
+                {listView && (
+                    <div className="my-auto mr-4">
+                    <button disabled={busy} onClick={() => askDeleteMovie(m)} className="hover:text-red-600 active:scale-98 hover:cursor-pointer">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 40 40">
+                        <path fill="currentColor" d="M32.937 7.304H27.19v-.956c0-1.345-.423-2.32-1.278-2.915c-.604-.39-1.353-.588-2.224-.588h-6.441l-.014.003l-.014-.003h-.909c-2.259 0-3.503 1.244-3.503 3.503v.956H7.063a.75.75 0 0 0 0 1.5h.647l1.946 25.785c0 1.631.945 2.566 2.594 2.566h15.461c1.611 0 2.557-.93 2.592-2.51L32.25 8.804h.686a.75.75 0 0 0 .001-1.5m-2.302 2.976H9.326l-.111-1.476h21.531zM14.308 6.348c0-1.423.58-2.003 2.003-2.003h7.378c.578 0 1.053.117 1.389.333c.413.287.613.833.613 1.67v.956H14.308zm14.498 28.224c-.019.81-.295 1.083-1.095 1.083H12.25c-.818 0-1.094-.269-1.096-1.123L9.439 11.779h21.082z"></path>
+                        <path fill="currentColor" d="M17.401 12.969a.75.75 0 0 0-.722.776l.704 19.354a.75.75 0 0 0 .748.723l.028-.001a.75.75 0 0 0 .722-.776l-.703-19.355c-.015-.414-.353-.757-.777-.721m-4.649.001a.75.75 0 0 0-.696.8l1.329 19.354a.75.75 0 0 0 .747.698l.053-.002a.75.75 0 0 0 .696-.8l-1.329-19.354a.756.756 0 0 0-.8-.696m9.784-.001c-.419-.04-.762.308-.776.722l-.705 19.354a.75.75 0 0 0 .722.776l.028.001a.75.75 0 0 0 .748-.723l.705-19.354a.75.75 0 0 0-.722-.776m4.649.001a.757.757 0 0 0-.8.696L25.056 33.02a.75.75 0 0 0 .696.8l.053.002a.75.75 0 0 0 .747-.698l1.329-19.354a.75.75 0 0 0-.696-.8"></path>
+                      </svg>
+
+                    </button>
+                    </div>
+                  
+                  )}
+
+
+
               </div>
             ))
           )}
@@ -304,3 +406,7 @@ export default function Page() {
     </main>
   );
 }
+
+
+
+

@@ -222,7 +222,7 @@ export default async function MovieDetailsPage({ params, searchParams }) {
 function UserRating() {
   return (
     <div className="mt-8 pt-8 border-t border-gray-700">
-      <h2 className="text-2xl font-bold mb-4">Your Rating</h2>
+      <h2 id="your-rating" className="text-2xl font-bold mb-4">Your Rating</h2>
       <div className="flex gap-2 mb-4">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(star => (
           <button

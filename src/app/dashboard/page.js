@@ -144,7 +144,10 @@ export default function Page() {
                     key={r.id}
                     title={r.movieTitle || "Movie review"}
                     movieId={r.movieId}
-                    onClick={(id) => router.push(`/movie/${id}`)}
+                    onClick={(id) => router.push(`/movie/${id}#your-rating`)}
+                    // Add scroll to review section below movie content when clicking on a review in the dashboard
+
+                    
                     meta={typeof r.rating === "number" ? `Rating: ${r.rating}/10` : ""}
                     extra={r.text ? r.text : ""}
                   />

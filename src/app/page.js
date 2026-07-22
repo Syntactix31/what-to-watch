@@ -309,14 +309,14 @@ export default function Home() {
               <>
                 <Link 
                   href="/dashboard"
-                  className="text-shimmer block w-full px-4 py-3 rounded-xl bg-black border-b-zinc-700 border-b-2   hover:bg-zinc-800 transition-all text-lg font-medium z-60"
+                  className="text-shimmer block w-full px-4 py-3 rounded-xl bg-black border-b-zinc-700 border-b-2 hover:bg-zinc-800 transition-all text-lg font-medium z-60 active:scale-95"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Dashboard
                 </Link>
                 <Link 
                   href="/playlists"
-                  className="text-shimmer block w-full px-4 py-3 rounded-xl bg-black border-b-zinc-700 border-b-2 hover:bg-zinc-800 transition-all text-lg font-medium z-60"
+                  className="text-shimmer block w-full px-4 py-3 rounded-xl bg-black border-b-zinc-700 border-b-2 hover:bg-zinc-800 transition-all text-lg font-medium z-60 active:scale-95"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Playlists
@@ -326,7 +326,7 @@ export default function Home() {
                     await handleLogout();
                     setIsMenuOpen(false);
                   }}
-                  className="text-shimmer w-full px-4 py-3 rounded-xl bg-black hover:bg-zinc-800 transition-all text-lg font-medium z-60"
+                  className="text-shimmer w-full px-4 py-3 rounded-xl bg-black hover:bg-zinc-800 transition-all text-lg font-medium z-60 active:scale-95"
                 >
                   Log Out
                 </button>

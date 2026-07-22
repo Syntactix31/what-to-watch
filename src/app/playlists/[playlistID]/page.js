@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { db } from "../../utils/firebase";
@@ -13,11 +13,12 @@ import {
   getDoc,
   getDocs,
   orderBy,
-  query,
+  query as firestoreQuery,
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
 import MovieDeleteModal from "../../components/MovieDeleteModal";
+import PlaylistSearchBar from "../../components/PlaylistSearchBar";
 
 export default function Page() {
   const { user, loading } = useRequireAuth("/login");
@@ -56,6 +57,41 @@ export default function Page() {
 
   // Sorting Options
 
+
+  // Search Filter results
+  const [query, setQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const searchRef = useRef(null);
+
+  // Search results match
+  const normalize = (s) =>
+  (s || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+
+  const filteredMovies = useMemo(() => {
+    const q = normalize(query);
+    if (!q) return movies;
+
+    return movies.filter((m) => {
+      const title = normalize(m.title);
+      const releaseDate = normalize(m.release_date);
+
+      // const releaseDate = (m.release_date || "").toLowerCase(); // not used but ppl can search for a movie from when it was released
+
+      return title.includes(q) || releaseDate.includes(q);
+    });
+  }, [movies, query]);
+
+  // Optional but good to stack requests and hide fetch wait times
+  const handleSearchChange = (value) => {
+    setQuery(value);
+    setIsSearching(true);
+    setTimeout(() => setIsSearching(false), 150);
+
+  };
+
+  const clearSearch = () => {
+    setQuery("");
+  };
 
 
   // Check for guard against congesting requests with busy state, and also check for user and playlistId before making requests
@@ -103,7 +139,7 @@ export default function Page() {
       setDraft(p?.name || "");
 
       const moviesCol = collection(db, `users/${user.uid}/playlists/${playlistId}/movies`);
-      const q = query(moviesCol, orderBy("addedAt", "desc"));
+      const q = firestoreQuery(moviesCol, orderBy("addedAt", "desc"));
       const mSnap = await getDocs(q);
       setMovies(mSnap.docs.map((d) => ({ id: d.id, ...d.data() })));
     } catch (e) {
@@ -274,7 +310,9 @@ export default function Page() {
             Sort By
           </h3>
 
-          <div className="mt-2 flex gap-2 flex-wrap">
+          {/* Having the sort buttons and search bar centered looks good as well */}
+          <div className="mt-2 gap-5 flex items-start flex-col mb-10 sm:mb-0 sm:items-center sm:flex-row sm:flex-wrap sm:justify-between">
+            <div className="flex gap-2 items-center">
             <button
               disabled={busy}
               className={`rounded-xl border  ${gridView ? 'border-zinc-200' : 'border-zinc-700'} bg-zinc-950/40 w-12 h-12 hover:cursor-pointer active:scale-95 hover:bg-zinc-900/50 disabled:opacity-60`}
@@ -319,18 +357,30 @@ export default function Page() {
                 </div>  
 
             </button>
+            </div>
+
+            <div className="">
+              <PlaylistSearchBar 
+                query={query}
+                onSearchChange={handleSearchChange}
+                isSearching={isSearching}
+                onClearSearch={clearSearch}
+                searchRef={searchRef}
+              />      
+            </div>        
 
 
           </div>
 
+
         </div>
         <div className={`mt-4 grid ${gridView ? 'sm:grid-cols-4 grid-cols-2 lg:grid-cols-6 gap-2' : `${listView ? 'gap-2' : 'gap-4 sm:grid-cols-2 lg:grid-cols-3'}` }`}>
-          {movies.length === 0 ? (
+          {filteredMovies.length === 0 ? (
             <div className="sm:col-span-2 lg:col-span-3 rounded-2xl border border-zinc-800 bg-zinc-900/20 p-6 text-zinc-300">
               No movies yet. Add some from the Movies page.
             </div>
           ) : (
-            movies.map((m) => (
+            filteredMovies.map((m) => (
               // hover:scale-101 active:scale-100 hover:cursor-pointer
 
               <div key={m.id} className={`flex ${listView ? 'flex-row justify-between hover:scale-101 hover:border-zinc-600 border-zinc-800' : 'border-zinc-800 bg-zinc-900/20'}  rounded-2xl border overflow-hidden`}>

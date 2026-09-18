@@ -49,6 +49,8 @@ export default function Page() {
   const [movieToDelete, setMovieToDelete] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
+  const [deleteButtonHover, setDeleteButtonHover] = useState(false);
+
   // Playlist display formatting
   const [gridView, setGridView] = useState(false);
   const [listView, setListView] = useState(false);
@@ -375,9 +377,15 @@ export default function Page() {
 
         </div>
         <div className={`mt-4 grid ${gridView ? 'sm:grid-cols-4 grid-cols-2 lg:grid-cols-6 gap-2' : `${listView ? 'gap-2' : 'gap-4 sm:grid-cols-2 lg:grid-cols-3'}` }`}>
+
+          {/*             ****SEMI IMPORTANT QOEP FIX****
+
+              Add a condition for rendering when there are no movies in the search results rather than showing the render when the playlist is empty. 
+              
+          */}
           {filteredMovies.length === 0 ? (
             <div className="sm:col-span-2 lg:col-span-3 rounded-2xl border border-zinc-800 bg-zinc-900/20 p-6 text-zinc-300">
-              No movies yet. Add some from the Movies page.
+              No movies yet. Add some from the Movies page!
             </div>
           ) : (
             filteredMovies.map((m) => (
@@ -407,17 +415,58 @@ export default function Page() {
                   <div className={`font-semibold hover:cursor-pointer active:scale-98`} onClick={() => handlePlaylistMovieClick(m.movieId)}>{m.title || "Untitled movie"}</div>
                   {m.release_date && <div className="text-sm text-zinc-500 mb-3">{m.release_date}</div>}
 
-  
+                  {/* Had to add this to test a delete button positioning that was similar to the other views now that they are the same I can get rid of some of the excess logic */}
+                  <div className={` ${listView || gridView ? 'hidden' : 'mt-auto flex justify-end'}`}>
+
+                  {/*  Commented out code for delete button "REMOVE" in red on default playlist movies view */}
                   <button
                     disabled={busy}
                     // Replace with delete modal flow
                     // onClick={() => removeMovie(m.id)}
 
                     onClick={() => askDeleteMovie(m)}
-                    className={`${listView ? 'hidden': 'mt-auto w-full rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-2 text-red-200 hover:cursor-pointer hover:scale-105 hover:bg-red-500/15 disabled:opacity-60 active:scale-95'}`}
-                  >
-                    Remove
+                    // className={`${listView || gridView ? 'hidden' : 'mt-auto w-full rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-2 text-red-200 hover:cursor-pointer hover:scale-105 hover:bg-red-500/15 disabled:opacity-60 active:scale-95' }`}
+                  //   >
+                  //   Remove
+                  // </button>
+
+
+
+                  /*    (SEPARATE} Accompanying handler calls for "remove" text to show when trashbin is hovered on   */
+                    //  onMouseEnter={() => setDeleteButtonHover(true)}
+                    //  onMouseLeave={() => setDeleteButtonHover(false)}
+                    
+                    className={`${listView || gridView ? 'hidden' : 'hover:text-red-600 hover:cursor-pointer disabled:opacity-60' }`}> 
+                      <div className="active:scale-98">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 40 40">
+                        <path fill="currentColor" d="M32.937 7.304H27.19v-.956c0-1.345-.423-2.32-1.278-2.915c-.604-.39-1.353-.588-2.224-.588h-6.441l-.014.003l-.014-.003h-.909c-2.259 0-3.503 1.244-3.503 3.503v.956H7.063a.75.75 0 0 0 0 1.5h.647l1.946 25.785c0 1.631.945 2.566 2.594 2.566h15.461c1.611 0 2.557-.93 2.592-2.51L32.25 8.804h.686a.75.75 0 0 0 .001-1.5m-2.302 2.976H9.326l-.111-1.476h21.531zM14.308 6.348c0-1.423.58-2.003 2.003-2.003h7.378c.578 0 1.053.117 1.389.333c.413.287.613.833.613 1.67v.956H14.308zm14.498 28.224c-.019.81-.295 1.083-1.095 1.083H12.25c-.818 0-1.094-.269-1.096-1.123L9.439 11.779h21.082z"></path>
+                        <path fill="currentColor" d="M17.401 12.969a.75.75 0 0 0-.722.776l.704 19.354a.75.75 0 0 0 .748.723l.028-.001a.75.75 0 0 0 .722-.776l-.703-19.355c-.015-.414-.353-.757-.777-.721m-4.649.001a.75.75 0 0 0-.696.8l1.329 19.354a.75.75 0 0 0 .747.698l.053-.002a.75.75 0 0 0 .696-.8l-1.329-19.354a.756.756 0 0 0-.8-.696m9.784-.001c-.419-.04-.762.308-.776.722l-.705 19.354a.75.75 0 0 0 .722.776l.028.001a.75.75 0 0 0 .748-.723l.705-19.354a.75.75 0 0 0-.722-.776m4.649.001a.757.757 0 0 0-.8.696L25.056 33.02a.75.75 0 0 0 .696.8l.053.002a.75.75 0 0 0 .747-.698l1.329-19.354a.75.75 0 0 0-.696-.8"></path>
+                      </svg> </div>
+                      
+
+                      {/*                 Potentially add "Remove" text on delete trashbin hover               */}
+                      {/* {deleteButtonHover && (
+                        <div className="ml-2 justify-center align-center my-auto text-sm text-red-600">
+                          Remove   x
+                        </div>
+                      )} */}
+                      {/* {deleteButtonHover && (<div className="ml-2 ">x</div>)} */}
+
                   </button>
+                  </div>
+
+                {gridView && (
+                    <div className="mt-auto flex justify-end">
+                    <button disabled={busy} onClick={() => askDeleteMovie(m)} className="hover:text-red-600 active:scale-98 hover:cursor-pointer disabled:opacity-60">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 40 40">
+                        <path fill="currentColor" d="M32.937 7.304H27.19v-.956c0-1.345-.423-2.32-1.278-2.915c-.604-.39-1.353-.588-2.224-.588h-6.441l-.014.003l-.014-.003h-.909c-2.259 0-3.503 1.244-3.503 3.503v.956H7.063a.75.75 0 0 0 0 1.5h.647l1.946 25.785c0 1.631.945 2.566 2.594 2.566h15.461c1.611 0 2.557-.93 2.592-2.51L32.25 8.804h.686a.75.75 0 0 0 .001-1.5m-2.302 2.976H9.326l-.111-1.476h21.531zM14.308 6.348c0-1.423.58-2.003 2.003-2.003h7.378c.578 0 1.053.117 1.389.333c.413.287.613.833.613 1.67v.956H14.308zm14.498 28.224c-.019.81-.295 1.083-1.095 1.083H12.25c-.818 0-1.094-.269-1.096-1.123L9.439 11.779h21.082z"></path>
+                        <path fill="currentColor" d="M17.401 12.969a.75.75 0 0 0-.722.776l.704 19.354a.75.75 0 0 0 .748.723l.028-.001a.75.75 0 0 0 .722-.776l-.703-19.355c-.015-.414-.353-.757-.777-.721m-4.649.001a.75.75 0 0 0-.696.8l1.329 19.354a.75.75 0 0 0 .747.698l.053-.002a.75.75 0 0 0 .696-.8l-1.329-19.354a.756.756 0 0 0-.8-.696m9.784-.001c-.419-.04-.762.308-.776.722l-.705 19.354a.75.75 0 0 0 .722.776l.028.001a.75.75 0 0 0 .748-.723l.705-19.354a.75.75 0 0 0-.722-.776m4.649.001a.757.757 0 0 0-.8.696L25.056 33.02a.75.75 0 0 0 .696.8l.053.002a.75.75 0 0 0 .747-.698l1.329-19.354a.75.75 0 0 0-.696-.8"></path>
+                      </svg>
+
+                    </button>
+                    </div>
+                  
+                  )} 
 
                 </div>
                 </div>
@@ -435,6 +484,7 @@ export default function Page() {
                     </div>
                   
                   )}
+
 
 
 
@@ -456,7 +506,4 @@ export default function Page() {
     </main>
   );
 }
-
-
-
 

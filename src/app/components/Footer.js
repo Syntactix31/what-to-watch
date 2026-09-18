@@ -24,11 +24,20 @@ export default function Footer() {
         <p className='mt-1'>Theo Sanchez</p>
       </div>
 
-      <div>
-        <Link href="/terms" className="inline-flex scale-80 text-xs mt-10 hover:underline">
+      <div className="flex sm:flex-row flex-col justify-center md:mt-14 md:justify-end align-center text-center mx-auto gap-2 mt-10 sm:w-auto w-30">
+        <Link href="/terms" className="scale-80 text-xs hover:underline">
           Terms and Conditions
         </Link>
+        <Link href="/privacy" className="scale-80 text-xs hover:underline  md:mr-4">
+          Privacy Policy
+        </Link>
+
       </div>
+
+      <div>
+
+      </div>
+
 
     </footer>
   )

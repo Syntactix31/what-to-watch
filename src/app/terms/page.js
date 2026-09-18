@@ -60,7 +60,7 @@ export default function Page() {
         <h3 className="font-bold mb-10 hover:underline"><a href="mailto:whattowatch.support@gmail.com">whattowatch.support@gmail.com</a></h3>
 
 
-        <p>By using WhatToWatch, you agree to our Terms and Conditions and acknowledge that your data is handled in accordance with our Privacy Policy. </p>
+        <p>By using WhatToWatch, you agree to our Terms and Conditions and acknowledge that your data is handled in accordance with our <Link href="/privacy" className="hover:underline font-bold">Privacy Policy</Link>. </p>
               
       </div>
       <div>
@@ -80,3 +80,5 @@ export default function Page() {
   
 
 }
+
+

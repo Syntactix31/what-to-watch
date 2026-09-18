@@ -46,7 +46,7 @@ export default function PlaylistSearchBar({
           
           <div className="pr-4 flex items-center">
             {isSearching && (
-              <div className="w-5 h-5 border-2 border-zinc-200 border-t-transparent rounded-full animate-spin mr-3"></div>
+              <div className="max-[425px]:hidden w-5 h-5 border-2 border-zinc-200 border-t-transparent rounded-full animate-spin mr-3"></div>
             )}
             {query && (
               <button 

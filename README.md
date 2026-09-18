@@ -29,7 +29,7 @@ Levi
 > [Portfolio](https://levi1901.wixsite.com/levimportfolio)
 
 Jiro Roales
-- Backend Developer
+- Database Server Management
 
 Theo Sanchez
 - Authentication and APIs

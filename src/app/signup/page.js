@@ -17,7 +17,7 @@ export default function Page() {
   const [error, setError] = useState("");
 
   const [showTerms, setShowTerms] = useState(false);
-  const [agreed, setAgreed] = useState(false);
+  const [agreed, setAgreed] = useState({terms: false, privacy: false});
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -28,7 +28,7 @@ export default function Page() {
       return;
     }
     
-    if (!agreed) {
+    if (!agreed.terms || !agreed.privacy) {
       setShowTerms(true);
       return;
     }
@@ -36,7 +36,12 @@ export default function Page() {
     await createAccount();
   }
 
-    async function createAccount() {
+  async function createAccount() {
+    if (!agreed.terms || !agreed.privacy) {
+      setError("You must agree to the Terms and Privacy Policy.");
+      return;
+    }   
+
     setLoading(true);
     try {
       await signUpWithEmail(name, email, pw, remember);

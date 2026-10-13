@@ -56,6 +56,7 @@ export default function Home() {
   const [showButton, setShowButton] = useState(false);
 
 
+
   const handleSearchChange = async (value) => {
     setQuery(value);
     if (value.trim().length < 2) {
@@ -207,7 +208,6 @@ export default function Home() {
                     setIsVisible(false);
                   }, 300);
                 }
-
            }}
 
           aria-label="Toggle menu"
@@ -301,8 +301,9 @@ export default function Home() {
         // <div className={`absolute top-full left-0 right-0 bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6 lg:hidden z-50 animate-fadeIn`}>
   <div className="absolute top-full left-0 right-0 overflow-hidden lg:hidden z-50">
     <div
-      className={`bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6   ${authReady && user ? 'max-w-[50%] sm:w-50' : 'sm:w-82 md:w-100 w-full'} ml-auto transition-transform duration-300 ${ wasMenuOpen ? "animate-slideOutRight" :  "animate-slideInRight"} `}
+      className={`bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6   ${authReady && user ? 'max-w-[50%] sm:w-50' : 'sm:w-82 md:w-100 w-full'} ml-auto transition-transform duration-300 ${ wasMenuOpen ? `${authReady && user ? "animate-slideOutRight" : "animate-slideOutTop"}` :  `${authReady && user ? "animate-slideInRight" : "animate-slideInTop"}`} `}
     >
+      {/* Change the above animate-slideOutRight and animate-slideInRight with the slide top variants for a drop down effect (Might look better - get user statements on this UI)  */}
 
           <div className="px-8 space-y-3 text-center">
             {authReady && user ? (

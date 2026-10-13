@@ -351,3 +351,39 @@ html::-webkit-scrollbar-thumb:hover {
 .animate-slideOutRight {
   animation: slideOutRight 300ms ease-out forwards;
 }
+
+
+
+/* Testing if a sliding animation from top would be better */
+@keyframes slideInTop {
+  from {
+    transform: translateY(-100%);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slideInTop {
+  animation: slideInTop 250ms ease-out forwards;
+}
+
+@keyframes slideOutTop {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0.8;
+  }
+}
+
+.animate-slideOutTop {
+  animation: slideOutTop 300ms ease-out forwards;
+}
+
+
+

@@ -6,6 +6,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   orderBy,
   query,
@@ -22,6 +23,8 @@ export default function AddToPlaylist({ movie }) {
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
 
+  const [containingPlaylists, setContainingPlaylists] = useState([]);
+
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => setUser(u || null));
     return () => unsub();
@@ -31,12 +34,37 @@ export default function AddToPlaylist({ movie }) {
     if (!user?.uid) return;
 
     (async () => {
-      const col = collection(db, `users/${user.uid}/playlists`);
-      const q = query(col, orderBy("updatedAt", "desc"));
-      const snap = await getDocs(q);
-      setPlaylists(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+      try {
+
+        const col = collection(db, `users/${user.uid}/playlists`);
+        const q = query(col, orderBy("updatedAt", "desc"));
+        const snap = await getDocs(q);
+
+        const allPlaylists = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+
+        setPlaylists(allPlaylists);
+
+        // The following is where the code checks all the playlist collections for a playlist that contains the matching movie id and returns the playlist name
+        const memberships = await Promise.all(allPlaylists.map(async (p) => {
+          const movieRef = doc(db, `users/${user.uid}/playlists/${p.id}/movies/${movie.id}`);
+          const movieSnap = await getDoc(movieRef);
+
+          return movieSnap.exists() ? p : null;
+
+
+        })  
+      );
+      
+      setContainingPlaylists(memberships.filter(Boolean));    // Interesting way to filter out nulls in an array list - will take note for this later
+
+
+
+      } catch (error) {
+        console.error("Failed to load playlists cuz:", error)
+
+      }
     })();
-  }, [user?.uid]);
+  }, [user?.uid, movie?.id]);
 
   async function add() {
     if (!user?.uid || !selected || !movie?.id) return;
@@ -59,8 +87,29 @@ export default function AddToPlaylist({ movie }) {
       await updateDoc(doc(db, `users/${user.uid}/playlists/${selected}`), {
         updatedAt: serverTimestamp(),
       });
+      
+      async function loadContainingPlaylists() {
+        if (!user?.uid || !movie?.id) return;
+
+        const memberships = await Promise.all(
+          playlists.map(async (p) => {
+            const movieRef = doc(
+              db,
+              `users/${user.uid}/playlists/${p.id}/movies/${movie.id}`
+            );
+            const movieSnap = await getDoc(movieRef);
+
+            return movieSnap.exists() ? p : null;
+          })
+        );
+
+        setContainingPlaylists(memberships.filter(Boolean));
+      }
+
 
       setMsg("Added to playlist ✔");
+      await loadContainingPlaylists();
+
     } catch {
       setMsg("Could not add to playlist.");
     } finally {
@@ -87,11 +136,11 @@ export default function AddToPlaylist({ movie }) {
         <select
           value={selected}
           onChange={(e) => setSelected(e.target.value)}
-          className="rounded-lg border border-gray-700 bg-gray-950/40 px-3 py-2"
+          className="rounded-lg border border-gray-700 bg-black px-3 py-2 hover:cursor-pointer"
         >
           <option value="">Select a playlist…</option>
           {playlists.map((p) => (
-            <option key={p.id} value={p.id}>
+            <option key={p.id} value={p.id} className="bg-black text-zinc-300">
               {p.name || "Untitled"}
             </option>
           ))}
@@ -111,7 +160,45 @@ export default function AddToPlaylist({ movie }) {
         </Link>
       </div>
 
-      {msg && <div className="mt-2 text-sm text-gray-300">{msg}</div>}
+      {msg && <div className="mt-2 text-sm text-gray-300 pl-4">{msg}</div>}
+
+
+      {/* Section for information about which playlists contains the movie  */}
+      {/* <div className="mt-6 text-sm text-gray-300">
+
+        <span className="font-semibold">{movie.title}</span> is in the {containingPlaylists.length} playlist(s):
+
+
+      </div> */}
+      <div className="mt-6 border-t border-gray-700 pt-4 text-sm text-gray-300">
+        <span className="font-semibold">{movie.title}</span> is in{" "}
+        {containingPlaylists.length === 1
+          ? "1 playlist"
+          : `${containingPlaylists.length} playlists`}
+        :
+
+        {containingPlaylists.length === 0 ? (
+          <div className="mt-2 text-gray-400">
+            This movie is not in any of your playlists yet.
+          </div>
+        ) : (
+          <ul className="mt-2 flex flex-wrap gap-2">
+            {containingPlaylists.map((p) => (
+              <li key={p.id}>
+                <Link
+                  href={`/playlists/${p.id}`}
+                  className="inline-block rounded-full border border-gray-700 bg-gray-800 px-3 py-1 hover:bg-gray-700 hover:scale-103 hover:border hover:border-zinc-300 active:scale-100 transition"
+                >
+                  {p.name || "Untitled"}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+
     </div>
   );
 }
+

@@ -39,8 +39,8 @@ export default function PlaylistSearchBar({
             maxLength={100}
             id="search-home"
             onChange={e => onSearchChange(e.target.value)}
-            placeholder="Search for a movie"   
-            className="bg-transparent outline-none text-white placeholder-gray-500 w-40 sm:w-40 focus:w-54 transition-all duration-300 py-2"
+            placeholder="Search for a movie..."                     // added ellipsis to placeholder                  
+            className="bg-transparent outline-none text-white placeholder-gray-500 w-50 sm:w-40 sm:focus:w-54 focus:w-52 transition-all duration-300 py-2"                                                           // slightly adjusted the focus width of the searchbar on mobile viewports to align it with the playlist movies flex box below it
             autoComplete="off"
           />
           

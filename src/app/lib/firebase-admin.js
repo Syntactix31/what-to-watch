@@ -8,30 +8,30 @@ function getFirebaseAdminApp() {
     return existingApp;
   }
 
-  // Usesthe downloaded service-account JSON file for local testing
+  // Preferred for Vercel/production: entire service-account JSON as Base64.
+  const base64ServiceAccount =
+    process.env.FIREBASE_SERVICE_ACCOUNT_BASE64;
+
+  if (base64ServiceAccount) {
+    const serviceAccount = JSON.parse(
+      Buffer.from(base64ServiceAccount, "base64").toString("utf8")
+    );
+
+    return initializeApp({
+      credential: cert(serviceAccount),
+    });
+  }
+
+  // Local development: downloaded service-account JSON file.
   if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
     return initializeApp({
       credential: applicationDefault(),
     });
   }
 
-  const projectId = process.env.FIREBASE_PROJECT_ID;
-  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
-
-  if (!projectId || !clientEmail || !privateKey) {
-    throw new Error(
-      "Missing Firebase Admin credentials. Set either GOOGLE_APPLICATION_CREDENTIALS locally or FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, and FIREBASE_PRIVATE_KEY in production."
-    );
-  }
-
-  return initializeApp({
-    credential: cert({
-      projectId,
-      clientEmail,
-      privateKey,
-    }),
-  });
+  throw new Error(
+    "Missing Firebase Admin credentials. Set FIREBASE_SERVICE_ACCOUNT_BASE64 in production or GOOGLE_APPLICATION_CREDENTIALS locally."
+  );
 }
 
 export const adminAuth = getAuth(getFirebaseAdminApp());

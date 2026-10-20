@@ -1,15 +1,27 @@
+// lib/recaptcha.js
 import { RecaptchaEnterpriseServiceClient } from "@google-cloud/recaptcha-enterprise";
 
 const projectID = process.env.GOOGLE_CLOUD_PROJECT_ID;
 const recaptchaKey = process.env.RECAPTCHA_SITE_KEY;
+const base64ServiceAccount =
+  process.env.FIREBASE_SERVICE_ACCOUNT_BASE64;
 
-if (!projectID || !recaptchaKey) {
+if (!projectID || !recaptchaKey || !base64ServiceAccount) {
   throw new Error(
-    "Missing GOOGLE_CLOUD_PROJECT_ID or RECAPTCHA_SITE_KEY environment variables."
+    "Missing GOOGLE_CLOUD_PROJECT_ID, RECAPTCHA_SITE_KEY, or FIREBASE_SERVICE_ACCOUNT_BASE64."
   );
 }
 
-const recaptchaClient = new RecaptchaEnterpriseServiceClient();
+const serviceAccount = JSON.parse(
+  Buffer.from(base64ServiceAccount, "base64").toString("utf8")
+);
+
+const recaptchaClient = new RecaptchaEnterpriseServiceClient({
+  credentials: {
+    client_email: serviceAccount.client_email,
+    private_key: serviceAccount.private_key,
+  },
+});
 
 export async function createAssessment({ token, recaptchaAction }) {
   if (!token) {
@@ -52,3 +64,6 @@ export async function createAssessment({ token, recaptchaAction }) {
     reasons: response.riskAnalysis?.reasons ?? [],
   };
 }
+
+
+

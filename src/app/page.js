@@ -107,7 +107,7 @@ export default function Home() {
       const size = 1.5 * featureEl.offsetWidth;
       const newSize = Math.max(size - (fromTop / 3), featureEl.offsetWidth);
       const blur = Math.min(0 + (fromTop / 100), 5);
-      const opacity = Math.max(1 - ((fromTop / document.documentElement.scrollHeight) * 1.3), 0);
+      const opacity = Math.max(1 - ((fromTop / document.documentElement.scrollHeight) * 1.5), 0);  // Value changed from 1.3 to 1.5 for darker scroll effect experiment with values for best choice
       
       setFeatureStyle({
         backgroundSize: `${newSize}px`,
@@ -357,7 +357,7 @@ export default function Home() {
       </header>   */}
 
 
-      <div className="relative z-40 mb-8">
+      <div className="relative z-40 ">    {/* mb-6 */}
         <div 
           className="feature fixed top-0 left-0 w-full h-screen bg-cover bg-no-repeat bg-center bg-[url('/movietheatre1.jpg')] z-10"
           style={featureStyle}

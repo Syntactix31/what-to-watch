@@ -203,9 +203,9 @@ export default function MoviesPage() {
       {/* Mobile Menu Dropdown */}
       {isVisible && (
         // <div className={`absolute top-full left-0 right-0 bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6 lg:hidden z-50 animate-fadeIn`}>
-  <div className="absolute top-20 left-0 right-0 overflow-hidden md:hidden z-99">
+  <div className="absolute top-20 left-0 right-0 overflow-hidden md:hidden z-99"> 
     <div
-      className={`bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6   ${authReady && user ? 'max-w-[50%] sm:w-50' : 'sm:w-82 md:w-100 w-full'} ml-auto transition-transform duration-300 ${ wasMenuOpen ? "animate-slideOutRight" :  "animate-slideInRight"} `}
+      className={`bg-black/80 backdrop-blur-md border-t border-zinc-700 pt-4 pb-6   ${authReady && user ? 'max-w-[50%] sm:w-50' : 'sm:w-82 md:w-100 w-full'} ml-auto transition-transform duration-300 ${ wasMenuOpen ? `${authReady && user ? "animate-slideOutRight" : "animate-slideOutTop"}` :  `${authReady && user ? "animate-slideInRight" : "animate-slideInTop"}`} `}
     >
 
           <div className="px-8 space-y-3 text-center">

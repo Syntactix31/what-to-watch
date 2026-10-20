@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Script from "next/script";
 import { useRouter } from "next/navigation";
 import { signUpWithEmail } from "../utils/auth";
 import TermsModal from "../components/TermsModal";
@@ -19,6 +20,41 @@ export default function Page() {
   const [showTerms, setShowTerms] = useState(false);
   const [agreed, setAgreed] = useState({terms: false, privacy: false});
 
+  const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+  //     Testing localhost for reCAPTCHA v3, you can use the following test keys:
+  // async function getRecaptchaToken() {
+  //   return new Promise((resolve, reject) => {
+  //     if (!window.grecaptcha?.enterprise) {
+  //       reject(new Error("reCAPTCHA is not ready. Please try again."));
+  //       return;
+  //     }
+
+  //     window.grecaptcha.enterprise.ready(async () => {
+  //       try {
+  //         const token = await window.grecaptcha.enterprise.execute(
+  //           RECAPTCHA_SITE_KEY,
+  //           { action: "SIGNUP" }
+  //         );
+  //         resolve(token);
+  //       } catch (err) {
+  //         console.error("reCAPTCHA execute failed:", err);
+  //         reject(new Error("reCAPTCHA verification failed. Please try again."));
+  //       }
+  //     });
+  //   });
+  // }  
+
+  function getRecaptchaToken() {
+    const token = window.grecaptcha?.enterprise?.getResponse?.();
+
+    if (!token) {
+      throw new Error("Please complete the reCAPTCHA check.");
+    }
+
+    return token;
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
@@ -27,24 +63,36 @@ export default function Page() {
       setError("Passwords do not match.");
       return;
     }
-    
+
     if (!agreed.terms || !agreed.privacy) {
       setShowTerms(true);
       return;
     }
 
-    await createAccount();
-  }
+    try {
+      const recaptchaToken = await getRecaptchaToken();
+      await createAccount(recaptchaToken);
+    } catch (err) {
+      setError(err.message || "Sign up failed.");
+    }
+  }  
 
-  async function createAccount() {
+
+
+  async function createAccount(recaptchaToken) {
     if (!agreed.terms || !agreed.privacy) {
       setError("You must agree to the Terms and Privacy Policy.");
       return;
     }   
 
+    if (!recaptchaToken) {
+      setError("Please complete the reCAPTCHA check.");
+      return;
+    }
+
     setLoading(true);
     try {
-      await signUpWithEmail(name, email, pw, remember);
+      await signUpWithEmail(name, email, pw, remember, recaptchaToken);
       router.push("/");
     } catch (err) {
       setError(err.message || "Sign up failed.");
@@ -57,6 +105,18 @@ export default function Page() {
 
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 grid place-items-center px-6">
+      <Script
+        src="https://www.google.com/recaptcha/enterprise.js"
+        strategy="afterInteractive"
+      />
+
+      {/*  Script for reCAPTCHA v3 for localhost development (score based)  */}
+      {/* <Script
+        src={`https://www.google.com/recaptcha/enterprise.js?render=${RECAPTCHA_SITE_KEY}`}
+        strategy="afterInteractive"
+      /> */}
+
+
       <div className="w-full max-w-md rounded-3xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-xl p-6 md:p-8">
         <h1 className="text-2xl font-bold">
           <span className="mr-2">Join</span>
@@ -81,7 +141,7 @@ export default function Page() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Johnappleseed"
-              maxLength={50}
+              maxLength={50}      /*   reduce to 10 digits so display name doesnt mess up nav bar and main page layout/formatting    */
               required
               className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
             />
@@ -142,10 +202,17 @@ export default function Page() {
             Remember me
           </label>
 
+          <div
+            className="g-recaptcha"
+            data-sitekey={RECAPTCHA_SITE_KEY}
+            data-action="SIGNUP"
+            data-theme="dark"
+          />
+
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-gradient-to-r from-yellow-400 to-orange-600 px-4 py-3 font-semibold text-zinc-950 hover:from-yellow-300 hover:to-orange-500 disabled-opacity-60 disabled:cursor-not-allowed transition cursor-pointer"
+            className="w-full rounded-xl bg-gradient-to-r from-yellow-400 to-orange-600 px-4 py-3 font-semibold text-zinc-950 hover:from-yellow-300 hover:to-orange-500 disabled:opacity-60 disabled:cursor-not-allowed transition cursor-pointer"
           >
             {loading ? "Creating…" : "Create account"}
           </button>
@@ -166,11 +233,33 @@ export default function Page() {
         setAgreed={setAgreed}
         onAccept={async () => {
           setShowTerms(false);
-          await createAccount();
+
+          try {
+            const recaptchaToken = getRecaptchaToken();
+            await createAccount(recaptchaToken);
+          } catch (err) {
+            setError(err.message || "Sign up failed.");
+          }
         }}
+
+        // onAccept for local development testing with reCAPTCHA v3 (score based)
+        // onAccept={async () => {
+        //   setShowTerms(false);
+
+        //   try {
+        //     const recaptchaToken = await getRecaptchaToken();
+        //     await createAccount(recaptchaToken);
+        //   } catch (err) {
+        //     setError(err.message || "Sign up failed.");
+        //   }
+        // }}
+        
       />
 
     </main>
   );
 }
+
+
+
 

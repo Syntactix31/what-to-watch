@@ -47,15 +47,57 @@ export async function loginWithGoogle(remember = true) {
   }
 }
 
-export async function signUpWithEmail(name, email, password, remember = true) {
+export async function signUpWithEmail(name, email, password, remember = true, recaptchaToken) {
+  if (!recaptchaToken) {
+    throw new Error("Please complete the reCAPTCHA check.");
+  }
   await applyPersistence(remember);
+
+  let response;
+
   try {
-    const cred = await createUserWithEmailAndPassword(auth, email, password);
-    if (name?.trim()) await updateProfile(cred.user, { displayName: name.trim() });
-    return cred;
+    response = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+        recaptchaToken,
+      }),
+    });
+  } catch {
+    throw new Error("Could not reach the signup service. Please try again.");
+  }
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.error || "Sign up failed.");
+  }
+
+  // The Admin SDK created the account, but the browser is not signed in yet.
+  try {
+    return await signInWithEmailAndPassword(auth, email, password);
   } catch (e) {
     throw new Error(friendlyAuthError(e));
   }
+
+
+
+
+  //   OLD TRY CATCH BLOCK (REVERT IN CASE OF RECAPTCHA ISSUES)
+  // try {
+  //   const cred = await createUserWithEmailAndPassword(auth, email, password);
+  //   if (name?.trim()) await updateProfile(cred.user, { displayName: name.trim() });
+  //   return cred;
+  // } catch (e) {
+  //   throw new Error(friendlyAuthError(e));
+  // }
+
+
 }
 
 export async function resetPassword(email) {

@@ -15,7 +15,7 @@ export default function Footer() {
       {/* <hr className="bg-zinc-200 lg:w-200 w-100 md:w-2xl mx-auto"/> */}
 
       <p className="pb-4 mt-10">&#169; 2026 All rights reserved.</p>
-      <div className="text-xs text-zinc-200">
+      <div className="text-xs text-zinc-200 pb-6">
         <Link href="https://www.linkedin.com/in/levi-moreau" target="_blank" rel="noopener noreferrer" className="cursor-pointer w-30">
           Levi Moreau
         </Link>
@@ -24,7 +24,7 @@ export default function Footer() {
         <p className='mt-1'>Theo Sanchez</p>
       </div>
 
-      <div className="flex sm:flex-row flex-col justify-center md:mt-14 md:justify-end align-center text-center mx-auto gap-2 mt-10 sm:w-auto w-30">
+      <div className="flex sm:flex-row flex-col justify-center md:mt-14 md:justify-end align-center text-center mx-auto gap-2 mt-10 sm:w-auto w-30 mb-4">
         <Link href="/terms" className="scale-80 text-xs hover:underline">
           Terms and Conditions
         </Link>
@@ -42,10 +42,3 @@ export default function Footer() {
     </footer>
   )
 }
-
-
-
-
-
-
-

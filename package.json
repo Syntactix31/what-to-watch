@@ -23,5 +23,12 @@
     "babel-plugin-react-compiler": "1.0.0",
     "baseline-browser-mapping": "^2.10.32",
     "tailwindcss": "^4"
+  },
+  "overrides": {
+    "jose": "5.9.6"
+  },
+    "engines": {
+    "node": "22.x"
   }
 }
+

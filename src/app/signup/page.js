@@ -204,6 +204,8 @@ export default function Page() {
             />
           </div>
 
+          {/* Div parent to wrap the remmeber me check box and recaptcha in the same flex row on small viewports */}
+          {/* <div className=" flex flex-row justify-end gap-16 max-w-max align-center sm:flex-column mb-7"></div> */}
           <label className="inline-flex items-center gap-2 text-sm text-zinc-300 select-none">
             <input
               type="checkbox"
@@ -214,9 +216,9 @@ export default function Page() {
             Remember me
           </label>
 
-          <div className={`${showCaptcha ? 'flex items-center justify-center w-fit mx-auto' : 'hidden'}`}>    {/* add scale for smaller mobile viewports */}
+          <div className={`${showCaptcha ? 'mx-auto max-w-md overflow-hidden flex align-items justify-center' : 'hidden'}`}>    {/* add scale for smaller mobile viewports */}
             <div
-              className={`g-recaptcha`}
+              className={`g-recaptcha w-fit`}
               data-sitekey={RECAPTCHA_SITE_KEY}
               data-action="SIGNUP"
               data-theme="dark"
@@ -273,4 +275,5 @@ export default function Page() {
     </main>
   );
 }
+
 

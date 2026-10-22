@@ -214,7 +214,7 @@ export default function Page() {
             Remember me
           </label>
 
-          <div className={`mx-auto ${showCaptcha ? 'block recaptcha-slot' : 'hidden'}`}>    {/* add scale for smaller mobile viewports */}
+          <div className={`${showCaptcha ? 'flex items-center justify-center w-fit mx-auto' : 'hidden'}`}>    {/* add scale for smaller mobile viewports */}
             <div
               className={`g-recaptcha`}
               data-sitekey={RECAPTCHA_SITE_KEY}

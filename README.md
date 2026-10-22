@@ -27,7 +27,7 @@ npm install express
 
 To learn more about our development process and tech stack, please reach out to the developers:
 
-## Accreditation:
+## Developers:
 
 Levi
 - Project Manager, Frontend Developer, AI Integration

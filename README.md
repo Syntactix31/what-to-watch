@@ -9,6 +9,12 @@ npm install
 # and
 npm run dev
 # and
+npm run build
+
+## DEPENDENCIES
+npm install firebase-admin @google-cloud/recaptcha-enterprise
+npm install firebase
+npm install express
 
 ```
 
@@ -19,7 +25,7 @@ npm run dev
 
 ## Learn More
 
-To learn more about our website, please reach out to the developers:
+To learn more about our development process and tech stack, please reach out to the developers:
 
 ## Accreditation:
 

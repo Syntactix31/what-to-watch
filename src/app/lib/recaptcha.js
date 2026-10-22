@@ -63,6 +63,3 @@ export async function createAssessment({ token, recaptchaAction }) {
     reasons: response.riskAnalysis?.reasons ?? [],
   };
 }
-
-
-

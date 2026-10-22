@@ -31,7 +31,8 @@ export default function Page() {
   const captchaContainerRef = useRef(null);
   const [captchaScale, setCaptchaScale] = useState(1);
 
-  const captchaHeight = Math.round(RECAPTCHA_HEIGHT * captchaScale);
+  const captchaWidth = RECAPTCHA_WIDTH * captchaScale;
+  const captchaHeight = RECAPTCHA_HEIGHT * captchaScale;
   
 
   // reCAPTCHA container fix cuz its being a piece of shit
@@ -266,29 +267,44 @@ export default function Page() {
             /> */}
 
         {/* Trying a suggestion from AI */}
+          <div
+            ref={captchaContainerRef}
+            className={
+              showCaptcha
+                ? "block w-full min-w-0 max-w-full"
+                : "hidden"
+            }
+          >
+            {/* Center the scaled dimensions, not the native 304px box. */}
             <div
-              ref={captchaContainerRef}
-              className={`${
-                showCaptcha
-                  ? "mt-2 flex w-full justify-center overflow-hidden"
-                  : "hidden"
-              }`}
+              className="relative mx-auto"
               style={{
+                width: captchaWidth,
                 height: captchaHeight,
+                maxWidth: "100%",
               }}
             >
+              {/* Keep the native-size widget out of normal layout flow. */}
               <div
-                className="g-recaptcha origin-top-left"
                 style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
                   width: RECAPTCHA_WIDTH,
                   height: RECAPTCHA_HEIGHT,
                   transform: `scale(${captchaScale})`,
+                  transformOrigin: "top left",
                 }}
-                data-sitekey={RECAPTCHA_SITE_KEY}
-                data-action="SIGNUP"
-                data-theme="dark"
-              />
+              >
+                <div
+                  className="g-recaptcha"
+                  data-sitekey={RECAPTCHA_SITE_KEY}
+                  data-action="SIGNUP"
+                  data-theme="dark"
+                />
+              </div>
             </div>
+          </div>
 
 
 

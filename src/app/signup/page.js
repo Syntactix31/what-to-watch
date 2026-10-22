@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Script from "next/script";
 import { useRouter } from "next/navigation";
@@ -20,9 +20,46 @@ export default function Page() {
   const [showTerms, setShowTerms] = useState(false);
   const [agreed, setAgreed] = useState({terms: false, privacy: false});
 
+  const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
   const [showCaptcha, setShowCaptcha] = useState(false);
 
-  const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  // reCAPTCHA dynamic sizing bs
+  const RECAPTCHA_WIDTH = 304;
+  const RECAPTCHA_HEIGHT = 78;
+
+  const captchaContainerRef = useRef(null);
+  const [captchaScale, setCaptchaScale] = useState(1);
+
+  const captchaHeight = Math.round(RECAPTCHA_HEIGHT * captchaScale);
+  
+
+  // reCAPTCHA container fix cuz its being a piece of shit
+  useEffect(() => {
+    if (!showCaptcha) return;
+
+    const container = captchaContainerRef.current;
+    if (!container) return;
+
+    function updateScale(availableWidth) {
+      if (availableWidth <= 0) return;
+
+      setCaptchaScale(
+        Math.min(1, availableWidth / RECAPTCHA_WIDTH)
+      );
+    }
+
+    updateScale(container.clientWidth);
+
+    const observer = new ResizeObserver(([entry]) => {
+      updateScale(entry.contentRect.width);
+    });
+
+    observer.observe(container);
+
+    return () => observer.disconnect();
+  }, [showCaptcha]);
+
 
   //     Testing localhost for reCAPTCHA v3, you can use the following test keys:
   // async function getRecaptchaToken() {
@@ -56,6 +93,7 @@ export default function Page() {
 
     return token;
   }
+
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -115,7 +153,8 @@ export default function Page() {
 
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100 grid place-items-center px-6">
+    // <main className="min-h-dvh bg-zinc-950 text-zinc-100 grid place-items-center px-6">
+    <main className="grid min-h-dvh w-full min-w-0 grid-cols-1 place-items-center bg-zinc-950 px-6 py-8 text-zinc-100">
       <Script
         src="https://www.google.com/recaptcha/enterprise.js"
         strategy="afterInteractive"
@@ -128,7 +167,8 @@ export default function Page() {
       /> */}
 
 
-      <div className="w-full max-w-md rounded-3xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-xl p-6 md:p-8">
+      {/* <div className="w-full max-w-md rounded-3xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-xl p-6 md:p-8"> */}
+      <div className="box-border w-full min-w-0 max-w-md rounded-3xl border border-zinc-800 bg-zinc-900/40 p-6 backdrop-blur-xl md:p-8">
         <h1 className="text-2xl font-bold">
           <span className="mr-2">Join</span>
           <span className="hover-container">
@@ -145,7 +185,8 @@ export default function Page() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+                                  {/* className="mt-6 space-y-4" */}
+        <form onSubmit={handleSubmit} className="mt-6 w-full min-w-0 space-y-4">
           <div>
             <label className="block text-sm font-medium text-zinc-200">Display name</label>
             <input
@@ -216,14 +257,42 @@ export default function Page() {
             Remember me
           </label>
 
-          <div className={`${showCaptcha ? 'mx-auto max-w-md overflow-hidden flex align-items justify-center' : 'hidden'}`}>    {/* add scale for smaller mobile viewports */}
-            <div
-              className={`g-recaptcha w-fit`}
+          {/* Old version which worked but needed better dynamic sizing */}
+            {/* <div
+              className={`${showCaptcha ? 'block origin-top-left w-[240px] overflow-hidden sm:w-full sm:flex sm:justify-center sm:scale-100 scale-[0.85]' : 'hidden'} g-recaptcha`}
               data-sitekey={RECAPTCHA_SITE_KEY}
               data-action="SIGNUP"
               data-theme="dark"
-            />
-          </div>
+            /> */}
+
+        {/* Trying a suggestion from AI */}
+            <div
+              ref={captchaContainerRef}
+              className={`${
+                showCaptcha
+                  ? "mt-2 flex w-full justify-center overflow-hidden"
+                  : "hidden"
+              }`}
+              style={{
+                height: captchaHeight,
+              }}
+            >
+              <div
+                className="g-recaptcha origin-top-left"
+                style={{
+                  width: RECAPTCHA_WIDTH,
+                  height: RECAPTCHA_HEIGHT,
+                  transform: `scale(${captchaScale})`,
+                }}
+                data-sitekey={RECAPTCHA_SITE_KEY}
+                data-action="SIGNUP"
+                data-theme="dark"
+              />
+            </div>
+
+
+
+
 
           <button
             type="submit"
@@ -275,5 +344,6 @@ export default function Page() {
     </main>
   );
 }
+
 
 

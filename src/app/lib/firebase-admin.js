@@ -8,7 +8,7 @@ function getFirebaseAdminApp() {
     return existingApp;
   }
 
-  // Preferred for Vercel/production: entire service-account JSON as Base64.
+  // Preferred for Vercel/production: entire service-account JSON as Base64 (CUZ THIS SHI WOULD NOT WORK)
   const base64ServiceAccount =
     process.env.FIREBASE_SERVICE_ACCOUNT_BASE64;
 
@@ -22,7 +22,7 @@ function getFirebaseAdminApp() {
     });
   }
 
-  // Local development: downloaded service-account JSON file.
+  // Local development: downloaded service-account JSON file
   if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
     return initializeApp({
       credential: applicationDefault(),

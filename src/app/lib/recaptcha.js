@@ -1,4 +1,3 @@
-// lib/recaptcha.js
 import { RecaptchaEnterpriseServiceClient } from "@google-cloud/recaptcha-enterprise";
 
 const projectID = process.env.GOOGLE_CLOUD_PROJECT_ID;

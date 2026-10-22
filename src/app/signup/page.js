@@ -20,6 +20,8 @@ export default function Page() {
   const [showTerms, setShowTerms] = useState(false);
   const [agreed, setAgreed] = useState({terms: false, privacy: false});
 
+  const [showCaptcha, setShowCaptcha] = useState(false);
+
   const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
   //     Testing localhost for reCAPTCHA v3, you can use the following test keys:
@@ -102,6 +104,15 @@ export default function Page() {
   }
 
 
+  function passwordsMatch() {
+    if (pw === pw2) {
+      setShowCaptcha(true);
+    } else {
+      setShowCaptcha(false);
+    }
+
+  }
+
 
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 grid place-items-center px-6">
@@ -182,6 +193,7 @@ export default function Page() {
             <input
               value={pw2}
               onChange={(e) => setPw2(e.target.value)}
+              onBlur={() => passwordsMatch()}
               type="password"
               autoComplete="new-password"
               maxLength={50}
@@ -202,12 +214,14 @@ export default function Page() {
             Remember me
           </label>
 
-          <div
-            className="g-recaptcha"
-            data-sitekey={RECAPTCHA_SITE_KEY}
-            data-action="SIGNUP"
-            data-theme="dark"
-          />
+          <div className="mx-auto w-full flex items-center justify-center">
+            <div
+              className={`g-recaptcha ${showCaptcha ? 'block' : 'hidden'}`}
+              data-sitekey={RECAPTCHA_SITE_KEY}
+              data-action="SIGNUP"
+              data-theme="dark"
+            />
+          </div>
 
           <button
             type="submit"
@@ -259,7 +273,4 @@ export default function Page() {
     </main>
   );
 }
-
-
-
 

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@google-cloud/recaptcha-enterprise": "^7.3.0",
+    "@neondatabase/serverless": "^1.2.0",
     "encoding": "^0.1.13",
     "express": "^5.3.0",
     "firebase": "^12.6.0",
@@ -28,4 +29,3 @@
     "jose": "5.9.6"
   }
 }
-

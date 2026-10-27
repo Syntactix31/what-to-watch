@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import TrackRecentlyViewed from "../../components/TrackRecentlyViewed";
 import AddToPlaylist from "../../components/AddToPlaylist";
 import MovieReview from "../../components/MovieReview";
+import Comments from "../../components/Comments";
+import ReviewSection from "../../components/ReviewSection";
 
 
 // Fetch function - NOTE (Levi): The api connection is very slow on authenticate users that have signed in because of congested handling. To resolve this, I have added better error handling and timeouts this does not fully resolve the issue but mitigates the server crashes 
@@ -204,12 +206,12 @@ export default async function MovieDetailsPage({ params, searchParams }) {
             }}
           />
 
-          <MovieReview
+          <ReviewSection 
             movie={{
               id: movie.id,
               title: movie.title,
-            }}
-          />
+            }}/>
+
 
             
           </div>

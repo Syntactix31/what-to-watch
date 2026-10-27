@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createAssessment } from "../../../lib/recaptcha";
 import { adminAuth } from "../../../lib/firebase-admin";
 
-const MIN_RECAPTCHA_SCORE = 0.4;   // try 0.4 or 0.5 for production, 0.3 for testing
+const MIN_RECAPTCHA_SCORE = 0.5;   // try 0.4 or 0.5 for production, 0.3 for testing cuz 0.6 too strict apparently
 
 export async function POST(request) {
   try {

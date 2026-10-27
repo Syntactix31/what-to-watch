@@ -186,10 +186,14 @@ function Empty({ text }) {
 
 function MiniRow({ title, meta, extra, movieId, onClick }) {
   return (
-    <div className="rounded-2xl border border-zinc-800 bg-zinc-950/30 p-3 hover:scale-102 active:scale-98 hover:cursor-pointer" onClick={() => onClick(movieId)}>
+    <div className="rounded-2xl border border-zinc-800 bg-zinc-950/30 p-3 hover:scale-101 hover:border-zinc-400 active:scale-98 hover:cursor-pointer" onClick={() => onClick(movieId)}>
       <div className="font-semibold">{title || "Untitled"}</div>
       {meta && <div className="text-sm text-zinc-500">{meta}</div>}
       {extra && <div className="mt-1 text-sm text-zinc-400 line-clamp-2">{extra}</div>}
     </div>
   );
 }
+
+
+
+

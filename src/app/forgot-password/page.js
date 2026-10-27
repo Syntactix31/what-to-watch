@@ -29,8 +29,8 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 grid place-items-center px-6">
       <div className="w-full max-w-md rounded-3xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-xl p-6 md:p-8">
-        <h1 className="text-2xl font-extrabold">
-          Reset your <span className="text-yellow-500">password</span>
+        <h1 className="text-2xl font-bold">
+          Reset your <span className="text-shimmer">password</span>
         </h1>
         <p className="mt-1 text-sm text-zinc-400">
           Enter your email and we’ll send you a reset link.
@@ -56,6 +56,7 @@ export default function Page() {
               onChange={(e) => setEmail(e.target.value)}
               type="email"
               autoComplete="email"
+              maxLength={100}
               placeholder="you@example.com"
               className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20"
             />
@@ -64,7 +65,7 @@ export default function Page() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-yellow-500 px-4 py-3 font-semibold text-zinc-950 hover:bg-yellow-400 disabled:opacity-60 disabled:cursor-not-allowed transition"
+            className="w-full rounded-xl bg-gradient-to-r from-yellow-400 to-orange-600 hover:cursor-pointer px-4 py-3 font-semibold text-zinc-950 hover:from-yellow-300 hover:to-orange-500 disabled:opacity-60 disabled:cursor-not-allowed transition"
           >
             {loading ? "Sending…" : "Send reset link"}
           </button>
@@ -80,3 +81,4 @@ export default function Page() {
     </main>
   );
 }
+

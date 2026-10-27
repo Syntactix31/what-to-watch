@@ -160,7 +160,7 @@ export default function AddToPlaylist({ movie }) {
         </Link>
       </div>
 
-      {msg && <div className="mt-2 text-sm text-gray-300 pl-4">{msg}</div>}
+      {msg && <div className="mt-2 text-sm text-gray-300 min-[439px]:pl-4">{msg}</div>}
 
 
       {/* Section for information about which playlists contains the movie  */}
@@ -178,11 +178,11 @@ export default function AddToPlaylist({ movie }) {
         :
 
         {containingPlaylists.length === 0 ? (
-          <div className="mt-2 text-gray-400">
-            This movie is not in any of your playlists yet.
+          <div className="my-2 text-gray-400">
+            This movie is not in any of your playlists yet!
           </div>
         ) : (
-          <ul className="mt-2 flex flex-wrap gap-2">
+          <ul className="my-2 flex flex-wrap gap-2">
             {containingPlaylists.map((p) => (
               <li key={p.id}>
                 <Link

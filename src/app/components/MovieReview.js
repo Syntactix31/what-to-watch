@@ -3,10 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { auth, db } from "../utils/firebase";
+import { auth } from "../utils/firebase";
 
-export default function MovieReview({ movie }) {
+export default function MovieReview({ movie, onSaved }) {
   const [user, setUser] = useState(null);
   const [rating, setRating] = useState(0);
   const [text, setText] = useState("");
@@ -19,29 +18,64 @@ export default function MovieReview({ movie }) {
   }, []);
 
   async function save(nextRating) {
-    if (!user?.uid || !movie?.id) return;
+    if (!user || !movie?.id || !nextRating) return;
 
     setBusy(true);
     setMsg("");
     try {
-      await setDoc(
-        doc(db, `users/${user.uid}/reviews/${movie.id}`),
-        {
+      const idToken = await user.getIdToken();
+
+      const res = await fetch("/api/reviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({
           movieId: movie.id,
-          movieTitle: movie.title || "",
+          movieTitle: movie.title ?? "",
           rating: nextRating,
           text,
-          createdAt: serverTimestamp(),
-        },
-        { merge: true }
-      );
-      setMsg("Saved!🔥");
-    } catch {
-      setMsg("Could not save review.");
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Could not save review.");
+      }
+
+      setMsg("Review published!");
+      onSaved?.();
+
+      setRating(0);
+      setText("");
+
+    } catch (error) {
+      setMsg(error.message || "Could not save review.");
     } finally {
       setBusy(false);
     }
   }
+
+  //   try {
+  //     await setDoc(
+  //       doc(db, `users/${user.uid}/reviews/${movie.id}`),
+  //       {
+  //         movieId: movie.id,
+  //         movieTitle: movie.title || "",
+  //         rating: nextRating,
+  //         text,
+  //         createdAt: serverTimestamp(),
+  //       },
+  //       { merge: true }
+  //     );
+  //     setMsg("Saved!🔥");
+  //   } catch {
+  //     setMsg("Could not save review.");
+  //   } finally {
+  //     setBusy(false);
+  //   }
+  // }
 
   if (!user) {
     return (
@@ -65,9 +99,9 @@ export default function MovieReview({ movie }) {
             disabled={busy}
             onClick={() => {
               setRating(n);
-              save(n);
+              // save(n);
             }}
-            className={`text-3xl hover:scale-110 hover:cursor-pointer transition ${
+            className={`text-2xl sm:text-3xl hover:scale-110 hover:cursor-pointer transition ${
               n <= rating ? "text-yellow-400" : "text-gray-600"
             }`}
             type="button"
@@ -80,6 +114,7 @@ export default function MovieReview({ movie }) {
 
       <textarea
         value={text}
+        maxLength={1000}
         onChange={(e) => setText(e.target.value)}
         placeholder="Write a quick review (optional)…"
         className="w-full rounded-xl border border-gray-700 bg-gray-950/40 px-4 py-3 text-white outline-none"
@@ -100,3 +135,4 @@ export default function MovieReview({ movie }) {
     </div>
   );
 }
+

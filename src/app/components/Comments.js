@@ -46,6 +46,24 @@ export default function Comments({ movieId, refreshKey = 0 }) {
   useEffect(() => {
     loadReviews();
   }, [loadReviews, refreshKey]);
+
+  useEffect(() => {
+    if (loading || reviews.length === 0) return;
+
+    const hash = window.location.hash;
+    const targetId = hash.startsWith("#review-")
+      ? hash.slice(1)
+      : null;
+
+    if (targetId) {
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.classList.add("ring-2", "ring-yellow-400");
+        setTimeout(() => el.classList.remove("ring-2", "ring-yellow-400"), 2000);
+      }
+    }
+  }, [loading, reviews]);
   
   async function handleCommentDelete(reviewId) {
     if (!user || !reviewId) return;
@@ -97,10 +115,10 @@ export default function Comments({ movieId, refreshKey = 0 }) {
       {error && <p className="text-red-400">{error}</p>}
 
       {!loading && !error && reviews.length === 0 && (
-        <p className="text-gray-400">No reviews yet. Be the first to review this movie.</p>
+        <p className="text-gray-400">No reviews yet. Be the first to review this movie!</p>
       )}
 
-      <div className="space-y-4">
+      <div className="space-y-4" id="review-list">
         {reviews.map((review) => {
           const isOwnReview = user?.uid === review.user_id;
           const isDeleting = busyReviewId === review.id;
@@ -108,6 +126,7 @@ export default function Comments({ movieId, refreshKey = 0 }) {
           return (
           <article
             key={review.id}
+            id={`review-${review.id}`}
             className="rounded-xl border border-gray-800 bg-gray-900/40 p-4"
           >
             <div className="flex items-center justify-between gap-4">
@@ -144,7 +163,10 @@ export default function Comments({ movieId, refreshKey = 0 }) {
                 {review.review_text}
               </p>
             )}
-            <button className="text-xs flex w-fit ml-auto hover:underline active:text-red-500 active:scale-95 hover:cursor-pointer" disabled={isDeleting}onClick={()=> handleCommentDelete(review.id)}>{isDeleting? "Deleting..." : "Delete"}</button>
+            {isOwnReview && (
+              <button className='text-xs flex w-fit ml-auto hover:underline active:text-red-500 active:scale-95 hover:cursor-pointer' disabled={isDeleting} onClick={()=> handleCommentDelete(review.id)}>{isDeleting? "Deleting..." : "Delete"}</button>
+            )}
+
 
           </article>);
         })}
@@ -152,3 +174,5 @@ export default function Comments({ movieId, refreshKey = 0 }) {
     </div>
   );
 }
+
+

@@ -2,8 +2,7 @@ import Image from "next/image";
 import { notFound } from 'next/navigation';
 import TrackRecentlyViewed from "../../components/TrackRecentlyViewed";
 import AddToPlaylist from "../../components/AddToPlaylist";
-import MovieReview from "../../components/MovieReview";
-import Comments from "../../components/Comments";
+
 import ReviewSection from "../../components/ReviewSection";
 
 
@@ -46,7 +45,7 @@ async function getMovie(id) {
   }
 }
 
-// Main component
+// Main component!!!!!!!
 export default async function MovieDetailsPage({ params, searchParams }) {
   const { id } = await params;
   const sp = await searchParams;
@@ -84,6 +83,7 @@ export default async function MovieDetailsPage({ params, searchParams }) {
   const playlistId = sp?.playlistId;
   const backHref = fromPlaylist && playlistId ? `/playlists/${playlistId}` : "/movies";
   const backLabel = fromPlaylist && playlistId ? "Back to Playlist" : "Back to Movies";
+
 
   return (
     <main className="min-h-screen bg-transparent text-white p-4 md:p-8">
@@ -240,7 +240,5 @@ function UserRating() {
     </div>
   );
 }
-
-
 
 

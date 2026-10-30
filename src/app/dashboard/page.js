@@ -23,7 +23,9 @@ export default function Page() {
     return {
       recentlyViewed: collection(db, `users/${uid}/recentlyViewed`),
       playlists: collection(db, `users/${uid}/playlists`),
-      reviews: collection(db, `users/${uid}/reviews`),
+
+      // Reviews now migrated from firestore docs to neon sql db
+      // reviews: collection(db, `users/${uid}/reviews`),
     };
   }, [uid]);
 
@@ -35,22 +37,39 @@ export default function Page() {
       try {
         const recentQ = query(refs.recentlyViewed, orderBy("viewedAt", "desc"), limit(8));
         const playlistsQ = query(refs.playlists, orderBy("updatedAt", "desc"), limit(6));
-        const reviewsQ = query(refs.reviews, orderBy("createdAt", "desc"), limit(8));
+        // const reviewsQ = query(refs.reviews, orderBy("createdAt", "desc"), limit(8));
 
-        const [r1, r2, r3] = await Promise.all([
+        const [r1, r2, res] = await Promise.all([
           getDocs(recentQ),
           getDocs(playlistsQ),
-          getDocs(reviewsQ),
+          // fetching from neon db rather than creating a doc on firestore
+          fetch("/api/reviews/mine", {
+            headers: { Authorization: `Bearer ${await user.getIdToken()}` },
+            cache: "no-store",
+          }),
+
         ]);
 
         setRecent(r1.docs.map((d) => ({ id: d.id, ...d.data() })));
         setPlaylists(r2.docs.map((d) => ({ id: d.id, ...d.data() })));
-        setReviews(r3.docs.map((d) => ({ id: d.id, ...d.data() })));
+        // setReviews(r3.docs.map((d) => ({ id: d.id, ...d.data() })));
+
+        if(!res.ok) throw new Error("Could not load your reviews.");
+        const data = await res.json();
+        setReviews((data.reviews ?? []).map((r) => ({
+          id: r.id,
+          movieId: r.movie_id,
+          movieTitle: r.movie_title,
+          rating: r.rating,
+          text: r.review_text,
+        })));
 
         } catch (e) {
           console.error(e);
           setError(e?.code ? `${e.code}: ${e.message}` : (e?.message || "Could not load data."));
           setPlaylists([]);
+          setRecent([]);
+          setReviews([]);
         }
 
     })();
@@ -144,7 +163,7 @@ export default function Page() {
                     key={r.id}
                     title={r.movieTitle || "Movie review"}
                     movieId={r.movieId}
-                    onClick={(id) => router.push(`/movie/${id}#your-rating`)}
+                    onClick={(id) => router.push(`/movie/${id}?review=${r.id}#review-${r.id}`)}
                     // Add scroll to review section below movie content when clicking on a review in the dashboard
 
                     

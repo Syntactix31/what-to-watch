@@ -293,6 +293,10 @@ html::-webkit-scrollbar-thumb:hover {
   background-color: #ffffff;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 
 
 

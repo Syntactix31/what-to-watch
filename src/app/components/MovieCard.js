@@ -45,3 +45,5 @@ export default function MovieCard({ movie, compact = false }) {
     </Link>
   );
 }
+
+

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
 
@@ -105,6 +106,17 @@ export default function Comments({ movieId, refreshKey = 0 }) {
     
   }
 
+  if (!user) {
+    return (
+      <div className="mt-8 mb-20 pt-8 border-t border-gray-700">
+        <h2 className="text-2xl font-bold mb-4 max-sm:mx-auto max-sm:w-fit">What The Audience Thinks</h2>
+        <Link href="/login" className="text-yellow-400 hover:text-yellow-300 max-sm:w-fit max-sm:text-center max-sm:flex max-sm:mx-auto">
+          Log in to see what others think about this movie 
+        </Link>
+      </div>
+    );
+  }
+
 
 
   return (
@@ -174,5 +186,4 @@ export default function Comments({ movieId, refreshKey = 0 }) {
     </div>
   );
 }
-
 

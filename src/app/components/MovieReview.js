@@ -80,10 +80,10 @@ export default function MovieReview({ movie, onSaved }) {
   if (!user) {
     return (
       <div className="mt-8 pt-8 border-t border-gray-700">
-        <h2 className="text-2xl font-bold mb-2">Your Rating</h2>
-        <Link href="/login" className="text-yellow-400 hover:text-yellow-300">
+        <h2 className="text-2xl font-bold mb-2 max-sm:mx-auto max-sm:w-fit">Your Rating</h2>
+        <Link href="/login" className="text-yellow-400 hover:text-yellow-300 max-sm:text-center max-sm:w-fit max-sm:flex max-sm:mx-auto">
           Log in to rate and review
-        </Link>
+        </Link>          {/* Log in to rate, review, and see what others think about this movie */}
       </div>
     );
   }

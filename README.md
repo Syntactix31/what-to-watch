@@ -16,6 +16,10 @@ npm install firebase-admin @google-cloud/recaptcha-enterprise
 npm install firebase
 npm install express
 
+## DB CONFIG (DM FOR FULL SCHEMA AND SETUP)
+npm install -g neon@latest
+npm i @neondatabase/serverless firebase-admin
+
 ```
 
 

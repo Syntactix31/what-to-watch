@@ -64,8 +64,8 @@ export default function Comments({ movieId, refreshKey = 0 }) {
       const el = document.getElementById(targetId);
       if (el) {
         el.scrollIntoView({ behavior: "smooth", block: "center" });
-        el.classList.add("ring-2", "ring-yellow-400");
-        setTimeout(() => el.classList.remove("ring-2", "ring-yellow-400"), 2000);
+        el.classList.add("ring-1", "ring-yellow-400");
+        setTimeout(() => el.classList.remove("ring-1", "ring-yellow-400"), 2000);
       }
     }
   }, [loading, reviews]);

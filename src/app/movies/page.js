@@ -419,7 +419,7 @@ export default function MoviesPage() {
       </div>
       </div>
 
-      <div className="mb-9">
+      <div className="">
         <Footer/>
       </div>
 

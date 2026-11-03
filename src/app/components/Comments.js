@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import ReviewDeleteModal from "./ReviewDeleteModal";
 
 export default function Comments({ movieId, refreshKey = 0 }) {
   const [reviews, setReviews] = useState([]);
@@ -12,6 +13,9 @@ export default function Comments({ movieId, refreshKey = 0 }) {
 
   const [ user, setUser ] = useState(null);
   const [ busyReviewId, setBusyReviewId ] = useState(null);
+
+  const [ reviewToDelete, setReviewToDelete ] = useState(null);
+  
 
   const loadReviews = useCallback(async () => {
     if (!movieId) return;
@@ -60,20 +64,29 @@ export default function Comments({ movieId, refreshKey = 0 }) {
       const el = document.getElementById(targetId);
       if (el) {
         el.scrollIntoView({ behavior: "smooth", block: "center" });
-        el.classList.add("ring-2", "ring-yellow-400");
-        setTimeout(() => el.classList.remove("ring-2", "ring-yellow-400"), 2000);
+        el.classList.add("ring-1", "ring-yellow-400");
+        setTimeout(() => el.classList.remove("ring-1", "ring-yellow-400"), 2000);
       }
     }
   }, [loading, reviews]);
+
+  function closeDeleteModal() {
+    setReviewToDelete(null);
+    setBusyReviewId(null);
+  }
+
+  async function confirmDeleteReview() {
+    if (!reviewToDelete) return;
+    const success = await handleCommentDelete(reviewToDelete);
+
+    if (success) {
+      closeDeleteModal();
+
+    }
+  }
   
   async function handleCommentDelete(reviewId) {
     if (!user || !reviewId) return;
-
-    // Temporary confirmation check until I make a proper modal
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this review?"
-    );
-    if (!confirmed) return; 
 
     setBusyReviewId(reviewId);
     setError("");
@@ -97,9 +110,13 @@ export default function Comments({ movieId, refreshKey = 0 }) {
       }
       setReviews((currentReviews) =>
         currentReviews.filter((review) => review.id !== reviewId));
+      return true;
 
     } catch(deleteError) {
       setError(deleteError.message || "This review could not be deleted. ");
+      closeDeleteModal();
+      return false;
+
     } finally {
       setBusyReviewId(null);
     }
@@ -176,13 +193,22 @@ export default function Comments({ movieId, refreshKey = 0 }) {
               </p>
             )}
             {isOwnReview && (
-              <button className='text-xs flex w-fit ml-auto hover:underline active:text-red-500 active:scale-95 hover:cursor-pointer' disabled={isDeleting} onClick={()=> handleCommentDelete(review.id)}>{isDeleting? "Deleting..." : "Delete"}</button>
+              <button className='text-xs flex w-fit ml-auto hover:underline active:text-red-500 active:scale-95 hover:cursor-pointer' disabled={isDeleting} onClick={()=> setReviewToDelete(review.id)}>{isDeleting? "Deleting..." : "Delete"}</button>
             )}
 
 
           </article>);
         })}
       </div>
+
+      {reviewToDelete && (
+        <ReviewDeleteModal
+          onClose={closeDeleteModal}
+          onDelete={confirmDeleteReview}
+          loading={busyReviewId === reviewToDelete}
+          
+      />)}
+
     </div>
   );
 }

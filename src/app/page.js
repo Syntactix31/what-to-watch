@@ -5,9 +5,11 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { SearchBar } from "./components/SearchBar";
 import Footer from "./components/Footer";
 import MovieContent from "./components/MovieContent";
+import SignOutModal from "./components/SignOutModal";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./utils/firebase";
 import { useRouter } from "next/navigation";
+
 
 
 
@@ -55,6 +57,9 @@ export default function Home() {
 
   const [showButton, setShowButton] = useState(false);
 
+  const [logOutModalOpen, setLogOutModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
 
   const handleSearchChange = async (value) => {
@@ -148,8 +153,42 @@ export default function Home() {
   return () => unsub();
   }, []);
 
-  async function handleLogout() {
-  await signOut(auth);
+
+
+  // NOTES (Levi)
+  // useCallback is essentially just a way to memorize the function itself so that it doesn't get recreated every time you render the component
+  // it differs slightly to useMemo in that useMemo stores the results of said function or a calculation so it isn't re-rendered every time
+  const handleLogout = useCallback(async () => {
+    if(!user || loading) return false;
+    setLoading(true);
+    setError("");
+
+    try {
+      await signOut(auth);
+      setLogOutModalOpen(false);
+      router.refresh();
+      return true;
+
+    } catch (err) {
+      setError("Failed to logout. Please try again.");
+      console.error("Logout failed:", err);
+      return false;
+
+    } finally {
+      setLoading(false);
+
+    }
+
+  }, [user, loading]);
+
+
+  const confirmLogout = useCallback( async () => {
+    await handleLogout();
+  }, [handleLogout]);
+
+
+  function closeLogoutModal() {
+    setLogOutModalOpen(false);
   }
 
 
@@ -278,7 +317,7 @@ export default function Home() {
 
     {/* Might change logout button colour to different one on hover doesn't look good its too dark */}
       <button
-        onClick={handleLogout}
+        onClick={() => setLogOutModalOpen(true)}
         className="hover:border-zinc-400 text-zinc-200 px-4 py-2 rounded-lg font-medium transition-colors border border-transparent mr-10 active:scale-95 active:text-red-700 active:border-red-700"
       >
         Log Out
@@ -323,10 +362,7 @@ export default function Home() {
                   Playlists
                 </Link>
                 <button
-                  onClick={async () => {
-                    await handleLogout();
-                    setIsMenuOpen(false);
-                  }}
+                  onClick={() => { setIsMenuOpen(false); setLogOutModalOpen(true);  }}
                   className="text-shimmer w-full px-4 py-3 rounded-xl bg-black hover:bg-zinc-800 transition-all text-lg font-medium z-60 active:scale-95"
                 >
                   Log Out
@@ -370,13 +406,13 @@ export default function Home() {
 
         <header className="mt-20 lg:mt-35 flex flex-col items-center z-20 pt-20">
             <div className="container-text text-center scale-80 sm:scale-100 transition-all">
-              <div className="mx-auto flex justify-start max-w-[440px] "><h1 className="">Don't know what to</h1>{/* ml-0 md:ml-[27.5%] lg:ml-[35%]! */}</div>
+              <div className="mx-auto flex justify-start max-w-[440px] "><h1>Don't know what to</h1>{/* ml-0 md:ml-[27.5%] lg:ml-[35%]! */}</div>
                 {/* MAKE  ADJUSTMENT SO THE DONT KNOW WHAT TO HEADER IS SKEWED FROM WATCH HEADER AND GIVES A "STACKED EFFECT" - It should align the W with the inner right edge of the inside of the "o" */}
 
                 
               {/* sm:ml-[19%] md:ml-[27.5%] lg:ml-[35%] */}
 
-              <h1 className="">Watch?</h1>
+              <h1>Watch?</h1>
             </div>
           {showButton && (
 
@@ -416,6 +452,15 @@ export default function Home() {
 
 
       </div>
+      {logOutModalOpen && (
+        <SignOutModal 
+          onClose={closeLogoutModal}
+          onLogOut={confirmLogout}
+          loading={loading}
+          error={error}
+        />
+      )}
+
     </main>
   );
 }

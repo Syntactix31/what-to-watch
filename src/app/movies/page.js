@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import MovieCard from "../components/MovieCard";
+import SignOutModal from "../components/SignOutModal";
 import Footer from "../components/Footer";
 import MovieSection from "../components/MovieSection";
 import { useRouter } from "next/navigation";
@@ -32,6 +33,10 @@ export default function MoviesPage() {
   const [isVisible, setIsVisible] = useState(false);
   const [wasMenuOpen, setWasMenuOpen] = useState(false);
 
+  const [logOutModalOpen, setLogOutModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
       setUser(u);
@@ -39,11 +44,6 @@ export default function MoviesPage() {
     });
     return () => unsub();
   }, []);
-
-  async function handleLogout() {
-    await signOut(auth);
-    router.push("/");
-  }
 
 
   useEffect(() => {
@@ -100,6 +100,35 @@ export default function MoviesPage() {
     } finally {
       setIsSearching(false);
     }
+  }
+
+  const handleLogOut = useCallback(async () => {
+    if(!user || loading) return false;
+
+    setLoading(true);
+    setError("");
+
+    try {
+      await signOut(auth);
+      router.push("/");
+      return true;
+    
+    } catch (err) {
+      console.error("Logout failed:", err);
+      setError("Logout failed. Please try again.");
+      return false;
+    } finally {
+      setLoading(false);
+    }
+
+  }, [user, loading]);
+
+  const confirmLogout = useCallback(async () => {
+    await handleLogOut();
+  }, [handleLogOut])
+
+  function closeLogoutModal() {
+    setLogOutModalOpen(false);
   }
 
   function handleSuggestionClick(movieId) {
@@ -184,7 +213,7 @@ export default function MoviesPage() {
           </Link>
 
           <button
-            onClick={handleLogout}
+            onClick={() => setLogOutModalOpen(true)}
             className="px-4 py-2 rounded-lg border border-black/0 hover:border-gray-400 active:text-red-700 active:border-red-700 transition active:scale-95"
           >
             Logout
@@ -226,8 +255,8 @@ export default function MoviesPage() {
                   Playlists
                 </Link>
                 <button
-                  onClick={async () => {
-                    await handleLogout();
+                  onClick={() => {
+                    setLogOutModalOpen(true);
                     setIsMenuOpen(false);
                   }}
                   className="text-shimmer w-full px-4 py-3 rounded-xl bg-black hover:bg-zinc-800 transition-all text-lg font-medium z-60"
@@ -423,6 +452,18 @@ export default function MoviesPage() {
         <Footer/>
       </div>
 
+      {logOutModalOpen && (
+        <SignOutModal
+          onClose={closeLogoutModal}
+          onLogOut={confirmLogout}
+          loading={loading}
+          error={error}
+        />)}
+
     </main>
   );
 }
+
+
+
+

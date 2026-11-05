@@ -21,3 +21,4 @@ export function useRequireAuth(redirectTo = "/login") {
 
   return { user, loading };
 }
+

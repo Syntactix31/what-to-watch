@@ -23,6 +23,7 @@ export default function Page() {
   const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
   const [showCaptcha, setShowCaptcha] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState("");
 
   // reCAPTCHA dynamic sizing bs
   const RECAPTCHA_WIDTH = 304;
@@ -61,6 +62,18 @@ export default function Page() {
     return () => observer.disconnect();
   }, [showCaptcha]);
 
+  // UseEffect to set the recaptcha callback globally accessible
+  useEffect(() => {
+    window.handleCaptchaSuccess = (token) => {
+      setCaptchaToken(token);
+      setShowTerms(true);
+    };
+
+    return () => {
+      delete window.handleCaptchaSuccess;
+    };
+  }, []);
+
 
   //     Testing localhost for reCAPTCHA v3, you can use the following test keys:
   // async function getRecaptchaToken() {
@@ -86,7 +99,7 @@ export default function Page() {
   // }  
 
   function getRecaptchaToken() {
-    const token = window.grecaptcha?.enterprise?.getResponse?.();
+    const token = captchaToken || window.grecaptcha?.enterprise?.getResponse?.();
 
     if (!token) {
       throw new Error("Please complete the reCAPTCHA check.");
@@ -105,13 +118,23 @@ export default function Page() {
       return;
     }
 
+    let recaptchaToken;
+
+    try {
+      recaptchaToken = await getRecaptchaToken();
+
+    } catch (err) {
+      setError(err.message || "Please complete the reCAPTCHA check.");
+      return;
+    }  
+
+
     if (!agreed.terms || !agreed.privacy) {
       setShowTerms(true);
       return;
     }
 
     try {
-      const recaptchaToken = await getRecaptchaToken();
       await createAccount(recaptchaToken);
     } catch (err) {
       setError(err.message || "Sign up failed.");
@@ -122,13 +145,11 @@ export default function Page() {
 
   async function createAccount(recaptchaToken) {
     if (!agreed.terms || !agreed.privacy) {
-      setError("You must agree to the Terms and Privacy Policy.");
-      return;
-    }   
+      throw new Error("You must agree to the Terms and Privacy Policy.");
+    }
 
     if (!recaptchaToken) {
-      setError("Please complete the reCAPTCHA check.");
-      return;
+      throw new Error("Please complete the reCAPTCHA check.");
     }
 
     setLoading(true);
@@ -146,8 +167,11 @@ export default function Page() {
   function passwordsMatch() {
     if (pw === pw2) {
       setShowCaptcha(true);
+      setError("");
     } else {
+      setCaptchaToken("");
       setShowCaptcha(false);
+      setError("Passwords do not match.");
     }
 
   }
@@ -236,6 +260,14 @@ export default function Page() {
               value={pw2}
               onChange={(e) => setPw2(e.target.value)}
               onBlur={() => passwordsMatch()}
+
+              // Literally jus needed ts (to prevent the default to submit the form and instead show the recaptcha just as a UI cleanup thing)
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  e.currentTarget.blur();
+                }
+              }}
               type="password"
               autoComplete="new-password"
               maxLength={50}
@@ -299,8 +331,9 @@ export default function Page() {
                 <div
                   className="g-recaptcha"
                   data-sitekey={RECAPTCHA_SITE_KEY}
-                  data-action="SIGNUP"
+                  // data-action="SIGNUP"             // Use this when converting the reCaptcha process to v3 score based
                   data-theme="dark"
+                  data-callback="handleCaptchaSuccess"    // References handler function so the terms modal can be queued until the user accepts the reCaptcha
                 />
               </div>
             </div>
@@ -360,6 +393,3 @@ export default function Page() {
     </main>
   );
 }
-
-
-

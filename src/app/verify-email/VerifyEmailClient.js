@@ -16,11 +16,13 @@ export default function VerifyEmailClient() {
   const router = useRouter();
 
   useEffect(() => {
+    const verified = searchParams.get("verified");
     const mode = searchParams.get("mode");
     const oobCode = searchParams.get("oobCode");
 
-    // Normal state immediately after signup: no email link has been clicked yet.
-    if (!mode && !oobCode) {
+    // Normal state immediately after signup:
+    // router.push("/verify-email") — no query parameters.
+    if (!verified && !mode && !oobCode) {
       setStatus("awaiting-email");
       setMessage(
         "A verification email has been sent. Please check your inbox and spam folder, then click the verification link."
@@ -28,7 +30,38 @@ export default function VerifyEmailClient() {
       return;
     }
 
-    // The user came from a Firebase email action, but the link is incomplete.
+    // Firebase's default hosted action handler completed verification,
+    // then redirected to /verify-email?verified=1.
+    if (verified === "1") {
+      let cancelled = false;
+
+      async function finishVerification() {
+        try {
+          if (auth.currentUser) {
+            await auth.currentUser.reload();
+          }
+        } catch (err) {
+          console.error("Could not refresh current user:", err);
+        }
+
+        if (!cancelled) {
+          setStatus("success");
+          setMessage("Your email has been successfully verified!");
+
+          setTimeout(() => {
+            router.replace("/");
+          }, 2500);
+        }
+      }
+
+      finishVerification();
+
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    // ONLY  USE THIS FOR CUSTOM FIREBASE EMAIL HANDLER ONCE SET UP
     if (mode === "verifyEmail" && !oobCode) {
       setStatus("error");
       setMessage("Invalid or incomplete verification link.");
@@ -48,6 +81,7 @@ export default function VerifyEmailClient() {
 
     async function finishVerification() {
       try {
+        // calling action code again would fail the authentication
         // await applyActionCode(auth, oobCode);
 
         if (auth.currentUser) {
@@ -114,7 +148,7 @@ export default function VerifyEmailClient() {
 
     try {
       await sendEmailVerification(user, {
-        url: `${window.location.origin}/verify-email`,
+        url: `${window.location.origin}/verify-email?verified=1`,
         handleCodeInApp: false,
       });
 
@@ -159,6 +193,7 @@ export default function VerifyEmailClient() {
     </main>
   );
 }
+
 
 
 

@@ -97,7 +97,7 @@ export async function signUpWithEmail(name, email, password, remember = true, re
 
   try {
     await sendEmailVerification(credential.user, {
-      url: `${window.location.origin}/verify-email`,
+      url: `${window.location.origin}/verify-email?verified=1`,
       handleCodeInApp: false,
     });
     } catch(e) {

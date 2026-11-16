@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   applyActionCode,
@@ -14,14 +14,36 @@ export default function VerifyEmailClient() {
   const [status, setStatus] = useState("verifying");
   const [message, setMessage] = useState("");
 
+  const router = useRouter();
+
   useEffect(() => {
+    const mode = searchParams.get("mode");
     const oobCode = searchParams.get("oobCode");
 
-    if (!oobCode) {
-      setStatus("error");
-      setMessage("Invalid verification link.");
+    // Normal state immediately after signup: no email link has been clicked yet.
+    if (!mode && !oobCode) {
+      setStatus("awaiting-email");
+      setMessage(
+        "A verification email has been sent. Please check your inbox and spam folder, then click the verification link."
+      );
       return;
     }
+
+    // The user came from a Firebase email action, but the link is incomplete.
+    if (mode === "verifyEmail" && !oobCode) {
+      setStatus("error");
+      setMessage("Invalid or incomplete verification link.");
+      return;
+    }
+
+    // An unexpected Firebase action mode reached this page.
+    if (mode && mode !== "verifyEmail") {
+      setStatus("error");
+      setMessage("This link is not an email verification link.");
+      return;
+    }
+
+
 
     let cancelled = false;
 
@@ -36,16 +58,38 @@ export default function VerifyEmailClient() {
         if (!cancelled) {
           setStatus("success");
           setMessage("Your email has been successfully verified!");
+
+          setTimeout(() => {
+            router.replace("/");
+          }, 2500);
+
         }
       } catch (err) {
-        console.error(err);
+        console.error("Email verification failed: ", err);
 
+        // if (!cancelled) {
+        //   setStatus("error");
+        //   setMessage(
+        //     "We could not verify this link. It may have expired or already been used."
+        //   );
+        // }
         if (!cancelled) {
           setStatus("error");
-          setMessage(
-            "We could not verify this link. It may have expired or already been used."
-          );
-        }
+
+          if (err?.code === "auth/invalid-action-code") {
+            setMessage(
+              "This verification link is invalid, expired, or has already been used. Please request a new verification email."
+            );
+          } else if (err?.code === "auth/unauthorized-continue-uri") {
+            setMessage(
+              "This website domain is not authorized in Firebase. Contact support or try again later."
+            );
+          } else {
+            setMessage(
+              `We could not verify this link. ${err?.code || "Unknown error"}`
+            );
+          }
+        }        
       }
     }
 
@@ -74,6 +118,9 @@ export default function VerifyEmailClient() {
     } catch (err) {
       console.error(err);
       setMessage("Could not resend the verification email. Try again later.");
+      throw new Error(
+        "Account created, but the verification email could not be sent. Please try resending it after signing in."
+      );
     }
   }
 
@@ -83,7 +130,11 @@ export default function VerifyEmailClient() {
         <h1 className="text-2xl font-bold text-shimmer">Email verification</h1>
 
         <p className="mt-3 text-sm text-zinc-400">
-          {status === "verifying" ? "Verifying your email…" : message}
+          {status === "verifying" || status === "awaiting-email"
+            ? status === "verifying"
+              ? "Verifying your email…"
+              : "Check your inbox to verify your email."
+            : message}
         </p>
 
         {status === "success" && (
@@ -95,7 +146,7 @@ export default function VerifyEmailClient() {
           </Link>
         )}
 
-        {status === "error" && (
+        {(status === "awaiting-email" || status === "error") && (
           <button
             onClick={resendVerificationEmail}
             className="mt-6 inline-block rounded-xl border border-zinc-700 px-5 py-3 font-semibold text-zinc-100 cursor-pointer"
@@ -107,3 +158,5 @@ export default function VerifyEmailClient() {
     </main>
   );
 }
+
+

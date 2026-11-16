@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
+  sendEmailVerification,
   updateProfile,
   setPersistence,
   browserLocalPersistence,
@@ -78,14 +79,32 @@ export async function signUpWithEmail(name, email, password, remember = true, re
     throw new Error(data.error || "Sign up failed.");
   }
 
+  let credential;
+
   // The Admin SDK created the account, but the browser is not signed in yet.
-  try {
-    return await signInWithEmailAndPassword(auth, email, password);
-  } catch (e) {
+  try { 
+    credential = await signInWithEmailAndPassword(auth, email, password);
+  } catch (e){
     throw new Error(friendlyAuthError(e));
   }
+ 
 
+  // try {
+  //   return await signInWithEmailAndPassword(auth, email, password);
+  // } catch (e) {
+  //   throw new Error(friendlyAuthError(e));
+  // }
 
+  try {
+    await sendEmailVerification(credential.user, {
+      url: `${window.location.origin}/verify-email`,
+      handleCodeInApp: false,
+    });
+    } catch(e) {
+      console.error("Could not send verification email:", e);
+  }
+
+  return credential;
 
 
   //   OLD TRY CATCH BLOCK (REVERT IN CASE OF RECAPTCHA ISSUES)
@@ -107,3 +126,4 @@ export async function resetPassword(email) {
     throw new Error(friendlyAuthError(e));
   }
 }
+

@@ -155,7 +155,7 @@ export default function Page() {
     setLoading(true);
     try {
       await signUpWithEmail(name, email, pw, remember, recaptchaToken);
-      router.push("/");
+      router.push("/verify-email");
     } catch (err) {
       setError(err.message || "Sign up failed.");
     } finally {

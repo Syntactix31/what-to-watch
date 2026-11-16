@@ -24,6 +24,7 @@ export default function Home() {
   const [suggestions, setSuggestions] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const searchRef = useRef(null);
+  const audioRef = useRef(null);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -102,6 +103,20 @@ export default function Home() {
       prevIndex === logoImages.length - 1 ? 0 : prevIndex + 1
     );
   };
+
+  const playSound = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.pause();
+    audio.currentTime = 0;
+
+    audio.play().catch((error) => {
+      if (error?.name !== "AbortError") {
+        console.error("Logo sound failed to play: ", error);
+      }
+    })
+  }, []); 
 
   const handleScroll = useCallback(() => {
     const fromTop = window.scrollY;
@@ -200,14 +215,15 @@ export default function Home() {
 
 <div className=" max-lg:flex max-lg:items-center max-lg:justify-between">
         <div className="sm:flex sm:gap-4 transition-all sm:justify-between max-sm:flex max-sm:items-center max-sm:gap-2">
-          <div onClick={cycleLogo} className="cursor-pointer max-[330px]:hidden">
+          <div onClick={() => { cycleLogo(); playSound(); }} className="cursor-pointer max-[330px]:hidden">
+
             <img
               src={`/img/${logoImages[currentLogoIndex]}.png`}
               width={64}
               height={64}
               
               alt="PopCorn Logo"
-              className="object-contain hover:scale-110 transition-transform active:scale-100 w-12 h-12"
+              className="object-contain hover:scale-110 transition-transform active:scale-95 w-12 h-12"
               loading="eager" 
             />
 
@@ -221,6 +237,8 @@ export default function Home() {
               priority  // Since it's above-the-fold logo
             /> */}
           </div>
+
+
 
           <div className="hover-container">
             <h1 className="text-shimmer shimmer-fontsize normal-case">WhatToWatch</h1>
@@ -460,6 +478,8 @@ export default function Home() {
           error={error}
         />
       )}
+
+      <audio ref={audioRef} src="/sounds/pop.mp3" preload="auto" />
 
     </main>
   );

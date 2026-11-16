@@ -331,7 +331,7 @@ export default function Page() {
                 <div
                   className="g-recaptcha"
                   data-sitekey={RECAPTCHA_SITE_KEY}
-                  // data-action="SIGNUP"             // Use this when converting the reCaptcha process to v3 score based
+                  data-action="SIGNUP"             // Use this when converting the reCaptcha process to v3 score based
                   data-theme="dark"
                   data-callback="handleCaptchaSuccess"    // References handler function so the terms modal can be queued until the user accepts the reCaptcha
                 />

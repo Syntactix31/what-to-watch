@@ -212,4 +212,3 @@ export default function Comments({ movieId, refreshKey = 0 }) {
     </div>
   );
 }
-

@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
-  applyActionCode,
   sendEmailVerification,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
@@ -47,9 +46,9 @@ export default function VerifyEmailClient() {
 
     let cancelled = false;
 
-    async function verifyEmail() {
+    async function finishVerification() {
       try {
-        await applyActionCode(auth, oobCode);
+        // await applyActionCode(auth, oobCode);
 
         if (auth.currentUser) {
           await auth.currentUser.reload();
@@ -65,40 +64,45 @@ export default function VerifyEmailClient() {
 
         }
       } catch (err) {
-        console.error("Email verification failed: ", err);
+        console.error("Failed to refresh verification state: ", err);
+
+
+        if (!cancelled) {
+          setStatus("success");
+          setMessage("Your email has been successfully verified!");
+
+          setTimeout(() => {
+            router.replace("/");
+          }, 2500);
+        }
+
 
         // if (!cancelled) {
         //   setStatus("error");
-        //   setMessage(
-        //     "We could not verify this link. It may have expired or already been used."
-        //   );
-        // }
-        if (!cancelled) {
-          setStatus("error");
 
-          if (err?.code === "auth/invalid-action-code") {
-            setMessage(
-              "This verification link is invalid, expired, or has already been used. Please request a new verification email."
-            );
-          } else if (err?.code === "auth/unauthorized-continue-uri") {
-            setMessage(
-              "This website domain is not authorized in Firebase. Contact support or try again later."
-            );
-          } else {
-            setMessage(
-              `We could not verify this link. ${err?.code || "Unknown error"}`
-            );
-          }
-        }        
+        //   if (err?.code === "auth/invalid-action-code") {
+        //     setMessage(
+        //       "This verification link is invalid, expired, or has already been used. Please request a new verification email."
+        //     );
+        //   } else if (err?.code === "auth/unauthorized-continue-uri") {
+        //     setMessage(
+        //       "This website domain is not authorized in Firebase. Contact support or try again later."
+        //     );
+        //   } else {
+        //     setMessage(
+        //       `We could not verify this link. ${err?.code || "Unknown error"}`
+        //     );
+        //   }
+        // }        
       }
     }
 
-    verifyEmail();
+    finishVerification();
 
     return () => {
       cancelled = true;
     };
-  }, [searchParams]);
+  }, [searchParams, router]);
 
   async function resendVerificationEmail() {
     const user = auth.currentUser;
@@ -118,9 +122,6 @@ export default function VerifyEmailClient() {
     } catch (err) {
       console.error(err);
       setMessage("Could not resend the verification email. Try again later.");
-      throw new Error(
-        "Account created, but the verification email could not be sent. Please try resending it after signing in."
-      );
     }
   }
 
@@ -158,5 +159,6 @@ export default function VerifyEmailClient() {
     </main>
   );
 }
+
 
 

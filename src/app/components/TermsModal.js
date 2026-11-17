@@ -119,7 +119,7 @@ export default function TermsModal({
             <button
               onClick={onAccept}
               disabled={!canAccept}
-              className="rounded-xl bg-yellow-500 px-4 py-2 font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-xl bg-yellow-500 px-4 py-2 font-semibold text-black disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer active:scale-95"
             >
               Accept and Continue
             </button>

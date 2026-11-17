@@ -12,7 +12,7 @@ export default function Footer() {
       </div>
 
 
-      {/* <hr className="bg-zinc-200 lg:w-200 w-100 md:w-2xl mx-auto"/> */}
+      {/* <hr className="bg-zinc-200 lg:w-200 w-100 md:w-2xl mx-auto"/> - additional comment to fix merge branch deployment issue */}
 
       <p className="pb-4 mt-10">&#169; 2026 All rights reserved.</p>
       <div className="text-xs text-zinc-200 pb-6">

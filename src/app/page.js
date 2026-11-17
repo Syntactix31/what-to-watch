@@ -336,7 +336,7 @@ export default function Home() {
     {/* Might change logout button colour to different one on hover doesn't look good its too dark */}
       <button
         onClick={() => setLogOutModalOpen(true)}
-        className="hover:border-zinc-400 text-zinc-200 px-4 py-2 rounded-lg font-medium transition-colors border border-transparent mr-10 active:scale-95 active:text-red-700 active:border-red-700"
+        className="hover:border-zinc-400 text-zinc-200 px-4 py-2 rounded-lg font-medium transition-colors border border-transparent mr-10 active:scale-95 active:text-red-700 active:border-red-700 hover:cursor-pointer"
       >
         Log Out
       </button>
@@ -381,7 +381,7 @@ export default function Home() {
                 </Link>
                 <button
                   onClick={() => { setIsMenuOpen(false); setLogOutModalOpen(true);  }}
-                  className="text-shimmer w-full px-4 py-3 rounded-xl bg-black hover:bg-zinc-800 transition-all text-lg font-medium z-60 active:scale-95"
+                  className="text-shimmer w-full px-4 py-3 rounded-xl bg-black hover:bg-zinc-800 transition-all text-lg font-medium z-60 active:scale-95 hover:cursor-pointer"
                 >
                   Log Out
                 </button>

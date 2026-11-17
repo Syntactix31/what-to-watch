@@ -175,7 +175,7 @@ export default function VerifyEmailClient() {
         {status === "success" && (
           <Link
             href="/"
-            className="mt-6 inline-block rounded-xl bg-yellow-500 px-5 py-3 font-semibold text-zinc-950 cursor-pointer"
+            className="mt-6 inline-block rounded-xl bg-gradient-to-r from-yellow-400 to-orange-600 hover:from-yellow-300 hover:to-orange-500 px-8 py-3 font-semibold text-zinc-950 active:scale-95 hover:cursor-pointer"
           >
             Continue
           </Link>
@@ -184,7 +184,7 @@ export default function VerifyEmailClient() {
         {(status === "awaiting-email" || status === "error") && (
           <button
             onClick={resendVerificationEmail}
-            className="mt-6 inline-block rounded-xl border border-zinc-700 px-5 py-3 font-semibold text-zinc-100 cursor-pointer"
+            className="mt-6 inline-block rounded-xl border border-zinc-700 px-5 py-3 font-semibold active:scale-95 text-zinc-100 hover:cursor-pointer"
           >
             Resend verification email
           </button>
@@ -193,7 +193,3 @@ export default function VerifyEmailClient() {
     </main>
   );
 }
-
-
-
-
